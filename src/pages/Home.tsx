@@ -7,7 +7,7 @@ import { PricingSection } from "../components/home/PricingSection";
 import MembershipSection from "../components/home/MembershipSection";
 import { SocialSidebar } from "../components/ui/SocialSidebar";
 import { Reveal } from "../components/ui/Reveal";
-import { Scene3D } from "../components/ui/Scene3D";
+
 
 function Home() {
   return (
