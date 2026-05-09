@@ -32,7 +32,6 @@ const Membership: React.FC = () => {
       exit={{ opacity: 0 }}
       className="overflow-x-hidden bg-[#FDFCF0] text-[#1A1A1A] font-sans selection:bg-[#B87333]/20 relative min-h-screen pb-20"
     >
-      
       {/* ─── HERO SECTION ─── */}
       <LuxuryMembershipHero
         title="Exclusive Membership"

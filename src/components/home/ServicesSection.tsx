@@ -33,8 +33,7 @@ const services = [
   },
   {
     title: "Manicure & Pedicure",
-    description:
-      "Pamper your hands and feet with our relaxing therapies.",
+    description: "Pamper your hands and feet with our relaxing therapies.",
     image: manicureImage,
     icon: <Droplets size={24} />,
     buttonClass: "btn-premium-gold",
@@ -74,7 +73,8 @@ const services = [
   },
   {
     title: "Wart Removal",
-    description: "Safe and effective removal of warts and skin tags using advanced techniques.",
+    description:
+      "Safe and effective removal of warts and skin tags using advanced techniques.",
     image: wartRemovalImage,
     icon: <Sparkles size={24} />,
     buttonClass: "btn-premium-gold",
@@ -94,8 +94,8 @@ export function ServicesSection() {
               </span>
             </h2>
             <p className="text-base tb:text-lg text-on-surface/80 max-w-xl tb:max-w-2xl mx-auto font-medium leading-relaxed px-4 mb:px-0">
-              From everyday glow to bridal perfection — Zen Tonez has got you covered
-              with expert treatments and premium products.
+              From everyday glow to bridal perfection — Zen Tonez has got you
+              covered with expert treatments and premium products.
             </p>
           </div>
         </ScrollReveal>

@@ -12,7 +12,7 @@ import bridalMakeup from "../../assets/bridalwebpimages/bridal1.webp";
 import nails from "../../assets/nailwebpimages/nail.jpeg";
 import liceRemoval from "../../assets/licewebpimages/lice4.webp";
 import hairStyle from "../../assets/hairwebp images/curlyhairstyle.webp";
-import wartRemoval from "../../assets/wartremovalwebpimages/wartremovalimg.webp";
+import wartRemoval from "../../assets/wartremovalwebpimages/wartdarkimg1.webp";
 import earPiercing from "../../assets/earpiercingimages/earpiercing.webp";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -42,17 +42,28 @@ const services: Service[] = [
     id: 1,
     title: "Skin Care",
     category: "Skin Wellness",
-    description: "Maintain radiant and healthy skin with our personalized skincare solutions.",
+    description:
+      "Maintain radiant and healthy skin with our personalized skincare solutions.",
     price: "₹400+",
     duration: "45 - 60 Mins",
-    review: "The facial was divine! My skin has never felt so hydrated and glowing. Truly a premium experience.",
+    review:
+      "The facial was divine! My skin has never felt so hydrated and glowing. Truly a premium experience.",
     clientName: "Deepika S.",
     highlights: ["Deep Cleansing", "Hydrating Mask", "Facial Massage"],
     image: skinCare,
     color: "#FB7185",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor" fillOpacity="0.9" />
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        className="w-6 h-6"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+          fill="currentColor"
+          fillOpacity="0.9"
+        />
       </svg>
     ),
   },
@@ -60,16 +71,23 @@ const services: Service[] = [
     id: 2,
     title: "Facial Treatment",
     category: "Advanced Therapy",
-    description: "Refresh and rejuvenate your skin with our advanced facial therapies.",
+    description:
+      "Refresh and rejuvenate your skin with our advanced facial therapies.",
     price: "₹1,150+",
     duration: "60 - 90 Mins",
-    review: "Results were visible after just one session. The therapist was so professional and knowledgeable.",
+    review:
+      "Results were visible after just one session. The therapist was so professional and knowledgeable.",
     clientName: "Ananya K.",
     highlights: ["Vitamin C Infusion", "Anti-aging"],
     image: facialTreatment,
     color: "#38BDF8",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        className="w-6 h-6"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <circle cx="12" cy="12" r="9" fill="currentColor" fillOpacity="0.9" />
       </svg>
     ),
@@ -81,14 +99,24 @@ const services: Service[] = [
     description: "Pamper your hands and feet with our relaxing therapies.",
     price: "₹599+",
     duration: "60 - 75 Mins",
-    review: "The best mani-pedi in town! The attention to detail and the relaxing atmosphere are unbeatable.",
+    review:
+      "The best mani-pedi in town! The attention to detail and the relaxing atmosphere are unbeatable.",
     clientName: "Meera V.",
     highlights: ["Sea Salt Scrub", "Paraffin Wax", "Gel Polish"],
     image: maniPedi,
     color: "#FB923C",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" xmlns="http://www.w3.org/2000/svg">
-        <path d="M18 11c-1.1 0-2 .9-2 2v3c0 1.1-.9 2-2 2s-2-.9-2-2v-3c0-1.1-.9-2-2-2s-2 .9-2 2v3c0 3.3 2.7 6 6 6s6-2.7 6-6v-3c0-1.1-.9-2-2-2z" fill="currentColor" fillOpacity="0.9" />
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        className="w-6 h-6"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M18 11c-1.1 0-2 .9-2 2v3c0 1.1-.9 2-2 2s-2-.9-2-2v-3c0-1.1-.9-2-2-2s-2 .9-2 2v3c0 3.3 2.7 6 6 6s6-2.7 6-6v-3c0-1.1-.9-2-2-2z"
+          fill="currentColor"
+          fillOpacity="0.9"
+        />
       </svg>
     ),
   },
@@ -96,17 +124,28 @@ const services: Service[] = [
     id: 4,
     title: "Hair Care",
     category: "Hair Health",
-    description: "Revitalize your hair with nourishing spa treatments designed to repair damage.",
+    description:
+      "Revitalize your hair with nourishing spa treatments designed to repair damage.",
     price: "₹899+",
     duration: "45 - 60 Mins",
-    review: "My hair feels like silk! The treatment really addressed my dryness and frizz issues.",
+    review:
+      "My hair feels like silk! The treatment really addressed my dryness and frizz issues.",
     clientName: "Sneha P.",
     highlights: ["Steam Treatment", "Nourishing Mask", "Scalp Massage"],
     image: hairSpa,
     color: "#0EA5E9",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" fill="currentColor" fillOpacity="0.9" />
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        className="w-6 h-6"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"
+          fill="currentColor"
+          fillOpacity="0.9"
+        />
       </svg>
     ),
   },
@@ -114,18 +153,29 @@ const services: Service[] = [
     id: 5,
     title: "Bridal Makeup",
     category: "Luxury Bridal",
-    description: "Look stunning on your special day with our professional bridal makeup services.",
+    description:
+      "Look stunning on your special day with our professional bridal makeup services.",
     price: "₹15,000+",
     duration: "180 - 240 Mins",
-    review: "The best bridal care in Tamil Nadu. My look was absolutely radiant and stayed perfect all day.",
+    review:
+      "The best bridal care in Tamil Nadu. My look was absolutely radiant and stayed perfect all day.",
     clientName: "Priya R.",
     highlights: ["HD Makeup", "Hairstyling", "Saree Draping"],
     image: bridalMakeup,
     objectPosition: "top",
     color: "#D97706",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" xmlns="http://www.w3.org/2000/svg">
-        <path d="M5 16L3 5L8.5 10L12 4L15.5 10L21 5L19 16H5Z" fill="currentColor" fillOpacity="0.9" />
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        className="w-6 h-6"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M5 16L3 5L8.5 10L12 4L15.5 10L21 5L19 16H5Z"
+          fill="currentColor"
+          fillOpacity="0.9"
+        />
       </svg>
     ),
   },
@@ -133,17 +183,28 @@ const services: Service[] = [
     id: 6,
     title: "Nails",
     category: "Nail Artistry",
-    description: "Exquisite nail art and extensions to express your unique style.",
+    description:
+      "Exquisite nail art and extensions to express your unique style.",
     price: "₹1,500+",
     duration: "60 - 90 Mins",
-    review: "Incredible nail art! They perfectly captured the design I wanted. So many compliments!",
+    review:
+      "Incredible nail art! They perfectly captured the design I wanted. So many compliments!",
     clientName: "Varsha M.",
     highlights: ["Extensions", "Hand-painted Art", "3D Accents"],
     image: nails,
     color: "#8B5CF6",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 2C7 2 3 6 3 11v8c0 1.7 1.3 3 3 3h12c1.7 0 3-1.3 3-3v-8c0-5-4-9-9-9z" fill="currentColor" fillOpacity="0.9" />
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        className="w-6 h-6"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M12 2C7 2 3 6 3 11v8c0 1.7 1.3 3 3 3h12c1.7 0 3-1.3 3-3v-8c0-5-4-9-9-9z"
+          fill="currentColor"
+          fillOpacity="0.9"
+        />
       </svg>
     ),
   },
@@ -151,17 +212,28 @@ const services: Service[] = [
     id: 7,
     title: "Lice Removal",
     category: "Scalp Care",
-    description: "Gentle and effective treatments to ensure a healthy, lice-free scalp.",
+    description:
+      "Gentle and effective treatments to ensure a healthy, lice-free scalp.",
     price: "₹5,000+",
     duration: "45 - 60 Mins",
-    review: "Very professional and discreet. The treatment was effective and painless. Highly recommend for kids.",
+    review:
+      "Very professional and discreet. The treatment was effective and painless. Highly recommend for kids.",
     clientName: "Lakshmi T.",
     highlights: ["Natural Treatment", "Discreet Service", "Scalp Health"],
     image: liceRemoval,
     color: "#10B981",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z" fill="currentColor" fillOpacity="0.9" />
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        className="w-6 h-6"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z"
+          fill="currentColor"
+          fillOpacity="0.9"
+        />
       </svg>
     ),
   },
@@ -169,18 +241,30 @@ const services: Service[] = [
     id: 8,
     title: "Hair Styling",
     category: "Hair Artistry",
-    description: "Expert hair styling for every occasion, from elegant updos to modern trends.",
+    description:
+      "Expert hair styling for every occasion, from elegant updos to modern trends.",
     price: "₹1,500+",
     duration: "30 - 45 Mins",
-    review: "Loved my hair for the party! It stayed perfectly in place all night.",
+    review:
+      "Loved my hair for the party! It stayed perfectly in place all night.",
     clientName: "Ritu G.",
     highlights: ["Elegant Updos", "Modern Braids", "Event Styling"],
     image: hairStyle,
     objectPosition: "top",
     color: "#EC4899",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" xmlns="http://www.w3.org/2000/svg">
-        <path d="M6 15a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 0V8a2 2 0 0 1 2-2h1m10 9a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 0V8a2 2 0 0 0-2-2h-1M12 18v-5m0-4V4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        className="w-6 h-6"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M6 15a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 0V8a2 2 0 0 1 2-2h1m10 9a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm0 0V8a2 2 0 0 0-2-2h-1M12 18v-5m0-4V4"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
       </svg>
     ),
   },
@@ -188,18 +272,30 @@ const services: Service[] = [
     id: 9,
     title: "Wart Removal",
     category: "Specialized Care",
-    description: "Safe and effective removal of warts and skin tags using advanced techniques.",
+    description:
+      "Safe and effective removal of warts and skin tags using advanced techniques.",
     price: "₹119+",
     duration: "15 - 30 Mins",
-    review: "The procedure was quick and practically painless. The results are amazing!",
+    review:
+      "The procedure was quick and practically painless. The results are amazing!",
     clientName: "Vikram J.",
     highlights: ["Quick Procedure", "Minimal Scarring", "Expert Care"],
     image: wartRemoval,
     color: "#EA580C",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        className="w-6 h-6"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <circle cx="12" cy="12" r="10" fill="currentColor" fillOpacity="0.9" />
-        <path d="M12 7v10M7 12h10" stroke="white" strokeWidth="2" strokeLinecap="round" />
+        <path
+          d="M12 7v10M7 12h10"
+          stroke="white"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
       </svg>
     ),
   },
@@ -207,16 +303,23 @@ const services: Service[] = [
     id: 10,
     title: "Ear Piercing",
     category: "Specialized Care",
-    description: "Safe and precise ear piercing using professional, sterilized equipment.",
+    description:
+      "Safe and precise ear piercing using professional, sterilized equipment.",
     price: "₹299+",
     duration: "15 - 30 Mins",
-    review: "The process was so quick and hygienic. I felt very comfortable throughout.",
+    review:
+      "The process was so quick and hygienic. I felt very comfortable throughout.",
     clientName: "Pooja S.",
     highlights: ["Safe & Hygienic", "Expert Piercer", "Aftercare Support"],
     image: earPiercing,
     color: "#F472B6",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" className="w-6 h-6" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        className="w-6 h-6"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <circle cx="12" cy="12" r="10" fill="currentColor" fillOpacity="0.9" />
         <circle cx="12" cy="12" r="3" fill="white" />
       </svg>
@@ -225,7 +328,10 @@ const services: Service[] = [
 ];
 
 const ServicesShowcase: React.FC = () => {
-  const [selectedImage, setSelectedImage] = React.useState<{ url: string; title: string } | null>(null);
+  const [selectedImage, setSelectedImage] = React.useState<{
+    url: string;
+    title: string;
+  } | null>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const rightColRef = useRef<HTMLDivElement>(null);
@@ -252,20 +358,21 @@ const ServicesShowcase: React.FC = () => {
               gsap.set(images[i], {
                 zIndex: 1,
                 opacity: 1,
-                overwrite: true
+                overwrite: true,
               });
               // Keep the subtle scale animation if desired, or remove it too
-              gsap.fromTo(images[i],
+              gsap.fromTo(
+                images[i],
                 { scale: 1.05 },
                 {
                   scale: 1,
                   duration: 0.8,
                   ease: "power2.out",
-                  overwrite: true
-                }
+                  overwrite: true,
+                },
               );
             }
-          }
+          },
         });
       });
 
@@ -285,10 +392,7 @@ const ServicesShowcase: React.FC = () => {
   }, []);
 
   return (
-    <div
-      className="bg-surface-dim relative overflow-hidden"
-      ref={containerRef}
-    >
+    <div className="bg-surface-dim relative overflow-hidden" ref={containerRef}>
       {/* Mobile/Tablet Layout */}
       <div className="dt:hidden py-12 tb:py-20 px-4 tb:px-8 space-y-12">
         <div className="text-center mb-16">
@@ -304,7 +408,9 @@ const ServicesShowcase: React.FC = () => {
           >
             <div
               className="aspect-square relative overflow-hidden cursor-zoom-in group"
-              onClick={() => setSelectedImage({ url: service.image, title: service.title })}
+              onClick={() =>
+                setSelectedImage({ url: service.image, title: service.title })
+              }
             >
               <img
                 src={service.image}
@@ -317,7 +423,9 @@ const ServicesShowcase: React.FC = () => {
                 <div className="bg-white/20 backdrop-blur-md p-3 rounded-full border border-white/30 animate-pulse">
                   <Star className="text-white fill-white" size={24} />
                 </div>
-                <span className="text-white text-[10px] font-black uppercase tracking-[0.2em] bg-black/30 px-3 py-1 rounded-full backdrop-blur-sm">Click to View</span>
+                <span className="text-white text-[10px] font-black uppercase tracking-[0.2em] bg-black/30 px-3 py-1 rounded-full backdrop-blur-sm">
+                  Click to View
+                </span>
               </div>
             </div>
 
@@ -428,8 +536,6 @@ const ServicesShowcase: React.FC = () => {
                   </div>
                 </div>
 
-
-
                 <div className="flex flex-col items-center gap-4 pt-4 w-full">
                   <div className="flex flex-col items-center">
                     <span className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface/60 mb-1">
@@ -460,7 +566,9 @@ const ServicesShowcase: React.FC = () => {
               <div
                 key={service.id}
                 className="absolute inset-0 z-0"
-                onClick={() => setSelectedImage({ url: service.image, title: service.title })}
+                onClick={() =>
+                  setSelectedImage({ url: service.image, title: service.title })
+                }
               >
                 <img
                   src={service.image}
@@ -473,7 +581,9 @@ const ServicesShowcase: React.FC = () => {
                   <div className="bg-white/20 backdrop-blur-md p-4 rounded-full border border-white/30 animate-pulse">
                     <Star className="text-white fill-white" size={32} />
                   </div>
-                  <span className="text-white text-xs font-black uppercase tracking-[0.3em] bg-black/20 px-4 py-1 rounded-full backdrop-blur-md">Click to View</span>
+                  <span className="text-white text-xs font-black uppercase tracking-[0.3em] bg-black/20 px-4 py-1 rounded-full backdrop-blur-md">
+                    Click to View
+                  </span>
                 </div>
               </div>
             ))}

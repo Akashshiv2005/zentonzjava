@@ -67,10 +67,14 @@ export const InteractiveMembershipCard: React.FC = () => {
           setMousePosition({ x: 0, y: 0 });
         }}
         onClick={showCompliment}
-        animate={!isMobile ? {
-          rotateX: mousePosition.y * 20,
-          rotateY: mousePosition.x * -20,
-        } : {}}
+        animate={
+          !isMobile
+            ? {
+                rotateX: mousePosition.y * 20,
+                rotateY: mousePosition.x * -20,
+              }
+            : {}
+        }
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
       >
         {/* Card Body */}
@@ -124,7 +128,7 @@ export const InteractiveMembershipCard: React.FC = () => {
 
           {/* Interactive Sparkles on Hover */}
           <AnimatePresence>
-            {(isHovered && !isMobile) && (
+            {isHovered && !isMobile && (
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}

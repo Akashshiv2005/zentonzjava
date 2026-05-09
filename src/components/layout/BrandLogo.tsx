@@ -20,7 +20,7 @@ export function BrandLogo() {
               className="h-full w-auto object-contain drop-shadow-md"
             />
           </div>
-          
+
           {/* Optional: Subtle backdrop or glow effect on hover */}
           <div className="absolute -inset-4 bg-primary/5 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
         </div>

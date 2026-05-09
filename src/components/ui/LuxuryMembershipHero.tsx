@@ -88,8 +88,7 @@ export const LuxuryMembershipHero: React.FC<LuxuryMembershipHeroProps> = ({
             >
               {title.split(" ").map((word, i) => (
                 <span key={i} className={i === 1 ? "text-[#B87333]" : ""}>
-                  {word}{" "}
-                  {i === 0 && <br />}
+                  {word} {i === 0 && <br />}
                 </span>
               ))}
             </motion.h1>
@@ -175,7 +174,7 @@ export const LuxuryMembershipHero: React.FC<LuxuryMembershipHeroProps> = ({
                     [
                       "linear-gradient(110deg, transparent 20%, rgba(255, 255, 255, 0.2) 40%, transparent 60%)",
                       "linear-gradient(110deg, transparent 40%, rgba(255, 255, 255, 0.2) 60%, transparent 80%)",
-                    ]
+                    ],
                   ),
                   opacity: isHovered ? 1 : 0,
                 }}

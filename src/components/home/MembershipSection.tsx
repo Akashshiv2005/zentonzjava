@@ -4,7 +4,6 @@ import { Check, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { ScrollReveal } from "./ScrollReveal";
 
-
 const compliments = [
   "You look stunning today! ✨",
   "Your beauty is unique and powerful. 💖",

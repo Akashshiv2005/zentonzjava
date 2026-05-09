@@ -28,7 +28,13 @@ const AboutValues: React.FC = () => {
       {/* SVG Gradient Definition */}
       <svg width="0" height="0" className="absolute pointer-events-none">
         <defs>
-          <linearGradient id="gold-gradient-3d" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient
+            id="gold-gradient-3d"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="100%"
+          >
             <stop offset="0%" stopColor="#BF953F" />
             <stop offset="25%" stopColor="#FCF6BA" />
             <stop offset="50%" stopColor="#B38728" />
@@ -36,8 +42,20 @@ const AboutValues: React.FC = () => {
             <stop offset="100%" stopColor="#AA771C" />
           </linearGradient>
           <filter id="3d-depth">
-            <feDropShadow dx="0.5" dy="0.5" stdDeviation="0.2" floodColor="#000" floodOpacity="0.5" />
-            <feDropShadow dx="-0.5" dy="-0.5" stdDeviation="0.2" floodColor="#fff" floodOpacity="0.2" />
+            <feDropShadow
+              dx="0.5"
+              dy="0.5"
+              stdDeviation="0.2"
+              floodColor="#000"
+              floodOpacity="0.5"
+            />
+            <feDropShadow
+              dx="-0.5"
+              dy="-0.5"
+              stdDeviation="0.2"
+              floodColor="#fff"
+              floodOpacity="0.2"
+            />
           </filter>
         </defs>
       </svg>
@@ -60,23 +78,32 @@ const AboutValues: React.FC = () => {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              whileHover={{ 
+              whileHover={{
                 y: -10,
                 rotateX: 5,
                 rotateY: 5,
-                transition: { duration: 0.3 }
+                transition: { duration: 0.3 },
               }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
               className="group p-8 sm:p-10 bg-surface-dim rounded-3xl sm:rounded-4xl border border-primary-container/20 text-center hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 perspective-1000"
               style={{ transformStyle: "preserve-3d" }}
             >
               <div className="w-16 h-16 sm:w-20 sm:h-20 bg-linear-to-br from-surface-dim to-background rounded-2xl flex items-center justify-center mx-auto mb-6 sm:mb-8 shadow-[inset_0_0_15px_rgba(0,0,0,0.1),5px_5px_15px_rgba(0,0,0,0.1)] border border-white/5 group-hover:border-primary/30 transition-all duration-500">
-                <div className="relative transform-gpu group-hover:scale-110 transition-transform duration-500" style={{ filter: "drop-shadow(0 4px 6px rgba(0,0,0,0.2)) drop-shadow(0 10px 15px rgba(191,149,63,0.15))" }}>
-                  {cloneElement(value.icon as ReactElement, {
-                    stroke: "url(#gold-gradient-3d)",
-                    className: "drop-shadow-[1px_1px_0px_rgba(0,0,0,0.2)]",
-                    style: { filter: "url(#3d-depth)" }
-                  } as SVGProps<SVGSVGElement>)}
+                <div
+                  className="relative transform-gpu group-hover:scale-110 transition-transform duration-500"
+                  style={{
+                    filter:
+                      "drop-shadow(0 4px 6px rgba(0,0,0,0.2)) drop-shadow(0 10px 15px rgba(191,149,63,0.15))",
+                  }}
+                >
+                  {cloneElement(
+                    value.icon as ReactElement,
+                    {
+                      stroke: "url(#gold-gradient-3d)",
+                      className: "drop-shadow-[1px_1px_0px_rgba(0,0,0,0.2)]",
+                      style: { filter: "url(#3d-depth)" },
+                    } as SVGProps<SVGSVGElement>,
+                  )}
                 </div>
               </div>
               <h3 className="text-xl sm:text-2xl font-serif text-on-surface mb-3 sm:mb-4 group-hover:text-primary transition-colors duration-300">
@@ -98,8 +125,9 @@ const AboutValues: React.FC = () => {
                   The Zen Tonez Core
                 </h4>
                 <p className="text-on-surface/80 leading-relaxed mb-6 sm:mb-8 text-sm sm:text-base font-serif font-medium">
-                  "Excellence isn't an act; it's a habit born from consistent quality,
-                  unwavering discipline, and a genuine passion for the art of beauty."
+                  "Excellence isn't an act; it's a habit born from consistent
+                  quality, unwavering discipline, and a genuine passion for the
+                  art of beauty."
                 </p>
               </div>
               <div className="space-y-4 sm:space-y-6 text-xs sm:text-sm font-bold tracking-widest uppercase text-on-surface/60">

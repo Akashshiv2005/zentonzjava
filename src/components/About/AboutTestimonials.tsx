@@ -16,7 +16,8 @@ const TESTIMONIALS: Testimonial[] = [
     id: 1,
     name: "Kowsalya Shinchan",
     service: "Layer Cut & Hair Botox",
-    quote: "I’m Kousi from Kulithalai. I had always wanted to try a haircut and treatment for years. I visited Zen Tonez Salon for the first time and got a layer cut and hair botox treatment. The service was very good, the team was friendly and engaging, and I loved the final result.",
+    quote:
+      "I’m Kousi from Kulithalai. I had always wanted to try a haircut and treatment for years. I visited Zen Tonez Salon for the first time and got a layer cut and hair botox treatment. The service was very good, the team was friendly and engaging, and I loved the final result.",
     rating: 5,
     image: "https://api.dicebear.com/7.x/lorelei/svg?seed=Kowsalya",
   },
@@ -24,7 +25,8 @@ const TESTIMONIALS: Testimonial[] = [
     id: 2,
     name: "Manoj Jeevagan",
     service: "Layer Cut & Styling",
-    quote: "Visited Zen Tonez Salon with my wife and was truly impressed. The layer cutting and hairstyling were perfect. Stylist Yogapriya is skilled, friendly, and understands exactly what you want. Highly recommend for a stylish look in Trichy.",
+    quote:
+      "Visited Zen Tonez Salon with my wife and was truly impressed. The layer cutting and hairstyling were perfect. Stylist Yogapriya is skilled, friendly, and understands exactly what you want. Highly recommend for a stylish look in Trichy.",
     rating: 5,
     image: "https://api.dicebear.com/7.x/lorelei/svg?seed=Priya",
   },
@@ -32,7 +34,8 @@ const TESTIMONIALS: Testimonial[] = [
     id: 3,
     name: "Meenakshi Janakiram",
     service: "Layer Cut",
-    quote: "I wanted a layer cut and Yogapriya did exactly what I wanted. Good ambience with a warm gesture. She is really talented.",
+    quote:
+      "I wanted a layer cut and Yogapriya did exactly what I wanted. Good ambience with a warm gesture. She is really talented.",
     rating: 5,
     image: "https://api.dicebear.com/7.x/lorelei/svg?seed=Meenakshi",
   },
@@ -40,7 +43,8 @@ const TESTIMONIALS: Testimonial[] = [
     id: 4,
     name: "Joe Anjali",
     service: "Facial & Threading",
-    quote: "Facial service from Yoga was amazing. She explained each step clearly and the massage was very relaxing. My skin felt fresh and glowing. Eyebrow threading was done perfectly with a natural shape.",
+    quote:
+      "Facial service from Yoga was amazing. She explained each step clearly and the massage was very relaxing. My skin felt fresh and glowing. Eyebrow threading was done perfectly with a natural shape.",
     rating: 5,
     image: "https://api.dicebear.com/7.x/lorelei/svg?seed=Anjali",
   },
@@ -48,7 +52,8 @@ const TESTIMONIALS: Testimonial[] = [
     id: 5,
     name: "Dharshini Malavika",
     service: "Facial & Haircut",
-    quote: "Sarthaj did a great job. I went for facial, haircut, and eyebrows — everything was very good. Neat and clean services. Excellent experience.",
+    quote:
+      "Sarthaj did a great job. I went for facial, haircut, and eyebrows — everything was very good. Neat and clean services. Excellent experience.",
     rating: 5,
     image: "https://api.dicebear.com/7.x/lorelei/svg?seed=Dharshini",
   },
@@ -56,7 +61,8 @@ const TESTIMONIALS: Testimonial[] = [
     id: 6,
     name: "Jenifer LD",
     service: "Threading",
-    quote: "Very satisfied! Eyebrow threading was done very well and almost pain-free. I was never satisfied with other salons before, but here the result was perfect.",
+    quote:
+      "Very satisfied! Eyebrow threading was done very well and almost pain-free. I was never satisfied with other salons before, but here the result was perfect.",
     rating: 5,
     image: "https://api.dicebear.com/7.x/lorelei/svg?seed=Jenifer",
   },
@@ -64,7 +70,8 @@ const TESTIMONIALS: Testimonial[] = [
     id: 7,
     name: "Vicky Sachithanantham",
     service: "Hair Spa & Cut",
-    quote: "Layer haircut, hair spa, and eyebrow services were excellent. Very good service.",
+    quote:
+      "Layer haircut, hair spa, and eyebrow services were excellent. Very good service.",
     rating: 5,
     image: "https://api.dicebear.com/7.x/lorelei/svg?seed=Vidhya",
   },
@@ -72,7 +79,8 @@ const TESTIMONIALS: Testimonial[] = [
     id: 8,
     name: "Sowmi Selvam",
     service: "Threading",
-    quote: "I had an amazing experience. Threading was done neatly and painlessly. Ms. Sarthaj is polite, professional, and made me feel very comfortable.",
+    quote:
+      "I had an amazing experience. Threading was done neatly and painlessly. Ms. Sarthaj is polite, professional, and made me feel very comfortable.",
     rating: 5,
     image: "https://api.dicebear.com/7.x/lorelei/svg?seed=Sowmi",
   },
@@ -80,7 +88,8 @@ const TESTIMONIALS: Testimonial[] = [
     id: 9,
     name: "Shyamaladevi Shyamala",
     service: "Facial & Threading",
-    quote: "Facial and threading services were very good. Yogapriya’s service was excellent.",
+    quote:
+      "Facial and threading services were very good. Yogapriya’s service was excellent.",
     rating: 5,
     image: "https://api.dicebear.com/7.x/lorelei/svg?seed=Shyamaladevi",
   },
@@ -88,7 +97,8 @@ const TESTIMONIALS: Testimonial[] = [
     id: 10,
     name: "Priyabanthavi Sivasubramanian",
     service: "Hair Spa",
-    quote: "I visited this salon and had a wonderful experience. The hair spa was exactly as I wanted. Jerlin was polite and efficient.",
+    quote:
+      "I visited this salon and had a wonderful experience. The hair spa was exactly as I wanted. Jerlin was polite and efficient.",
     rating: 5,
     image: "https://api.dicebear.com/7.x/lorelei/svg?seed=Priyabanthavi",
   },
@@ -96,7 +106,8 @@ const TESTIMONIALS: Testimonial[] = [
     id: 11,
     name: "Gopi Harini",
     service: "Salon Service",
-    quote: "Jerlin did wonderful work. She is very friendly and skillful. Great service!",
+    quote:
+      "Jerlin did wonderful work. She is very friendly and skillful. Great service!",
     rating: 5,
     image: "https://api.dicebear.com/7.x/lorelei/svg?seed=Harini",
   },
@@ -104,7 +115,8 @@ const TESTIMONIALS: Testimonial[] = [
     id: 12,
     name: "Malathi Vinoth",
     service: "Salon Service",
-    quote: "Excellent service by Revathi team. The staff are experienced and the salon atmosphere is very good.",
+    quote:
+      "Excellent service by Revathi team. The staff are experienced and the salon atmosphere is very good.",
     rating: 5,
     image: "https://api.dicebear.com/7.x/lorelei/svg?seed=Malathi",
   },
@@ -112,7 +124,8 @@ const TESTIMONIALS: Testimonial[] = [
     id: 13,
     name: "Thulasi Anand",
     service: "Salon Service",
-    quote: "The service was fantastic. Everyone was welcoming and kind. They truly care about their clients.",
+    quote:
+      "The service was fantastic. Everyone was welcoming and kind. They truly care about their clients.",
     rating: 5,
     image: "https://api.dicebear.com/7.x/lorelei/svg?seed=Thulasi",
   },
@@ -120,7 +133,8 @@ const TESTIMONIALS: Testimonial[] = [
     id: 14,
     name: "Manesa Manesa",
     service: "Hair Spa",
-    quote: "Yoga gave me a very nice hair spa session. Her service was very good.",
+    quote:
+      "Yoga gave me a very nice hair spa session. Her service was very good.",
     rating: 5,
     image: "https://api.dicebear.com/7.x/lorelei/svg?seed=Manesa",
   },
@@ -128,7 +142,8 @@ const TESTIMONIALS: Testimonial[] = [
     id: 15,
     name: "Sharmi Kalai",
     service: "Haircut & Facial",
-    quote: "I visited Zen Tonez Salon for haircut and facial. Sarthaj handled everything with care and suggested the right services for my skin and hair. Overall, the service was excellent and I highly recommend it.",
+    quote:
+      "I visited Zen Tonez Salon for haircut and facial. Sarthaj handled everything with care and suggested the right services for my skin and hair. Overall, the service was excellent and I highly recommend it.",
     rating: 5,
     image: "https://api.dicebear.com/7.x/lorelei/svg?seed=Sharmi",
   },
@@ -136,7 +151,8 @@ const TESTIMONIALS: Testimonial[] = [
     id: 16,
     name: "Swarnanjali Nagarajan",
     service: "Layer Cut",
-    quote: "I got a layer haircut from Yogapriya. The service was very good. The staff are polite and handle customers very nicely.",
+    quote:
+      "I got a layer haircut from Yogapriya. The service was very good. The staff are polite and handle customers very nicely.",
     rating: 5,
     image: "https://api.dicebear.com/7.x/lorelei/svg?seed=Swarnanjali",
   },
@@ -144,7 +160,8 @@ const TESTIMONIALS: Testimonial[] = [
     id: 17,
     name: "Senthil Nathan",
     service: "Layer Cut & Treatment",
-    quote: "Yasmin did dandruff treatment and a bouncy layer cut. She explained everything well and took great care. Very satisfying service.",
+    quote:
+      "Yasmin did dandruff treatment and a bouncy layer cut. She explained everything well and took great care. Very satisfying service.",
     rating: 5,
     image: "https://api.dicebear.com/7.x/lorelei/svg?seed=Yasmin",
   },
@@ -160,10 +177,11 @@ const TESTIMONIALS: Testimonial[] = [
     id: 19,
     name: "Divya Sri",
     service: "Salon Service",
-    quote: "I was confused about choosing a salon, but this was the best decision. Thank you Yoga Akka for the amazing care and excellent service.",
+    quote:
+      "I was confused about choosing a salon, but this was the best decision. Thank you Yoga Akka for the amazing care and excellent service.",
     rating: 5,
     image: "https://api.dicebear.com/7.x/lorelei/svg?seed=Divya",
-  }
+  },
 ];
 
 const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({
@@ -250,30 +268,34 @@ const AboutTestimonials: React.FC = () => {
 
       <div className="relative z-10 flex flex-col gap-8">
         {/* Row 1: Left to Right */}
-        <div className={`flex ${isMobile ? "overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4 px-4" : "overflow-hidden group"}`}>
+        <div
+          className={`flex ${isMobile ? "overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4 px-4" : "overflow-hidden group"}`}
+        >
           <motion.div
             animate={!isMobile ? { x: ["0%", "-50%"] } : {}}
-            transition={!isMobile ? {
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 50,
-                ease: "linear",
-              },
-            } : {}}
+            transition={
+              !isMobile
+                ? {
+                    x: {
+                      repeat: Infinity,
+                      repeatType: "loop",
+                      duration: 50,
+                      ease: "linear",
+                    },
+                  }
+                : {}
+            }
             className={`flex ${isMobile ? "" : "hover:[animation-play-state:paused]"}`}
           >
-            {isMobile ? (
-              row1.map((t, i) => (
-                <div key={i} className="snap-center">
-                  <TestimonialCard testimonial={t} />
-                </div>
-              ))
-            ) : (
-              [...row1, ...row1].map((t, i) => (
-                <TestimonialCard key={i} testimonial={t} />
-              ))
-            )}
+            {isMobile
+              ? row1.map((t, i) => (
+                  <div key={i} className="snap-center">
+                    <TestimonialCard testimonial={t} />
+                  </div>
+                ))
+              : [...row1, ...row1].map((t, i) => (
+                  <TestimonialCard key={i} testimonial={t} />
+                ))}
           </motion.div>
         </div>
 

@@ -1,10 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  Users,
-  Package,
-  BookOpen,
-  Handshake,
-} from "lucide-react";
+import { Users, Package, BookOpen, Handshake } from "lucide-react";
 import "./AboutTimeline.css";
 
 const TIMELINE_DATA = [

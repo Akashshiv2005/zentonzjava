@@ -527,6 +527,7 @@
 
   /* 3D Kinetic Hover effect for characters (Desktop only) */
   @media (min-width: 1024px) {
+
     .spark-text-container:hover .ch,
     .spark-text-container.spark-force-animate .ch {
       transform: translateY(-8px) scale(1.1);

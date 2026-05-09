@@ -55,9 +55,9 @@ const AboutHero: React.FC = () => {
               </h1>
 
               <p className="text-sm mb:text-base tb:text-lg dt:text-xl text-on-surface/90 leading-relaxed max-w-xl mx-auto dt:mx-0 mb-6 font-medium px-4 mb:px-0">
-                Beauty is confidence, self-love, and feeling truly seen. Zen Tonez
-                is an exclusive women salon, a sanctuary where luxury meets
-                personal care.
+                Beauty is confidence, self-love, and feeling truly seen. Zen
+                Tonez is an exclusive women salon, a sanctuary where luxury
+                meets personal care.
               </p>
 
               <div className="flex flex-col mb:flex-row items-center gap-4 mb:gap-6 justify-center dt:justify-start px-4 mb:px-0">
@@ -90,7 +90,10 @@ const AboutHero: React.FC = () => {
           <motion.div
             initial={!isMobile ? { opacity: 0, x: 30 } : { opacity: 1 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: !isMobile ? 0.8 : 0.4, delay: !isMobile ? 0.2 : 0 }}
+            transition={{
+              duration: !isMobile ? 0.8 : 0.4,
+              delay: !isMobile ? 0.2 : 0,
+            }}
             className="relative flex items-center justify-center dt:justify-end mt-4 dt:mt-0"
           >
             {/* The Arch Shape */}

@@ -3,7 +3,6 @@ import { motion, type Variants } from "framer-motion";
 import { Link } from "react-router-dom";
 import ownerImage from "../../assets/ownerimage/image.png";
 
-
 const AboutStory: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -31,8 +30,6 @@ const AboutStory: React.FC = () => {
       transition: { duration: 0.8, ease: "easeOut" },
     },
   };
-
-
 
   return (
     <section className="py-6 mb:py-8 tb:py-12 dt:py-16 bg-background overflow-hidden">
