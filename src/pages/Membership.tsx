@@ -519,12 +519,13 @@ const Membership: React.FC = () => {
                         type="text"
                         required
                         value={formState.customerName}
-                        onChange={(e) =>
+                        onChange={(e) => {
+                          const val = e.target.value.replace(/[^a-zA-Z\s]/g, "");
                           setFormState((prev) => ({
                             ...prev,
-                            customerName: e.target.value,
-                          }))
-                        }
+                            customerName: val,
+                          }));
+                        }}
                         className="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-[#B87333] outline-none transition-colors font-semibold"
                         placeholder="Customer name"
                       />
@@ -538,14 +539,17 @@ const Membership: React.FC = () => {
                         type="tel"
                         required
                         value={formState.phone}
-                        onChange={(e) =>
-                          setFormState((prev) => ({
-                            ...prev,
-                            phone: e.target.value,
-                          }))
-                        }
+                        onChange={(e) => {
+                          const val = e.target.value.replace(/\D/g, "");
+                          if (val.length <= 10) {
+                            setFormState((prev) => ({
+                              ...prev,
+                              phone: val,
+                            }));
+                          }
+                        }}
                         className="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-[#B87333] outline-none transition-colors font-semibold"
-                        placeholder="+91 00000 00000"
+                        placeholder="10-digit mobile number"
                       />
                     </div>
 
