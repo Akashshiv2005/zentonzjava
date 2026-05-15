@@ -18,22 +18,35 @@ const ContactForm: React.FC = () => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
+
     try {
-      const res = await fetch("http://localhost:8081/api/contact", {
+      // Send to Backend (to save in DB)
+      await fetch("http://localhost:8081/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formState),
       });
-      if (!res.ok) {
-        const errorText = await res.text();
-        throw new Error(errorText || "Failed to send");
-      }
 
+      // 2. Build WhatsApp message (Matching your flowchart)
+      const text = `*New Contact Inquiry - Zen Tonez*\n\n` +
+        `*Name:* ${formState.name}\n` +
+        `*Email:* ${formState.email}\n` +
+        `*Phone:* ${formState.phone}\n` +
+        `*Service:* ${formState.service}\n` +
+        `*Message:* ${formState.message}`;
+
+      const phoneNumber = "919751231239";
+      const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
+
+      // 3. Open WhatsApp (Matching your flowchart)
+      window.open(url, "_blank");
+
+      // Show success state locally
       setIsSubmitted(true);
       setFormState({ name: "", email: "", phone: "", service: "", message: "" });
       setTimeout(() => setIsSubmitted(false), 5000);
-    } catch {
-      setError("Something went wrong while sending your message. Please try again.");
+    } catch (err) {
+      setError("Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -86,7 +99,10 @@ const ContactForm: React.FC = () => {
               <input type="text" required
                 className="w-full px-5 tb:px-8 py-4 tb:py-5 bg-white/70 border border-secondary/20 rounded-2xl tb:rounded-3xl focus:ring-4 focus:ring-primary/10 focus:border-primary/30 outline-none transition-all placeholder:text-on-surface/40 font-bold text-sm tb:text-base text-on-surface"
                 placeholder="Your Name" value={formState.name}
-                onChange={(e) => setFormState({ ...formState, name: e.target.value })} />
+                onChange={(e) => {
+                  const val = e.target.value.replace(/[^a-zA-Z\s]/g, "");
+                  setFormState({ ...formState, name: val });
+                }} />
             </div>
             <div className="space-y-2 tb:space-y-3">
               <label className="text-[9px] tb:text-[10px] uppercase tracking-[0.3em] font-black text-on-surface/60 block px-3 tb:px-4">Email Address</label>
@@ -103,8 +119,13 @@ const ContactForm: React.FC = () => {
               <label className="text-[9px] tb:text-[10px] uppercase tracking-[0.3em] font-black text-on-surface/60 block px-3 tb:px-4">Phone Number</label>
               <input type="tel" required
                 className="w-full px-5 tb:px-8 py-4 tb:py-5 bg-white/50 border border-on-surface/10 rounded-2xl tb:rounded-3xl focus:ring-4 focus:ring-primary/10 focus:border-primary/30 outline-none transition-all placeholder:text-on-surface/40 font-bold text-sm tb:text-base text-on-surface"
-                placeholder="+91 00000 00000" value={formState.phone}
-                onChange={(e) => setFormState({ ...formState, phone: e.target.value })} />
+                placeholder="10-digit mobile number" value={formState.phone}
+                onChange={(e) => {
+                  const val = e.target.value.replace(/\D/g, "");
+                  if (val.length <= 10) {
+                    setFormState({ ...formState, phone: val });
+                  }
+                }} />
             </div>
             <div className="space-y-2 tb:space-y-3">
               <label className="text-[9px] tb:text-[10px] uppercase tracking-[0.3em] font-black text-on-surface/60 block px-3 tb:px-4">Service Interested</label>

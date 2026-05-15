@@ -1,8 +1,14 @@
+com\zentonez\model\MembershipPurchase.class
+com\zentonez\dto\VerifyMembershipPaymentRequest.class
+com\zentonez\repository\ContactRepository.class
+com\zentonez\dto\CreateMembershipOrderRequest.class
 com\zentonez\model\Contact.class
+com\zentonez\service\MembershipPaymentService.class
 com\zentonez\service\WhatsappNotificationService.class
 com\zentonez\controller\ContactController.class
 com\zentonez\controller\ReservationController.class
 com\zentonez\repository\ReservationRepository.class
-com\zentonez\repository\ContactRepository.class
+com\zentonez\controller\MembershipPaymentController.class
 com\zentonez\model\Reservation.class
 com\zentonez\ZentonezApplication.class
+com\zentonez\repository\MembershipPurchaseRepository.class

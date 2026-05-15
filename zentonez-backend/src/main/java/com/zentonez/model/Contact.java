@@ -39,5 +39,5 @@ public class Contact {
     public void setService(String service) { this.service = service; }
     public String getMessage() { return message; }
     public void setMessage(String message) { this.message = message; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
+    public LocalDateTime getCreatedAt() { return createdAt; } 
 }

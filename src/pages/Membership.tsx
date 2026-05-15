@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useMemo, useRef, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import {
   Check,
   X,
@@ -12,9 +12,15 @@ import {
 } from "lucide-react";
 import { LuxuryMembershipHero } from "../components/ui/LuxuryMembershipHero";
 import { Reveal } from "../components/ui/Reveal";
+import { API_BASE_URL, loadRazorpayCheckout } from "../lib/payments";
 
-import { useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+declare global {
+  interface Window {
+    Razorpay?: new (options: Record<string, unknown>) => {
+      open: () => void;
+    };
+  }
+}
 
 const Membership: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -24,25 +30,128 @@ const Membership: React.FC = () => {
   });
 
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+  const [formState, setFormState] = useState({
+    customerName: "",
+    phone: "",
+    email: "",
+  });
+  const [isPaying, setIsPaying] = useState(false);
+  const [isPurchased, setIsPurchased] = useState(false);
+  const [error, setError] = useState("");
+
+  const canSubmit = useMemo(
+    () => Boolean(formState.customerName.trim() && formState.phone.trim()),
+    [formState]
+  );
+
+  const handlePurchase = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!canSubmit) return;
+
+    setError("");
+    setIsPaying(true);
+
+    try {
+      await loadRazorpayCheckout();
+
+      const orderRes = await fetch(`${API_BASE_URL}/api/membership/create-order`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formState),
+      });
+
+      if (!orderRes.ok) {
+        const message = await orderRes.text();
+        throw new Error(message || "Unable to start payment.");
+      }
+
+      const order = await orderRes.json();
+      const razorpay = window.Razorpay
+        ? new window.Razorpay({
+            key: order.keyId,
+            amount: order.amount,
+            currency: order.currency,
+            name: "Zen Tonez",
+            description: `${order.planName} - 1 Year`,
+            order_id: order.orderId,
+            prefill: {
+              name: formState.customerName,
+              contact: formState.phone,
+              email: formState.email,
+            },
+            theme: {
+              color: "#B87333",
+            },
+            modal: {
+              ondismiss: () => setIsPaying(false),
+            },
+            handler: async (response: Record<string, string>) => {
+              try {
+                const verifyRes = await fetch(
+                  `${API_BASE_URL}/api/membership/verify-payment`,
+                  {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      ...formState,
+                      razorpayOrderId: response.razorpay_order_id,
+                      razorpayPaymentId: response.razorpay_payment_id,
+                      razorpaySignature: response.razorpay_signature,
+                    }),
+                  }
+                );
+
+                if (!verifyRes.ok) {
+                  const message = await verifyRes.text();
+                  throw new Error(message || "Payment verification failed.");
+                }
+
+                setIsPurchased(true);
+                setFormState({ customerName: "", phone: "", email: "" });
+              } catch (verificationError) {
+                setError(
+                  verificationError instanceof Error
+                    ? verificationError.message
+                    : "Payment verification failed."
+                );
+              } finally {
+                setIsPaying(false);
+              }
+            },
+          })
+        : null;
+
+      if (!razorpay) {
+        throw new Error("Razorpay checkout is unavailable.");
+      }
+
+      razorpay.open();
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong while opening payment."
+      );
+      setIsPaying(false);
+    }
+  };
 
   return (
     <motion.div
+      ref={containerRef}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       className="overflow-x-hidden bg-[#FDFCF0] text-[#1A1A1A] font-sans selection:bg-[#B87333]/20 relative min-h-screen pb-20"
     >
-      {/* ─── HERO SECTION ─── */}
       <LuxuryMembershipHero
         title="Exclusive Membership"
         subtitle="The ultimate key to consistent beauty and luxury. Join our exclusive inner circle and transform your salon experience with unrivaled privileges."
-        ctaText="JOIN NOW — ₹199/YEAR"
+        ctaText="JOIN NOW - Rs.199/YEAR"
         ctaLink="#join"
       />
 
-      {/* ─── DETAILED BENEFITS ─── */}
       <section className="py-20 lg:py-32 bg-white relative overflow-hidden">
-        {/* Decorative Parallax Element */}
         <motion.div
           style={{ y: backgroundY }}
           className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-[120px] pointer-events-none"
@@ -55,8 +164,8 @@ const Membership: React.FC = () => {
                 Unrivaled <span className="text-[#B87333]">Privileges</span>
               </h2>
               <p className="text-slate-600 text-lg lg:text-xl max-w-2xl mx-auto font-medium">
-                Being a member at Zen Tonez is more than just a discount—it's a
-                commitment to your long-term beauty journey.
+                Being a member at Zen Tonez is more than just a discount. It is
+                a commitment to your long-term beauty journey.
               </p>
             </div>
           </Reveal>
@@ -112,7 +221,6 @@ const Membership: React.FC = () => {
         </div>
       </section>
 
-      {/* ─── COMPARISON SECTION ─── */}
       <section className="py-20 lg:py-32 bg-slate-50 overflow-hidden relative">
         <motion.div
           initial={{ x: -100, opacity: 0 }}
@@ -154,7 +262,7 @@ const Membership: React.FC = () => {
                       guest: "Standard",
                       member: "15% Discount",
                     },
-                    { feature: "Yearly Fee", guest: "₹0", member: "₹199" },
+                    { feature: "Yearly Fee", guest: "Rs.0", member: "Rs.199" },
                     {
                       feature: "Booking Priority",
                       guest: "Standard",
@@ -238,8 +346,8 @@ const Membership: React.FC = () => {
                 </h4>
                 <ul className="space-y-3">
                   {[
-                    "One-time upfront fee of ₹199",
-                    "Discount doesn't stack with other promos",
+                    "One-time upfront fee of Rs.199",
+                    "Discount does not stack with other promos",
                     "Non-transferable to other individuals",
                     "Valid only at our signature locations",
                   ].map((item, i) => (
@@ -258,7 +366,6 @@ const Membership: React.FC = () => {
         </div>
       </section>
 
-      {/* ─── ELIGIBLE SERVICES ─── */}
       <section className="py-20 lg:py-32 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 tb:px-6 dt:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -269,8 +376,8 @@ const Membership: React.FC = () => {
                 </h2>
                 <p className="text-slate-600 text-lg font-medium leading-relaxed">
                   Your membership discount applies to almost our entire service
-                  catalog. Whether it's a monthly refresh or a
-                  once-in-a-lifetime transformation.
+                  catalog. Whether it is a monthly refresh or a once-in-a-lifetime
+                  transformation.
                 </p>
 
                 <div className="grid grid-cols-2 gap-x-8 gap-y-4">
@@ -313,13 +420,13 @@ const Membership: React.FC = () => {
                 </h3>
                 <p className="text-white/60 font-medium leading-relaxed">
                   Join thousands of women who have already unlocked the Zen
-                  Tonez Membership experience. It's time to reward yourself.
+                  Tonez Membership experience. It is time to reward yourself.
                 </p>
                 <div className="space-y-4 pt-4">
                   {[
-                    "Visit our salon in Trichy",
-                    "Ask for the Membership Card",
-                    "Unlock 15% OFF",
+                    "Buy your card securely online",
+                    "Receive payment confirmation instantly",
+                    "Unlock 15% OFF on your visits",
                   ].map((step, i) => (
                     <motion.div
                       key={i}
@@ -333,6 +440,148 @@ const Membership: React.FC = () => {
                     </motion.div>
                   ))}
                 </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="join"
+        className="py-20 lg:py-28 bg-slate-50 border-t border-slate-200"
+      >
+        <div className="max-w-6xl mx-auto px-4 tb:px-6 dt:px-8">
+          <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-start">
+            <Reveal width="100%" direction="left">
+              <div className="space-y-6">
+                <h2 className="text-4xl lg:text-5xl font-black text-slate-900 uppercase tracking-tighter font-serif leading-none">
+                  Purchase <span className="text-[#B87333]">Membership</span>
+                </h2>
+                <p className="text-slate-600 text-lg font-medium leading-relaxed">
+                  Customers can purchase the membership card directly from the
+                  website. We collect their details, create a secure payment
+                  order on the backend, and confirm the purchase after payment
+                  verification.
+                </p>
+                <div className="grid sm:grid-cols-3 gap-4">
+                  {[
+                    { label: "Plan", value: "1 Year Card" },
+                    { label: "Price", value: "Rs.199" },
+                    { label: "Discount", value: "15% OFF" },
+                  ].map((item) => (
+                    <div
+                      key={item.label}
+                      className="bg-white border border-slate-200 rounded-3xl p-5"
+                    >
+                      <div className="text-[11px] uppercase tracking-[0.25em] text-slate-400 font-black">
+                        {item.label}
+                      </div>
+                      <div className="mt-2 text-xl font-black text-slate-900">
+                        {item.value}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal width="100%" direction="right">
+              <div className="bg-white border border-slate-200 rounded-[2rem] p-6 lg:p-8 shadow-xl">
+                {isPurchased ? (
+                  <div className="text-center py-10 space-y-4">
+                    <div className="w-16 h-16 mx-auto rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
+                      <Check size={28} />
+                    </div>
+                    <h3 className="text-2xl font-black text-slate-900 uppercase font-serif">
+                      Membership Purchased
+                    </h3>
+                    <p className="text-slate-600 font-medium">
+                      Payment has been verified and the membership purchase was
+                      saved in the backend.
+                    </p>
+                  </div>
+                ) : (
+                  <form onSubmit={handlePurchase} className="space-y-5">
+                    <div>
+                      <h3 className="text-2xl font-black text-slate-900 uppercase font-serif">
+                        Buy Online
+                      </h3>
+                      <p className="text-sm text-slate-500 font-medium mt-2">
+                        Enter customer details and continue to secure checkout.
+                      </p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-[11px] uppercase tracking-[0.25em] text-slate-500 font-black block">
+                        Full Name
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={formState.customerName}
+                        onChange={(e) =>
+                          setFormState((prev) => ({
+                            ...prev,
+                            customerName: e.target.value,
+                          }))
+                        }
+                        className="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-[#B87333] outline-none transition-colors font-semibold"
+                        placeholder="Customer name"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-[11px] uppercase tracking-[0.25em] text-slate-500 font-black block">
+                        Phone Number
+                      </label>
+                      <input
+                        type="tel"
+                        required
+                        value={formState.phone}
+                        onChange={(e) =>
+                          setFormState((prev) => ({
+                            ...prev,
+                            phone: e.target.value,
+                          }))
+                        }
+                        className="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-[#B87333] outline-none transition-colors font-semibold"
+                        placeholder="+91 00000 00000"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-[11px] uppercase tracking-[0.25em] text-slate-500 font-black block">
+                        Email Address
+                      </label>
+                      <input
+                        type="email"
+                        value={formState.email}
+                        onChange={(e) =>
+                          setFormState((prev) => ({
+                            ...prev,
+                            email: e.target.value,
+                          }))
+                        }
+                        className="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-slate-50 focus:bg-white focus:border-[#B87333] outline-none transition-colors font-semibold"
+                        placeholder="customer@email.com"
+                      />
+                    </div>
+
+                    {error && (
+                      <p className="text-sm text-red-600 font-semibold">
+                        {error}
+                      </p>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={!canSubmit || isPaying}
+                      className="w-full bg-[#1A1A1A] text-white py-4 rounded-2xl font-black uppercase tracking-[0.2em] text-sm disabled:opacity-60"
+                    >
+                      {isPaying ? "Processing..." : "Pay Rs.199"}
+                    </button>
+                  </form>
+                )}
               </div>
             </Reveal>
           </div>

@@ -29,4 +29,9 @@ public class ContactController {
         whatsappNotificationService.sendContactNotification(saved);
         return ResponseEntity.ok(saved);
     }
+
+    @GetMapping
+    public ResponseEntity<java.util.List<Contact>> getAllContacts() {
+        return ResponseEntity.ok(contactRepository.findAll());
+    }
 }

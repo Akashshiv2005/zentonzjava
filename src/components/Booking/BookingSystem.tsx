@@ -284,7 +284,10 @@ export const BookingSystem: React.FC = () => {
             <input
               type="text"
               value={data.user.name}
-              onChange={e => setData({ ...data, user: { ...data.user, name: e.target.value } })}
+              onChange={e => {
+                const val = e.target.value.replace(/[^a-zA-Z\s]/g, "");
+                setData({ ...data, user: { ...data.user, name: val } });
+              }}
               className="w-full bg-on-surface/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-on-surface placeholder:text-on-surface/30 focus:outline-none focus:border-primary transition-colors"
               placeholder="Enter your name"
             />
@@ -297,9 +300,14 @@ export const BookingSystem: React.FC = () => {
             <input
               type="tel"
               value={data.user.phone}
-              onChange={e => setData({ ...data, user: { ...data.user, phone: e.target.value } })}
+              onChange={e => {
+                const val = e.target.value.replace(/\D/g, "");
+                if (val.length <= 10) {
+                  setData({ ...data, user: { ...data.user, phone: val } });
+                }
+              }}
               className="w-full bg-on-surface/5 border border-white/10 rounded-2xl py-4 pl-12 pr-4 text-on-surface placeholder:text-on-surface/30 focus:outline-none focus:border-primary transition-colors"
-              placeholder="+91 00000 00000"
+              placeholder="10-digit mobile number"
             />
           </div>
         </div>
@@ -381,6 +389,7 @@ export const BookingSystem: React.FC = () => {
         onClick={async () => {
           setIsSubmitting(true);
           try {
+            // 1. Send to Backend (to save in DB)
             const res = await fetch('http://localhost:8081/api/reservations', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -393,9 +402,33 @@ export const BookingSystem: React.FC = () => {
                 notes: data.user.notes,
               }),
             });
-            if (!res.ok) throw new Error();
+
+            if (!res.ok) throw new Error('Failed to save booking');
+
+            // 2. Build WhatsApp message (Matching your flowchart)
+            const dateStr = data.date?.toLocaleDateString('en-US', { 
+              weekday: 'long', 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric' 
+            });
+
+            const text = `*New Ritual Booking - Zen Tonez*\n\n` +
+              `*Service:* ${data.service?.name}\n` +
+              `*Date:* ${dateStr}\n` +
+              `*Time:* ${data.time}\n\n` +
+              `*Customer Details:*\n` +
+              `*Name:* ${data.user.name}\n` +
+              `*Phone:* ${data.user.phone}\n` +
+              `*Notes:* ${data.user.notes || 'None'}`;
+
+            const phoneNumber = "919751231239";
+            const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
+
+            // 3. Open WhatsApp (Matching your flowchart)
+            window.open(url, "_blank");
             nextStep();
-          } catch {
+          } catch (err) {
             alert('Something went wrong. Please try again.');
           } finally {
             setIsSubmitting(false);

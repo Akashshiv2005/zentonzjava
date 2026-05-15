@@ -30,6 +30,7 @@ const Gallery = lazy(() => import("./pages/Gallery"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Book = lazy(() => import("./pages/Book"));
 const Membership = lazy(() => import("./pages/Membership"));
+const Admin = lazy(() => import("./pages/Admin"));
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -70,6 +71,7 @@ const App: React.FC = () => {
               <Route path="/contact" element={<Contact />} />
               <Route path="/book" element={<Book />} />
               <Route path="/membership" element={<Membership />} />
+              <Route path="/admin" element={<Admin />} />
             </Routes>
           </Suspense>
         </main>
