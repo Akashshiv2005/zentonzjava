@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Scissors, Droplets, CheckCircle, ChevronLeft, ShieldCheck, User, Phone } from 'lucide-react';
+import { Sparkles, Scissors, Droplets, CheckCircle, ChevronLeft, ShieldCheck, User, Phone, Clock } from 'lucide-react';
 
 type ServiceType = {
   id: string;
