@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Scissors, Droplets, CheckCircle, ChevronLeft, ShieldCheck } from 'lucide-react';
+import { Sparkles, Scissors, Droplets, CheckCircle, ChevronLeft, ShieldCheck, User, Phone } from 'lucide-react';
 
 type ServiceType = {
   id: string;
@@ -42,7 +42,7 @@ export const BookingSystem: React.FC = () => {
     user: { name: '', phone: '', notes: '' }
   });
 
-  const nextStep = () => setStep(s => Math.min(s + 1, 4));
+  const nextStep = () => setStep(s => Math.min(s + 1, 6));
   const prevStep = () => setStep(s => Math.max(s - 1, 1));
 
   const fetchBookedSlots = async (service: string, date: Date): Promise<string[]> => {
@@ -228,54 +228,10 @@ export const BookingSystem: React.FC = () => {
             return (
               <div
                 key={idx}
-                onClick={async () => {
-                  if (isBooked || isSubmitting) return;
-                  
-                  setIsSubmitting(true);
-                  try {
-                    // 1. Send to Backend (to save in DB)
-                    const res = await fetch('http://localhost:8081/api/reservations', {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify({
-                        service: data.service?.id,
-                        date: data.date?.toISOString().split('T')[0],
-                        time: time,
-                        name: "Guest",
-                        phone: "WhatsApp",
-                        notes: "",
-                      }),
-                    });
-
-                    if (!res.ok) throw new Error('Failed to save booking');
-
-                    // 2. Build WhatsApp message
-                    const dateStr = data.date?.toLocaleDateString('en-US', { 
-                      weekday: 'long', 
-                      year: 'numeric', 
-                      month: 'long', 
-                      day: 'numeric' 
-                    });
-
-                    const text = `*New Ritual Booking - Zen Tonez*\n\n` +
-                      `*Service:* ${data.service?.name}\n` +
-                      `*Date:* ${dateStr}\n` +
-                      `*Time:* ${time}\n\n` +
-                      `Please confirm my booking!`;
-
-                    const phoneNumber = "919751231239";
-                    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
-
-                    // 3. Open WhatsApp
-                    window.open(url, "_blank");
-                    
-                    setData(prev => ({ ...prev, time }));
-                    setStep(4);
-                  } catch (err) {
-                    alert('Something went wrong. Please try again.');
-                  } finally {
-                    setIsSubmitting(false);
-                  }
+                onClick={() => {
+                  if (isBooked) return;
+                  setData({ ...data, time });
+                  setTimeout(nextStep, 300);
                 }}
                 className={`text-center p-4 rounded-2xl border-2 transition-all duration-300 font-bold tracking-widest text-sm ${
                   isBooked
@@ -296,7 +252,6 @@ export const BookingSystem: React.FC = () => {
     );
   };
 
-  /*
   // Step 4: Form
   const renderStep4 = () => (
     <motion.div
@@ -366,7 +321,7 @@ export const BookingSystem: React.FC = () => {
             placeholder="Any specific requests or conditions?"
           />
         </div>
-        * /
+        */}
 
         <button 
           onClick={async () => {
@@ -427,6 +382,7 @@ export const BookingSystem: React.FC = () => {
     </motion.div>
   );
 
+  /*
   // Step 5: Summary
   const renderStep5 = () => (
     <motion.div
@@ -587,9 +543,9 @@ export const BookingSystem: React.FC = () => {
     <div className="max-w-2xl mx-auto w-full bg-surface sm:bg-on-surface/[0.02] sm:border border-white/5 sm:rounded-[3rem] p-4 sm:p-10 shadow-luxury-deep">
 
       {/* Progress Header */}
-      {step < 4 && (
+      {step < 5 && (
         <div className="mb-10 flex items-center justify-between">
-          {step > 1 && step < 4 ? (
+          {step > 1 && step < 5 ? (
             <button
               onClick={prevStep}
               className="flex items-center gap-2 text-on-surface/50 hover:text-primary transition-colors text-xs font-black uppercase tracking-widest"
@@ -600,7 +556,7 @@ export const BookingSystem: React.FC = () => {
           ) : <div className="w-20"></div>}
 
           <div className="flex gap-2">
-            {[1, 2, 3].map(i => (
+            {[1, 2, 3, 4].map(i => (
               <div
                 key={i}
                 className={`h-1.5 rounded-full transition-all duration-300 ${i === step ? 'w-8 bg-primary' : i < step ? 'w-4 bg-primary/50' : 'w-4 bg-on-surface/10'
@@ -609,7 +565,7 @@ export const BookingSystem: React.FC = () => {
             ))}
           </div>
           <div className="w-20 text-right text-[10px] font-black uppercase tracking-widest text-primary/50">
-            Step {Math.min(step, 3)} / 3
+            Step {Math.min(step, 4)} / 4
           </div>
         </div>
       )}
@@ -620,7 +576,8 @@ export const BookingSystem: React.FC = () => {
           {step === 1 && renderStep1()}
           {step === 2 && renderStep2()}
           {step === 3 && renderStep3()}
-          {step === 4 && renderStep6()}
+          {step === 4 && renderStep4()}
+          {step === 6 && renderStep6()}
         </AnimatePresence>
       </div>
 
