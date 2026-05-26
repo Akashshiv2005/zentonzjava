@@ -392,7 +392,7 @@ const ServicesShowcase: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-surface-dim relative overflow-hidden" ref={containerRef}>
+    <div id="services-showcase" className="services-arch bg-surface-dim relative overflow-hidden" ref={containerRef}>
       {/* Mobile/Tablet Layout */}
       <div className="dt:hidden py-12 tb:py-20 px-4 tb:px-8 space-y-12">
         <div className="text-center mb-16">

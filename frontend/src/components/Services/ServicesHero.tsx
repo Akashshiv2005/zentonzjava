@@ -6,6 +6,22 @@ import { SparkleHeading } from "../ui/SparkleHeading";
 import beautyHeroImage from "../../assets/south_indian_hero.png";
 
 const ServicesHero: React.FC = () => {
+  const handleScroll = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.nativeEvent) {
+      e.nativeEvent.stopImmediatePropagation();
+    }
+    const element = document.querySelector("#services-showcase");
+    if (element instanceof HTMLElement) {
+      if (window.lenisInstance) {
+        window.lenisInstance.scrollTo(element, { offset: 100, duration: 1.5 });
+      } else {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
   return (
     <section className="relative min-h-[85vh] flex items-center bg-background overflow-hidden pt-16 tb:pt-24 dt:pt-32">
       <div className="max-w-7xl mx-auto px-4 tb:px-6 dt:px-8 py-10 tb:py-16 grid dt:grid-cols-2 gap-8 tb:gap-12 items-center relative z-10">
@@ -68,22 +84,15 @@ const ServicesHero: React.FC = () => {
                 Book Appointment
               </motion.button>
             </Link>
-            <button
-              onClick={() =>
-                document
-                  .querySelector(".services-arch")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
-              className="w-full mb:w-auto"
+            <motion.a
+              href="#services-showcase"
+              onClick={handleScroll}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="btn-premium-outline w-full mb:w-auto px-8 tb:px-10 py-3.5 tb:py-4 text-sm bg-primary/5 border-primary/30 text-primary hover:bg-primary/10 transition-all text-center cursor-pointer"
             >
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="btn-premium-outline w-full mb:w-auto px-8 tb:px-10 py-3.5 tb:py-4 text-sm bg-primary/5 border-primary/30 text-primary hover:bg-primary/10 transition-all text-center"
-              >
-                View Services
-              </motion.div>
-            </button>
+              View Services
+            </motion.a>
           </motion.div>
         </motion.div>
 
