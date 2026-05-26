@@ -158,35 +158,34 @@ export function HeroSection() {
 
           <div className="relative">
             <h1 className="text-display text-on-surface mb-4 tb:mb-6 mt-2 normal-case relative z-10 font-bold sparkle-group">
-              <div className="overflow-hidden">
-                <motion.div
-                  initial={{ y: "100%" }}
-                  animate={{ y: 0 }}
-                  transition={{ duration: 0.6, ease: [0.33, 1, 0.68, 1] }}
-                >
-                  <SparkleHeading
-                    text="Where Beauty"
-                    className="text-black hover:text-[#ff8531] transition-colors duration-300"
-                  />
-                </motion.div>
-              </div>
-              <div className="overflow-hidden">
-                <motion.div
-                  initial={{ y: "100%" }}
-                  animate={{ y: 0 }}
-                  transition={{
-                    duration: 0.6,
-                    delay: 0.1,
-                    ease: [0.33, 1, 0.68, 1],
-                  }}
-                >
-                  <SparkleHeading
-                    text="Meets Luxury"
-                    className="text-black hover:text-[#ff8531] transition-colors duration-300"
-                    sparkleScale={1.8}
-                  />
-                </motion.div>
-              </div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                className="inline-block"
+              >
+                <SparkleHeading
+                  text="Where Beauty"
+                  className="text-black hover:text-[#ff8531] transition-colors duration-300"
+                />
+              </motion.div>
+              <br />
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.8,
+                  delay: 0.15,
+                  ease: "easeOut",
+                }}
+                className="inline-block"
+              >
+                <SparkleHeading
+                  text="Meets Luxury"
+                  className="text-black hover:text-[#ff8531] transition-colors duration-300"
+                  sparkleScale={1.8}
+                />
+              </motion.div>
             </h1>
           </div>
 
