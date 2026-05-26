@@ -606,6 +606,15 @@
     }
   }
 
+  /* Hide scrollbar utility */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none !important;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+  }
+
   /* ─── Safe area insets for notched devices ─── */
   .safe-top {
     padding-top: env(safe-area-inset-top);

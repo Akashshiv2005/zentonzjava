@@ -163,7 +163,7 @@ const ContactForm: React.FC = () => {
                   <motion.ul
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="absolute left-0 right-0 mt-2 bg-white/95 backdrop-blur-md border border-on-surface/10 rounded-2xl shadow-2xl z-50 py-2 max-h-60 overflow-y-auto scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent"
+                    className="absolute left-0 right-0 mt-2 bg-white border border-on-surface/10 rounded-2xl shadow-2xl z-50 py-2 max-h-60 overflow-y-auto no-scrollbar"
                     style={{ WebkitOverflowScrolling: "touch" }}
                   >
                     <li
@@ -194,13 +194,13 @@ const ContactForm: React.FC = () => {
                         }}
                         className={`px-5 py-3 font-bold text-sm cursor-pointer transition-colors flex items-center justify-between ${
                           formState.service === service 
-                            ? "bg-primary text-white hover:bg-primary/90" 
+                            ? "bg-[#C9A24A]/20 text-[#C9A24A]" 
                             : "text-on-surface hover:bg-primary/10 hover:text-primary"
                         }`}
                       >
                         <span>{service}</span>
                         {formState.service === service && (
-                          <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4 text-[#C9A24A]" fill="none" stroke="currentColor" strokeWidth="3" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                           </svg>
                         )}
