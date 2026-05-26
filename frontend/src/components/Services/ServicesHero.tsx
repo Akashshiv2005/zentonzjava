@@ -15,7 +15,7 @@ const ServicesHero: React.FC = () => {
     const element = document.querySelector("#services-showcase");
     if (element instanceof HTMLElement) {
       if (window.lenisInstance) {
-        window.lenisInstance.scrollTo(element, { offset: 100, duration: 1.5 });
+        window.lenisInstance.scrollTo(element, { offset: 30, duration: 1.5 });
       } else {
         element.scrollIntoView({ behavior: "smooth" });
       }
