@@ -32,7 +32,7 @@ const ServicesHero: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="text-hero text-on-surface mb-4 normal-case glow-text text-center dt:text-left leading-tight"
+            className="text-hero text-on-surface mb-4 normal-case glow-text text-center dt:text-left leading-tight sparkle-group"
           >
             <SparkleHeading text="Our Artisanal" className="text-on-surface" />
             <br className="dt:block hidden" />

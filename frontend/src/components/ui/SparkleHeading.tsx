@@ -95,6 +95,31 @@ export const SparkleHeading: React.FC<SparkleHeadingProps> = ({ text, className,
     };
   }, [isHovered, isInView, isMobile, isExemptPage]);
 
+  useEffect(() => {
+    if (!containerRef.current || isMobile) return;
+    const parentGroup = containerRef.current.closest(".sparkle-group");
+    if (!parentGroup) return;
+
+    const handleGroupEnter = () => {
+      setIsHovered(true);
+      setIsPulsing(false);
+      playerRef.current?.play();
+    };
+
+    const handleGroupLeave = () => {
+      setIsHovered(false);
+      playerRef.current?.pause();
+    };
+
+    parentGroup.addEventListener("mouseenter", handleGroupEnter);
+    parentGroup.addEventListener("mouseleave", handleGroupLeave);
+
+    return () => {
+      parentGroup.removeEventListener("mouseenter", handleGroupEnter);
+      parentGroup.removeEventListener("mouseleave", handleGroupLeave);
+    };
+  }, [isMobile]);
+
   const handleMouseEnter = () => {
     setIsHovered(true);
     setIsPulsing(false); // Stop auto-pulse

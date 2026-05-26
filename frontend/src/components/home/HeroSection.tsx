@@ -157,7 +157,7 @@ export function HeroSection() {
           </motion.span>
 
           <div className="relative">
-            <h1 className="text-display text-on-surface mb-4 tb:mb-6 mt-2 normal-case relative z-10 font-bold">
+            <h1 className="text-display text-on-surface mb-4 tb:mb-6 mt-2 normal-case relative z-10 font-bold sparkle-group">
               <div className="overflow-hidden">
                 <motion.div
                   initial={{ y: "100%" }}

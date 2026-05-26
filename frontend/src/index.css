@@ -529,7 +529,8 @@
   @media (min-width: 1024px) {
 
     .spark-text-container:hover .ch,
-    .spark-text-container.spark-force-animate .ch {
+    .spark-text-container.spark-force-animate .ch,
+    .sparkle-group:hover .spark-text-container .ch {
       transform: translateY(-8px) scale(1.1);
       text-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 0 20px rgba(255, 133, 49, 0.4);
       color: #ff8531;
@@ -537,19 +538,22 @@
 
     /* Character staggering & randomization */
     .spark-text-container:hover .ch:nth-child(3n+1),
-    .spark-text-container.spark-force-animate .ch:nth-child(3n+1) {
+    .spark-text-container.spark-force-animate .ch:nth-child(3n+1),
+    .sparkle-group:hover .spark-text-container .ch:nth-child(3n+1) {
       transform: translateY(-6px) rotate(-2deg) scale(1.1);
       transition-delay: 0.05s;
     }
 
     .spark-text-container:hover .ch:nth-child(3n+2),
-    .spark-text-container.spark-force-animate .ch:nth-child(3n+2) {
+    .spark-text-container.spark-force-animate .ch:nth-child(3n+2),
+    .sparkle-group:hover .spark-text-container .ch:nth-child(3n+2) {
       transform: translateY(-3px) rotate(1.5deg) scale(1.08);
       transition-delay: 0.1s;
     }
 
     .spark-text-container:hover .ch:nth-child(3n),
-    .spark-text-container.spark-force-animate .ch:nth-child(3n) {
+    .spark-text-container.spark-force-animate .ch:nth-child(3n),
+    .sparkle-group:hover .spark-text-container .ch:nth-child(3n) {
       transform: translateY(-5px) rotate(-1deg) scale(1.12);
       transition-delay: 0.15s;
     }
@@ -572,7 +576,8 @@
   }
 
   .spark-text-container:hover .spark-canvas-wrapper,
-  .spark-text-container.spark-force-animate .spark-canvas-wrapper {
+  .spark-text-container.spark-force-animate .spark-canvas-wrapper,
+  .sparkle-group:hover .spark-text-container .spark-canvas-wrapper {
     opacity: 1;
   }
 

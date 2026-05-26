@@ -26,7 +26,7 @@ const GalleryHero: React.FC = () => {
         </Reveal>
 
         <Reveal width="100%" direction="up" distance={40} delay={0.2}>
-          <h1 className="text-display text-white mb-6 leading-[1.1]">
+          <h1 className="text-display text-white mb-6 leading-[1.1] sparkle-group">
             <SparkleHeading text="The Artisanal" className="text-white" />
             <br />
             <SparkleHeading text="Chapters" className="text-primary" sparkleScale={1.3} />
