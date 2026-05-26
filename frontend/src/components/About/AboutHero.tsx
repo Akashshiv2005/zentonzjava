@@ -41,12 +41,12 @@ const AboutHero: React.FC = () => {
             className="space-y-4 tb:space-y-6 text-center dt:text-left pt-6 dt:pt-0"
           >
             <div>
-              <h1 className="text-display text-on-surface mb-6 glow-text leading-[1.1] normal-case sparkle-group">
+              <h1 className="text-display text-on-surface mb-6 glow-text leading-[0.95] normal-case sparkle-group">
                 <SparkleHeading
                   text="More Than a Salon"
                   className="text-on-surface"
                 />
-                <br className="dt:hidden" />
+                <br />
                 <SparkleHeading
                   text="A Beauty Sanctuary"
                   className="text-primary"
