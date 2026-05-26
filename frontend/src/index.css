@@ -588,6 +588,24 @@
     filter: hue-rotate(-18deg) saturate(1.5);
   }
 
+  /* Unified Form Inputs Height Parity */
+  .form-input-unified {
+    height: 48px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    box-sizing: border-box !important;
+  }
+  @media (min-width: 481px) {
+    .form-input-unified {
+      height: 54px !important;
+    }
+  }
+  @media (min-width: 769px) {
+    .form-input-unified {
+      height: 60px !important;
+    }
+  }
+
   /* ─── Safe area insets for notched devices ─── */
   .safe-top {
     padding-top: env(safe-area-inset-top);

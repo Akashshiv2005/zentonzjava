@@ -97,7 +97,7 @@ const ContactForm: React.FC = () => {
             <div className="space-y-2 tb:space-y-3">
               <label className="text-[9px] tb:text-[10px] uppercase tracking-[0.3em] font-black text-on-surface/60 block px-3 tb:px-4">Full Name</label>
               <input type="text" required
-                className="w-full px-5 tb:px-8 bg-white/60 border border-on-surface/10 rounded-2xl tb:rounded-3xl outline-none transition-all duration-300 placeholder:text-on-surface/40 font-bold text-sm tb:text-base text-on-surface h-12 tb:h-[60px] hover:bg-white/80 hover:border-primary/40 focus:bg-white focus:border-primary/50 focus:scale-[1.01] focus:ring-4 focus:ring-primary/10 focus:shadow-[0_0_15px_rgba(201,162,74,0.15)]"
+                className="w-full px-5 tb:px-8 bg-white/60 border border-on-surface/10 rounded-2xl tb:rounded-3xl outline-none transition-all duration-300 placeholder:text-on-surface/40 font-bold text-sm tb:text-base text-on-surface h-12 tb:h-[60px] form-input-unified hover:bg-white/80 hover:border-primary/40 focus:bg-white focus:border-primary/50 focus:scale-[1.01] focus:ring-4 focus:ring-primary/10 focus:shadow-[0_0_15px_rgba(201,162,74,0.15)]"
                 placeholder="Your Name" value={formState.name}
                 onChange={(e) => {
                   const val = e.target.value.replace(/[^a-zA-Z\s]/g, "");
@@ -107,7 +107,7 @@ const ContactForm: React.FC = () => {
             <div className="space-y-2 tb:space-y-3">
               <label className="text-[9px] tb:text-[10px] uppercase tracking-[0.3em] font-black text-on-surface/60 block px-3 tb:px-4">Email Address</label>
               <input type="email"
-                className="w-full px-5 tb:px-8 bg-white/60 border border-on-surface/10 rounded-2xl tb:rounded-3xl outline-none transition-all duration-300 placeholder:text-on-surface/40 font-bold text-sm tb:text-base text-on-surface h-12 tb:h-[60px] hover:bg-white/80 hover:border-primary/40 focus:bg-white focus:border-primary/50 focus:scale-[1.01] focus:ring-4 focus:ring-primary/10 focus:shadow-[0_0_15px_rgba(201,162,74,0.15)]"
+                className="w-full px-5 tb:px-8 bg-white/60 border border-on-surface/10 rounded-2xl tb:rounded-3xl outline-none transition-all duration-300 placeholder:text-on-surface/40 font-bold text-sm tb:text-base text-on-surface h-12 tb:h-[60px] form-input-unified hover:bg-white/80 hover:border-primary/40 focus:bg-white focus:border-primary/50 focus:scale-[1.01] focus:ring-4 focus:ring-primary/10 focus:shadow-[0_0_15px_rgba(201,162,74,0.15)]"
                 placeholder="your@email.com" value={formState.email}
                 onChange={(e) => setFormState({ ...formState, email: e.target.value })} />
             </div>
@@ -118,7 +118,7 @@ const ContactForm: React.FC = () => {
             <div className="space-y-2 tb:space-y-3">
               <label className="text-[9px] tb:text-[10px] uppercase tracking-[0.3em] font-black text-on-surface/60 block px-3 tb:px-4">Phone Number</label>
               <input type="tel" required
-                className="w-full px-5 tb:px-8 bg-white/60 border border-on-surface/10 rounded-2xl tb:rounded-3xl outline-none transition-all duration-300 placeholder:text-on-surface/40 font-bold text-sm tb:text-base text-on-surface h-12 tb:h-[60px] hover:bg-white/80 hover:border-primary/40 focus:bg-white focus:border-primary/50 focus:scale-[1.01] focus:ring-4 focus:ring-primary/10 focus:shadow-[0_0_15px_rgba(201,162,74,0.15)]"
+                className="w-full px-5 tb:px-8 bg-white/60 border border-on-surface/10 rounded-2xl tb:rounded-3xl outline-none transition-all duration-300 placeholder:text-on-surface/40 font-bold text-sm tb:text-base text-on-surface h-12 tb:h-[60px] form-input-unified hover:bg-white/80 hover:border-primary/40 focus:bg-white focus:border-primary/50 focus:scale-[1.01] focus:ring-4 focus:ring-primary/10 focus:shadow-[0_0_15px_rgba(201,162,74,0.15)]"
                 placeholder="10-digit mobile number" value={formState.phone}
                 onChange={(e) => {
                   const val = e.target.value.replace(/\D/g, "");
@@ -131,7 +131,7 @@ const ContactForm: React.FC = () => {
               <label className="text-[9px] tb:text-[10px] uppercase tracking-[0.3em] font-black text-on-surface/60 block px-3 tb:px-4">Service Interested</label>
               <div className="relative w-full">
                 <select required
-                  className="w-full px-5 tb:px-8 bg-white/60 border border-on-surface/10 rounded-2xl tb:rounded-3xl outline-none transition-all duration-300 font-bold text-sm tb:text-base text-on-surface h-12 tb:h-[60px] hover:bg-white/80 hover:border-primary/40 focus:bg-white focus:border-primary/50 focus:scale-[1.01] focus:ring-4 focus:ring-primary/10 focus:shadow-[0_0_15px_rgba(201,162,74,0.15)] appearance-none pr-12"
+                  className="w-full px-5 tb:px-8 bg-white/60 border border-on-surface/10 rounded-2xl tb:rounded-3xl outline-none transition-all duration-300 font-bold text-sm tb:text-base text-on-surface h-12 tb:h-[60px] form-input-unified hover:bg-white/80 hover:border-primary/40 focus:bg-white focus:border-primary/50 focus:scale-[1.01] focus:ring-4 focus:ring-primary/10 focus:shadow-[0_0_15px_rgba(201,162,74,0.15)] appearance-none pr-12"
                   value={formState.service}
                   onChange={(e) => setFormState({ ...formState, service: e.target.value })}>
                   <option value="">Select a service</option>
