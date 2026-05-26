@@ -34,7 +34,7 @@ const AboutHero: React.FC = () => {
     const element = document.querySelector("#our-journey");
     if (element instanceof HTMLElement) {
       if (window.lenisInstance) {
-        window.lenisInstance.scrollTo(element, { offset: 50, duration: 1.5 });
+        window.lenisInstance.scrollTo(element, { offset: 220, duration: 1.5 });
       } else {
         element.scrollIntoView({ behavior: "smooth" });
       }
