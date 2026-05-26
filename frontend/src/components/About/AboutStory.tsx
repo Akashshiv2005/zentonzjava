@@ -32,7 +32,7 @@ const AboutStory: React.FC = () => {
   };
 
   return (
-    <section className="py-6 mb:py-8 tb:py-12 dt:py-16 bg-background overflow-hidden">
+    <section id="our-journey" className="py-6 mb:py-8 tb:py-12 dt:py-16 bg-background overflow-hidden">
       <motion.div
         variants={containerVariants}
         initial="hidden"

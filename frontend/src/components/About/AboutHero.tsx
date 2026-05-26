@@ -29,6 +29,18 @@ const AboutHero: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
+  const handleScroll = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const element = document.querySelector("#our-journey");
+    if (element instanceof HTMLElement) {
+      if (window.lenisInstance) {
+        window.lenisInstance.scrollTo(element, { offset: -80, duration: 1.5 });
+      } else {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
   return (
     <section className="relative w-full min-h-screen flex items-center pt-12 tb:pt-16 pb-6 tb:pb-10 overflow-hidden bg-background">
       <div className="max-w-7xl mx-auto px-4 tb:px-6 dt:px-12 relative z-10">
@@ -70,10 +82,12 @@ const AboutHero: React.FC = () => {
                     Book Your Ritual
                   </motion.button>
                 </Link>
-                <motion.button
+                <motion.a
+                  href="#our-journey"
+                  onClick={handleScroll}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="group flex items-center gap-3 text-[9px] tb:text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface/60 hover:text-on-surface transition-colors duration-300"
+                  className="group flex items-center gap-3 text-[9px] tb:text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface/60 hover:text-on-surface transition-colors duration-300 cursor-pointer"
                 >
                   <span className="pb-1 border-b-2 border-on-surface/10 group-hover:border-primary transition-all duration-300">
                     Learn Our Story
@@ -81,7 +95,7 @@ const AboutHero: React.FC = () => {
                   <span className="text-lg group-hover:translate-x-2 transition-transform duration-300">
                     →
                   </span>
-                </motion.button>
+                </motion.a>
               </div>
             </div>
           </motion.div>
