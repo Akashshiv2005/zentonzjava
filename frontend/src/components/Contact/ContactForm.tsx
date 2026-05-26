@@ -13,6 +13,7 @@ const ContactForm: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -130,26 +131,64 @@ const ContactForm: React.FC = () => {
             <div className="space-y-2 tb:space-y-3">
               <label className="text-[9px] tb:text-[10px] uppercase tracking-[0.3em] font-black text-on-surface/60 block px-3 tb:px-4">Service Interested</label>
               <div className="relative w-full">
-                <select required
-                  className="w-full px-5 tb:px-8 bg-white/60 border border-on-surface/10 rounded-2xl tb:rounded-3xl outline-none transition-all duration-300 font-bold text-sm tb:text-base text-on-surface h-12 tb:h-[60px] form-input-unified hover:bg-white/80 hover:border-primary/40 focus:bg-white focus:border-primary/50 focus:scale-[1.01] focus:ring-4 focus:ring-primary/10 focus:shadow-[0_0_15px_rgba(201,162,74,0.15)] appearance-none pr-12"
-                  value={formState.service}
-                  onChange={(e) => setFormState({ ...formState, service: e.target.value })}>
-                  <option value="">Select a service</option>
-                  <option value="Hair Spa">Hair Spa</option>
-                  <option value="Facial">Facial</option>
-                  <option value="Skin Care">Skin Care</option>
-                  <option value="Hair Styling">Hair Styling</option>
-                  <option value="Nails">Nails</option>
-                  <option value="Manicure">Manicure</option>
-                  <option value="Pedicure">Pedicure</option>
-                  <option value="Lice Treatment">Lice Treatment</option>
-                  <option value="Bridal Makeup">Bridal Makeup</option>
-                </select>
-                <div className="absolute right-5 tb:right-8 top-1/2 -translate-y-1/2 pointer-events-none text-on-surface/50">
-                  <svg className="w-4 h-4 tb:w-5 tb:h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                <button
+                  type="button"
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="w-full px-5 tb:px-8 bg-white/60 border border-on-surface/10 rounded-2xl tb:rounded-3xl outline-none transition-all duration-300 font-bold text-sm tb:text-base text-on-surface h-12 tb:h-[60px] form-input-unified hover:bg-white/80 hover:border-primary/40 focus:bg-white focus:border-primary/50 focus:scale-[1.01] focus:ring-4 focus:ring-primary/10 focus:shadow-[0_0_15px_rgba(201,162,74,0.15)] flex items-center justify-between text-left"
+                >
+                  <span className={formState.service ? "text-on-surface" : "text-on-surface/40"}>
+                    {formState.service || "Select a service"}
+                  </span>
+                  <svg className={`w-4 h-4 tb:w-5 tb:h-5 text-on-surface/50 transition-transform duration-300 ${isDropdownOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                   </svg>
-                </div>
+                </button>
+                <input type="hidden" name="service" value={formState.service} required />
+
+                {isDropdownOpen && (
+                  <>
+                    {/* Backdrop to close when clicking outside */}
+                    <div className="fixed inset-0 z-40" onClick={() => setIsDropdownOpen(false)} />
+                    
+                    <motion.ul
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="absolute left-0 right-0 mt-2 bg-white/95 backdrop-blur-md border border-on-surface/10 rounded-2xl shadow-2xl z-50 py-2 max-h-60 overflow-y-auto"
+                    >
+                      <li
+                        onClick={() => {
+                          setFormState({ ...formState, service: "" });
+                          setIsDropdownOpen(false);
+                        }}
+                        className="px-5 py-3 hover:bg-primary/10 text-on-surface/40 font-bold text-sm cursor-pointer transition-colors"
+                      >
+                        Select a service
+                      </li>
+                      {[
+                        "Hair Spa",
+                        "Facial",
+                        "Skin Care",
+                        "Hair Styling",
+                        "Nails",
+                        "Manicure",
+                        "Pedicure",
+                        "Lice Treatment",
+                        "Bridal Makeup"
+                      ].map((service) => (
+                        <li
+                          key={service}
+                          onClick={() => {
+                            setFormState({ ...formState, service: service });
+                            setIsDropdownOpen(false);
+                          }}
+                          className={`px-5 py-3 hover:bg-primary/10 hover:text-primary font-bold text-sm cursor-pointer transition-colors ${formState.service === service ? "text-primary bg-primary/5" : "text-on-surface"}`}
+                        >
+                          {service}
+                        </li>
+                      ))}
+                    </motion.ul>
+                  </>
+                )}
               </div>
             </div>
           </div>
