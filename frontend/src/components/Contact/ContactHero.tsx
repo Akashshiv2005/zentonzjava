@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
+import { SparkleHeading } from "../ui/SparkleHeading";
 import ThreeDClock from "./ThreeDClock";
 
 const ContactHero: React.FC = () => {
@@ -21,9 +22,14 @@ const ContactHero: React.FC = () => {
                 Connect With The Atelier
               </span>
             </div>
-            <h1 className="text-display text-on-surface mb-6 tb:mb-10 normal-case leading-tight">
-              Begin Your <br className="tb:block hidden" />
-              <span className="text-primary">Transformation</span>
+            <h1 className="text-display text-on-surface mb-6 tb:mb-10 normal-case leading-[0.95] sparkle-group">
+              <SparkleHeading text="Begin Your" className="text-on-surface" />
+              <br />
+              <SparkleHeading
+                text="Transformation"
+                className="text-primary"
+                sparkleScale={1.2}
+              />
             </h1>
             <p className="text-base tb:text-lg dt:text-xl text-on-surface/90 leading-relaxed max-w-xl tb:max-w-2xl mx-auto dt:mx-0 font-medium px-4 mb:px-0">
               "Reach out to reserve your personalized ritual or to discover more
