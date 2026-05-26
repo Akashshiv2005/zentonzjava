@@ -153,7 +153,7 @@ export function HeroSection() {
             transition={{ duration: 1.5, ease: "easeOut" }}
             className="font-sans text-[10px] uppercase tracking-[0.3em] text-primary mb-4 block font-medium"
           >
-            Zen Tonez - Exclusive Women Salon
+            Zen Tonez - Exclusive Women's Salon
           </motion.span>
 
           <div className="relative">

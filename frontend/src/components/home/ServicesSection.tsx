@@ -87,10 +87,9 @@ export function ServicesSection() {
       <div className="max-w-7xl mx-auto px-4 tb:px-6 dt:px-8 relative z-10">
         <ScrollReveal>
           <div className="text-center mb-10 tb:mb-16 dt:mb-20">
-            <h2 className="text-section-title font-black text-on-surface mb-4 tb:mb-6 uppercase tracking-tighter font-serif">
-              What{" "}
-              <span className="text-primary underline decoration-secondary/30 underline-offset-8">
-                We Offer
+            <h2 className="text-section-title font-black text-on-surface mb-4 tb:mb-6 uppercase tracking-wider font-serif">
+              <span className="underline decoration-primary/30 underline-offset-8">
+                What <span className="text-primary">We Offer</span>
               </span>
             </h2>
             <p className="text-base tb:text-lg text-on-surface/80 max-w-xl tb:max-w-2xl mx-auto font-medium leading-relaxed px-4 mb:px-0">

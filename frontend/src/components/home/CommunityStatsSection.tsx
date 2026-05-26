@@ -2,7 +2,7 @@ import { ScrollReveal } from "./ScrollReveal";
 
 const stats = [
   { label: "Professional Experience", value: "5+ Years" },
-  { label: "Our Sanctuary", value: "Exclusive Women Salon" },
+  { label: "Our Sanctuary", value: "Exclusive Women's Salon" },
   { label: "Premium Products Only", value: "High-End" },
   { label: "Hygienic Standards", value: "100%" },
   { label: "Personalized Service", value: "Bespoke" },
