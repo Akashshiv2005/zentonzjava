@@ -525,7 +525,15 @@
     will-change: transform, text-shadow;
   }
 
-  /* 3D Kinetic Hover effect for characters (Desktop only) */
+  /* 3D Kinetic Hover effect for characters */
+  .spark-text-container:hover .ch,
+  .spark-text-container.spark-force-animate .ch,
+  .sparkle-group:hover .spark-text-container .ch {
+    color: #ff8531;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.15), 0 0 20px rgba(255, 133, 49, 0.4);
+  }
+
+  /* 3D Kinetic Hover translation transitions (Desktop only) */
   @media (min-width: 1024px) {
 
     .spark-text-container:hover .ch,
@@ -533,7 +541,6 @@
     .sparkle-group:hover .spark-text-container .ch {
       transform: translateY(-8px) scale(1.1);
       text-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 0 20px rgba(255, 133, 49, 0.4);
-      color: #ff8531;
     }
 
     /* Character staggering & randomization */

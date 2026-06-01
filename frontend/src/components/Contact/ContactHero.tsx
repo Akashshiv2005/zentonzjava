@@ -6,9 +6,9 @@ import ThreeDClock from "./ThreeDClock";
 
 const ContactHero: React.FC = () => {
   return (
-    <section className="relative pt-24 tb:pt-36 pb-10 tb:pb-16 overflow-hidden bg-background">
+    <section className="relative pt-24 tb:pt-36 pb-2 tb:pb-16 overflow-hidden bg-background">
       <div className="max-w-7xl mx-auto px-4 tb:px-6 dt:px-8 relative z-10">
-        <div className="grid grid-cols-1 dt:grid-cols-2 gap-12 dt:gap-20 items-center">
+        <div className="grid grid-cols-1 dt:grid-cols-2 gap-4 tb:gap-12 dt:gap-20 items-center">
           {/* Left Column: Narrative */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -42,7 +42,7 @@ const ContactHero: React.FC = () => {
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex items-center justify-center min-h-[300px] tb:min-h-[400px]"
+            className="flex items-center justify-center min-h-[100px] tb:min-h-[400px] py-2 tb:py-0"
           >
             <ThreeDClock />
           </motion.div>

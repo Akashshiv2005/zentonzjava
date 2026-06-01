@@ -299,6 +299,10 @@ export const BookingSystem: React.FC = () => {
             <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-on-surface/40 w-5 h-5" />
             <input
               type="tel"
+              required
+              minLength={10}
+              maxLength={10}
+              pattern="[0-9]{10}"
               value={data.user.phone}
               onChange={e => {
                 const val = e.target.value.replace(/\D/g, "");
@@ -372,7 +376,7 @@ export const BookingSystem: React.FC = () => {
               setIsSubmitting(false);
             }
           }}
-          disabled={!data.user.name || !data.user.phone || isSubmitting}
+          disabled={!data.user.name || data.user.phone.length !== 10 || isSubmitting}
           className="w-full mt-6 bg-primary text-background py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-sm hover:shadow-[0_0_20px_rgba(201,162,74,0.4)] disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center justify-center gap-2"
         >
           <Sparkles size={18} />

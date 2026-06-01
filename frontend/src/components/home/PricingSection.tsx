@@ -34,7 +34,7 @@ export function PricingSection() {
 
         <div className="max-w-3xl mx-auto grid grid-cols-1 gap-6">
           {pricingData.map((item, idx) => (
-            <ScrollReveal key={idx} delay={idx * 0.1}>
+            <ScrollReveal key={idx} delay={idx * 0.05}>
               <div className="flex justify-between items-center p-6 bg-background rounded-2xl border border-primary/10 hover:border-primary/30 transition-all shadow-sm group">
                 <span className="text-lg tb:text-xl font-serif font-bold text-on-surface">
                   {item.name}

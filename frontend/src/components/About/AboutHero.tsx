@@ -77,7 +77,7 @@ const AboutHero: React.FC = () => {
               </p>
 
               <div className="flex flex-col mb:flex-row items-center gap-4 mb:gap-6 justify-center dt:justify-start px-4 mb:px-0">
-                <Link to="/contact" className="w-full mb:w-auto">
+                <Link to="/book" className="w-full mb:w-auto">
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -131,9 +131,6 @@ const AboutHero: React.FC = () => {
                 </AnimatePresence>
               </div>
 
-              {/* Decorative Dots */}
-              <div className="absolute top-1/4 -right-4 w-2 h-2 rounded-full bg-primary/40" />
-              <div className="absolute bottom-1/3 -left-4 w-3 h-3 rounded-full border border-primary/40" />
             </div>
           </motion.div>
         </div>

@@ -401,11 +401,15 @@ const ServicesShowcase: React.FC = () => {
           </h2>
         </div>
 
-        {services.map((service) => (
-          <div
-            key={service.id}
-            className="group relative bg-white rounded-[3rem] overflow-hidden shadow-luxury border border-on-surface/10"
-          >
+        {services.map((service) => {
+          const serviceKey = service.title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+          return (
+            <div
+              key={service.id}
+              id={`mobile-${serviceKey}`}
+              data-service={serviceKey}
+              className="group relative bg-white rounded-[3rem] overflow-hidden shadow-luxury border border-on-surface/10 scroll-mt-24"
+            >
             <div
               className="aspect-square relative overflow-hidden cursor-zoom-in group"
               onClick={() =>
@@ -419,13 +423,13 @@ const ServicesShowcase: React.FC = () => {
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 style={{ objectPosition: service.objectPosition || "center" }}
               />
-              <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2">
-                <div className="bg-white/20 backdrop-blur-md p-3 rounded-full border border-white/30 animate-pulse">
-                  <Star className="text-white fill-white" size={24} />
+              <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md border border-white/15 px-3 py-2 rounded-full flex items-center gap-2 shadow-lg scale-90 group-hover:scale-100 transition-transform duration-300">
+                  <div className="bg-primary/20 p-1.5 rounded-full border border-primary/30">
+                    <Star className="text-primary fill-primary" size={12} />
+                  </div>
+                  <span className="text-white text-[9px] font-black uppercase tracking-[0.15em] pr-1">Click to View</span>
                 </div>
-                <span className="text-white text-[10px] font-black uppercase tracking-[0.2em] bg-black/30 px-3 py-1 rounded-full backdrop-blur-sm">
-                  Click to View
-                </span>
               </div>
             </div>
 
@@ -478,7 +482,7 @@ const ServicesShowcase: React.FC = () => {
                     </div>
                   </div>
                 </div>
-                <Link to="/contact">
+                <Link to="/book">
                   <button className="btn-premium-gold px-6 py-3 text-xs">
                     Book Ritual
                   </button>
@@ -486,18 +490,23 @@ const ServicesShowcase: React.FC = () => {
               </div>
             </div>
           </div>
-        ))}
+        );
+      })}
       </div>
 
       {/* Desktop Layout */}
       <div className="hidden dt:grid max-w-7xl mx-auto px-6 grid-cols-2 gap-10 xl:gap-16 pb-32">
         {/* Left Column: Rich Content */}
         <div className="space-y-0 flex flex-col items-center">
-          {services.map((service) => (
-            <div
-              key={service.id}
-              className="showcase-info h-screen flex items-center justify-center text-center"
-            >
+          {services.map((service) => {
+            const serviceKey = service.title.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+            return (
+              <div
+                key={service.id}
+                id={`desktop-${serviceKey}`}
+                data-service={serviceKey}
+                className="showcase-info h-screen flex items-center justify-center text-center scroll-mt-24"
+              >
               <div className="max-w-md space-y-7 flex flex-col items-center">
                 <div className="flex flex-col items-center gap-4">
                   <div className="p-4 bg-white text-primary rounded-2xl shadow-luxury-deep border border-primary/20">
@@ -545,7 +554,7 @@ const ServicesShowcase: React.FC = () => {
                       {service.price}
                     </span>
                   </div>
-                  <Link to="/contact" className="w-full">
+                  <Link to="/book" className="w-full">
                     <button className="btn-premium-gold w-full py-4 text-sm tracking-widest">
                       Book Ritual
                     </button>
@@ -553,7 +562,8 @@ const ServicesShowcase: React.FC = () => {
                 </div>
               </div>
             </div>
-          ))}
+          );
+        })}
         </div>
 
         {/* Right Column: Pinned Visualization */}
@@ -577,13 +587,13 @@ const ServicesShowcase: React.FC = () => {
                   className="showcase-img w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                   style={{ objectPosition: service.objectPosition || "center" }}
                 />
-                <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-3">
-                  <div className="bg-white/20 backdrop-blur-md p-4 rounded-full border border-white/30 animate-pulse">
-                    <Star className="text-white fill-white" size={32} />
+                <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                  <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md border border-white/15 px-3 py-2 rounded-full flex items-center gap-2 shadow-lg scale-90 group-hover:scale-100 transition-transform duration-300">
+                    <div className="bg-primary/20 p-1.5 rounded-full border border-primary/30">
+                      <Star className="text-primary fill-primary" size={12} />
+                    </div>
+                    <span className="text-white text-[9px] font-black uppercase tracking-[0.15em] pr-1">Click to View</span>
                   </div>
-                  <span className="text-white text-xs font-black uppercase tracking-[0.3em] bg-black/20 px-4 py-1 rounded-full backdrop-blur-md">
-                    Click to View
-                  </span>
                 </div>
               </div>
             ))}

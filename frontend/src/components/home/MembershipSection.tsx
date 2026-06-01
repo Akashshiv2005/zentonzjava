@@ -84,11 +84,9 @@ const MembershipSection: React.FC = () => {
                 </div>
               </div>
 
-              <Link to="/membership">
-                <button className="mt-12 w-full py-5 rounded-2xl border-2 border-slate-900 text-slate-900 font-black uppercase tracking-widest text-xs hover:bg-slate-900 hover:text-white transition-all duration-300">
-                  Continue as Guest
-                </button>
-              </Link>
+              <button className="mt-12 w-full py-5 rounded-2xl border-2 border-slate-900 text-slate-900 font-black uppercase tracking-widest text-xs hover:bg-slate-900 hover:text-white transition-all duration-300">
+                Continue as Guest
+              </button>
             </motion.div>
           </ScrollReveal>
 

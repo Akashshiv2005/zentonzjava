@@ -92,11 +92,13 @@ export const ScrollParallaxCard: React.FC<ParallaxItemProps> = ({
             backgroundPosition: backgroundPosition || "center",
           }}
         />
-        <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2">
-          <div className="bg-white/20 backdrop-blur-md p-3 rounded-full border border-white/30 animate-pulse">
-            <Star className="text-white fill-white" size={24} />
+        <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+          <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md border border-white/15 px-3 py-2 rounded-full flex items-center gap-2 shadow-lg scale-90 group-hover:scale-100 transition-transform duration-300">
+            <div className="bg-primary/20 p-1.5 rounded-full border border-primary/30">
+              <Star className="text-primary fill-primary" size={12} />
+            </div>
+            <span className="text-white text-[9px] font-black uppercase tracking-[0.15em] pr-1">Click to View</span>
           </div>
-          <span className="text-white text-[10px] font-black uppercase tracking-[0.2em] bg-black/30 px-3 py-1 rounded-full backdrop-blur-sm">Click to View</span>
         </div>
       </motion.div>
 

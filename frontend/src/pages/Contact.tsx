@@ -20,7 +20,7 @@ const Contact: React.FC = () => {
 
       {/* ─── CONTENT ─── */}
       <Reveal width="100%" direction="up" distance={50}>
-        <section className="py-8 tb:py-12 px-4 tb:px-6 dt:px-8">
+        <section className="py-4 tb:py-12 px-4 tb:px-6 dt:px-8">
           <div className="max-w-4xl mx-auto">
             <ContactForm />
           </div>

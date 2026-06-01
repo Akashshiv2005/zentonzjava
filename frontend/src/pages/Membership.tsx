@@ -228,7 +228,7 @@ const Membership: React.FC = () => {
             <Reveal width="100%" direction="right">
               <div className="p-8 bg-white rounded-3xl border border-slate-200 shadow-sm h-full">
                 <h4 className="text-lg font-black text-slate-900 uppercase mb-4 flex items-center gap-2">
-                  <Star size={20} className="text-slate-400" /> Things to
+                  <Star size={20} className="text-[#B87333]" /> Things to
                   Consider
                 </h4>
                 <ul className="space-y-3">
@@ -242,7 +242,7 @@ const Membership: React.FC = () => {
                       key={i}
                       className="text-sm font-medium text-slate-600 flex items-start gap-2"
                     >
-                      <div className="w-1.5 h-1.5 bg-slate-300 rounded-full mt-1.5 shrink-0" />
+                      <div className="w-1.5 h-1.5 bg-[#B87333] rounded-full mt-1.5 shrink-0" />
                       {item}
                     </li>
                   ))}

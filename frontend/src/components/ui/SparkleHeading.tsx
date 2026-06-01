@@ -18,22 +18,8 @@ export const SparkleHeading: React.FC<SparkleHeadingProps> = ({ text, className,
   const [isPulsing, setIsPulsing] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
-  const [isMobile, setIsMobile] = useState(false);
-  const [isExemptPage, setIsExemptPage] = useState(false);
-
   useEffect(() => {
-    const checkStatus = () => {
-      setIsMobile(window.innerWidth < 768);
-      const path = window.location.pathname;
-      setIsExemptPage(path.includes("/services") || path.includes("/gallery"));
-    };
-    checkStatus();
-    window.addEventListener("resize", checkStatus);
-    return () => window.removeEventListener("resize", checkStatus);
-  }, []);
-
-  useEffect(() => {
-    if (!canvasRef.current || isMobile || !isExemptPage) return;
+    if (!canvasRef.current) return;
 
     // Initialize DotLottie from the ESM URL
     playerRef.current = new DotLottie({
@@ -50,7 +36,7 @@ export const SparkleHeading: React.FC<SparkleHeadingProps> = ({ text, className,
     return () => {
       playerRef.current?.destroy();
     };
-  }, [isMobile, isExemptPage]);
+  }, []);
 
   const [isInView, setIsInView] = useState(false);
 
@@ -66,7 +52,7 @@ export const SparkleHeading: React.FC<SparkleHeadingProps> = ({ text, className,
 
   // ─── Auto-Pulse Heartbeat ───
   useEffect(() => {
-    if (!isInView || isMobile || !isExemptPage) {
+    if (!isInView) {
       playerRef.current?.pause();
       return;
     }
@@ -84,7 +70,7 @@ export const SparkleHeading: React.FC<SparkleHeadingProps> = ({ text, className,
       }, 1000); // 1.0s pulse duration (optimized)
     };
 
-    const interval = setInterval(pulseHero, 12000); // 12 seconds (Aggressive Optimization)
+    const interval = setInterval(pulseHero, 12000); // 12 seconds
     
     // Initial pulse after 2s for immediate impact
     const initialDelay = setTimeout(pulseHero, 2000);
@@ -93,10 +79,10 @@ export const SparkleHeading: React.FC<SparkleHeadingProps> = ({ text, className,
       clearInterval(interval);
       clearTimeout(initialDelay);
     };
-  }, [isHovered, isInView, isMobile, isExemptPage]);
+  }, [isHovered, isInView]);
 
   useEffect(() => {
-    if (!containerRef.current || isMobile) return;
+    if (!containerRef.current) return;
     const parentGroup = containerRef.current.closest(".sparkle-group");
     if (!parentGroup) return;
 
@@ -118,7 +104,7 @@ export const SparkleHeading: React.FC<SparkleHeadingProps> = ({ text, className,
       parentGroup.removeEventListener("mouseenter", handleGroupEnter);
       parentGroup.removeEventListener("mouseleave", handleGroupLeave);
     };
-  }, [isMobile]);
+  }, []);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -139,11 +125,11 @@ export const SparkleHeading: React.FC<SparkleHeadingProps> = ({ text, className,
       ref={containerRef}
       className={cn(
         "spark-text-container group select-none", 
-        (isPulsing && !isMobile) && "spark-force-animate",
+        isPulsing && "spark-force-animate",
         className
       )}
-      onMouseEnter={!isMobile ? handleMouseEnter : undefined}
-      onMouseLeave={!isMobile ? handleMouseLeave : undefined}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {/* Lottie Canvas Wrapper */}
       <div 

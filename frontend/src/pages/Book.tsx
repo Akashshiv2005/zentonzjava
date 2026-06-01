@@ -32,7 +32,9 @@ const Book: React.FC = () => {
           </div>
         </div>
 
-        <BookingSystem />
+        <div className="pt-16 sm:pt-28">
+          <BookingSystem />
+        </div>
       </div>
     </div>
   );

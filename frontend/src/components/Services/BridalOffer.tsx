@@ -77,15 +77,12 @@ const BridalOffer: React.FC = () => {
               </div>
             </div>
 
-            <div className="flex flex-col mb:flex-row gap-4 justify-center dt:justify-start">
-              <Link to="/contact">
+            <div className="max-w-md mx-auto dt:mx-0 flex justify-center">
+              <Link to="/contact" className="w-full mb:w-auto">
                 <button className="btn-premium-gold px-12 py-4 text-sm w-full mb:w-auto">
                   Claim Offer
                 </button>
               </Link>
-              <button className="btn-premium-outline px-12 py-4 text-sm w-full mb:w-auto">
-                Learn More
-              </button>
             </div>
           </motion.div>
 

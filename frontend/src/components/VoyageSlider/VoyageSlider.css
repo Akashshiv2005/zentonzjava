@@ -61,14 +61,32 @@
   justify-content: center;
   align-items: center;
   opacity: 0.5;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  border-radius: 50%;
   transition: all 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
   z-index: 1001;
   width: 50px;
   height: 50px;
+}
+
+/* Static, stable hover background target that will be translated */
+.voyage-slider--btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transition: all 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
+  z-index: -1;
+}
+
+/* General outer hit targets */
+.voyage-slider--btn::after {
+  content: "";
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  z-index: 2;
 }
 
 .voyage-slider--btn__prev {
@@ -101,12 +119,22 @@
   width: var(--size);
   height: var(--size);
   stroke: white;
+  transition: all 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
+  position: relative;
+  z-index: 1;
 }
 
 .voyage-slider--btn:hover {
   opacity: 1;
+}
+
+.voyage-slider--btn:hover::before {
   background: var(--color-primary, #735c00);
-  border-color: transparent !important;
+  border-color: transparent;
+  transform: translateY(-5px);
+}
+
+.voyage-slider--btn:hover svg {
   transform: translateY(-5px);
 }
 
@@ -331,7 +359,7 @@
   position: absolute;
   height: fit-content;
   left: 0%;
-  bottom: 10%;
+  bottom: 5%;
   transform: translateZ(var(--z-offset));
   z-index: 100;
   pointer-events: none;
@@ -342,7 +370,7 @@
   .voyage-slide-info--text__wrapper {
     left: 10px;
     right: 10px;
-    bottom: 8%;
+    bottom: 3%;
     text-align: center;
   }
 
@@ -409,12 +437,18 @@
 .voyage-slide-info--text[data-description] {
   margin-top: 8px;
   margin-left: 0.5rem;
-  font-size: clamp(0.75rem, 1.5cqw, 1.1rem);
+  font-size: clamp(0.68rem, 1.3cqw, 0.9rem);
   font-family: var(--font-archivo);
-  font-weight: 400;
-  color: #0c080a;
+  font-weight: 500;
+  color: #1a1a1a;
   max-width: min(80vw, 350px);
   white-space: normal;
+}
+
+.voyage-slide-info--text[data-description] span {
+  animation: none;
+  color: #1a1a1a;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8), 0 1px 5px rgba(255, 255, 255, 0.6);
 }
 
 @media (min-width: 768px) {

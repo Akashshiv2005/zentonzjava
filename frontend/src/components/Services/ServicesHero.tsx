@@ -75,7 +75,7 @@ const ServicesHero: React.FC = () => {
             transition={{ delay: 0.5, duration: 0.6 }}
             className="flex flex-col mb:flex-row gap-3 tb:gap-4 w-full mb:w-auto px-4 mb:px-0"
           >
-            <Link to="/contact" className="w-full mb:w-auto">
+            <Link to="/book" className="w-full mb:w-auto">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

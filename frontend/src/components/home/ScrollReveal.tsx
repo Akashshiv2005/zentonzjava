@@ -4,11 +4,13 @@ import { motion, useAnimation, useInView } from "framer-motion";
 interface ScrollRevealProps {
   children: React.ReactNode;
   delay?: number;
+  className?: string;
 }
 
 export function ScrollReveal({
   children,
   delay = 0,
+  className,
 }: ScrollRevealProps) {
   const ref = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(ref, { once: true, margin: "-20px" });
@@ -23,6 +25,7 @@ export function ScrollReveal({
   return (
     <motion.div
       ref={ref}
+      className={className}
       variants={{
         hidden: { opacity: 0, y: 20 },
         visible: {

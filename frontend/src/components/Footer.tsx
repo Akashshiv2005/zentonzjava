@@ -91,7 +91,7 @@ const Footer: React.FC = () => {
                 >
                   <Link
                     to={item.path}
-                    className="group text-on-surface/80 hover:text-white transition-colors text-[8px] tb:text-[9px] font-black uppercase tracking-widest text-center mb:text-left"
+                    className="group text-on-surface/80 hover:text-[#C9A24A] transition-colors text-[8px] tb:text-[9px] font-black uppercase tracking-widest text-center mb:text-left"
                   >
                     {item.label}
                   </Link>
@@ -110,20 +110,25 @@ const Footer: React.FC = () => {
             </h3>
             <ul className="space-y-1.5 tb:space-y-3">
               {[
-                "Skin Care",
-                "Facial Treatment",
-                "Hair Care",
-                "Bridal Makeup",
-                "Nail Artistry",
-                "Lice Removal",
-                "Threading & Waxing",
-                "Wart Removal",
+                { name: "Skin Care", hash: "#skin-care" },
+                { name: "Facial Treatment", hash: "#facial-treatment" },
+                { name: "Hair Care", hash: "#hair-care" },
+                { name: "Bridal Makeup", hash: "#bridal-makeup" },
+                { name: "Nail Artistry", hash: "#nails" },
+                { name: "Lice Removal", hash: "#lice-removal" },
+                { name: "Threading & Waxing", hash: "" },
+                { name: "Wart Removal", hash: "#wart-removal" },
               ].map((s) => (
                 <li
-                  key={s}
-                  className="text-on-surface/80 text-[8px] tb:text-[9px] font-black uppercase tracking-widest cursor-default text-center mb:text-left"
+                  key={s.name}
+                  className="flex justify-center mb:justify-start"
                 >
-                  {s}
+                  <Link
+                    to={`/services${s.hash}`}
+                    className="group text-on-surface/80 hover:text-[#C9A24A] transition-colors text-[8px] tb:text-[9px] font-black uppercase tracking-widest text-center mb:text-left"
+                  >
+                    {s.name}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -149,7 +154,7 @@ const Footer: React.FC = () => {
                   <Phone className="text-[#C9A24A] w-2.5 h-2.5 tb:w-3 tb:h-3" />
                   <a
                     href="tel:9751231239"
-                    className="text-on-surface/80 text-[8px] tb:text-[10px] group-hover:text-white transition-colors font-black uppercase tracking-widest"
+                    className="text-on-surface/80 text-[8px] tb:text-[10px] group-hover:text-[#C9A24A] transition-colors font-black uppercase tracking-widest"
                   >
                     9751231239
                   </a>
@@ -158,7 +163,7 @@ const Footer: React.FC = () => {
                   <Mail className="text-[#C9A24A] w-2.5 h-2.5 tb:w-3 tb:h-3" />
                   <a
                     href="mailto:zentonezsalon@gmail.com"
-                    className="text-on-surface/80 text-[8px] tb:text-[10px] group-hover:text-white transition-colors font-black uppercase tracking-widest"
+                    className="text-on-surface/80 text-[8px] tb:text-[10px] group-hover:text-[#C9A24A] transition-colors font-black uppercase tracking-widest"
                   >
                     zentonezsalon@gmail.com
                   </a>

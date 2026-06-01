@@ -31,8 +31,14 @@ const ContactForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
     setError("");
+
+    if (formState.phone.length !== 10) {
+      setError("Please enter a valid 10-digit phone number.");
+      return;
+    }
+
+    setIsLoading(true);
 
     try {
       // Send to Backend (to save in DB)
@@ -133,6 +139,9 @@ const ContactForm: React.FC = () => {
             <div className="space-y-2 tb:space-y-3">
               <label className="text-[9px] tb:text-[10px] uppercase tracking-[0.3em] font-black text-on-surface/60 block px-3 tb:px-4">Phone Number</label>
               <input type="tel" required
+                minLength={10}
+                maxLength={10}
+                pattern="[0-9]{10}"
                 className="w-full px-5 tb:px-8 bg-white/60 border border-on-surface/10 rounded-2xl tb:rounded-3xl outline-none transition-all duration-300 placeholder:text-on-surface/40 font-bold text-sm tb:text-base text-on-surface h-12 tb:h-[60px] form-input-unified hover:bg-white/80 hover:border-primary/40 focus:bg-white focus:border-primary/50 focus:scale-[1.01] focus:ring-4 focus:ring-primary/10 focus:shadow-[0_0_15px_rgba(201,162,74,0.15)]"
                 placeholder="10-digit mobile number" value={formState.phone}
                 onChange={(e) => {
