@@ -575,7 +575,7 @@ const ServicesShowcase: React.FC = () => {
             {services.map((service) => (
               <div
                 key={service.id}
-                className="absolute inset-0 z-0"
+                className="showcase-img absolute inset-0 z-0"
                 onClick={() =>
                   setSelectedImage({ url: service.image, title: service.title })
                 }
@@ -584,7 +584,7 @@ const ServicesShowcase: React.FC = () => {
                   src={service.image}
                   alt={service.title}
                   loading="lazy"
-                  className="showcase-img w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                   style={{ objectPosition: service.objectPosition || "center" }}
                 />
                 <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
