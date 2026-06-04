@@ -5,7 +5,7 @@ import {
   Route,
   useLocation,
 } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import Lenis from "lenis";
 
 declare global {
@@ -22,15 +22,15 @@ import { MobileBookingButton } from "./components/layout/MobileBookingButton";
 import { SmoothScroll } from "./components/ui/SmoothScroll";
 import { Scene3D } from "./components/ui/Scene3D";
 
-// Lazy Load Pages
-const Home = lazy(() => import("./pages/Home"));
-const About = lazy(() => import("./pages/About"));
-const Services = lazy(() => import("./pages/Services"));
-const Gallery = lazy(() => import("./pages/Gallery"));
-const Contact = lazy(() => import("./pages/Contact"));
-const Book = lazy(() => import("./pages/Book"));
-const Membership = lazy(() => import("./pages/Membership"));
-const Admin = lazy(() => import("./pages/Admin"));
+// Eager Load Pages for instant navigation
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Services from "./pages/Services";
+import Gallery from "./pages/Gallery";
+import Contact from "./pages/Contact";
+import Book from "./pages/Book";
+import Membership from "./pages/Membership";
+import Admin from "./pages/Admin";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -39,13 +39,21 @@ gsap.registerPlugin(ScrollTrigger);
 // Scroll to top on route change
 const ScrollToTop = () => {
   const { pathname } = useLocation();
-  useEffect(() => {
-    const lenis = window.lenisInstance;
-    if (lenis) {
-      lenis.scrollTo(0, { immediate: true });
-    } else {
-      window.scrollTo(0, 0);
-    }
+  useLayoutEffect(() => {
+    // Force native instant scroll synchronously before the browser paints the new route.
+    // This prevents IntersectionObservers (like Framer Motion's useInView) from firing
+    // at the old scroll position and then firing again at the top, causing massive lag.
+    window.scrollTo(0, 0);
+    
+    const timeoutId = setTimeout(() => {
+      ScrollTrigger.refresh();
+      const lenis = window.lenisInstance;
+      if (lenis) {
+        lenis.scrollTo(0, { immediate: true });
+      }
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
   }, [pathname]);
   return null;
 };
@@ -62,7 +70,6 @@ const App: React.FC = () => {
         <MobileBookingButton />
 
         <main className="grow">
-          <Suspense fallback={<div className="min-h-screen bg-background" />}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
@@ -73,7 +80,6 @@ const App: React.FC = () => {
               <Route path="/membership" element={<Membership />} />
               <Route path="/admin" element={<Admin />} />
             </Routes>
-          </Suspense>
         </main>
         <Footer />
 
