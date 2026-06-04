@@ -68,7 +68,7 @@ const AboutStory: React.FC = () => {
               >
                 A Dream Built on <span className="text-[#B87333]">Passion</span>
                 <br />
-                Since 2025
+                Since 2020
               </motion.div>
             </h2>
 
@@ -76,7 +76,7 @@ const AboutStory: React.FC = () => {
               variants={itemVariants}
               className="text-base sm:text-lg text-on-surface/80 font-sans leading-relaxed"
             >
-              Founded in March 2025 by a seasoned makeup artist with over five
+              Founded in March 2020 by a seasoned makeup artist with over five
               years of expertise, Zen Tonez Beauty Salon was envisioned to bring
               refined luxury beauty within reach of every woman in Tamil Nadu,
               evolving seamlessly from a bespoke freelance journey into a

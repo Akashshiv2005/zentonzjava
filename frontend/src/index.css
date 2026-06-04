@@ -6,6 +6,18 @@
   --breakpoint-tb: 481px;
   --breakpoint-dt: 769px;
 
+  --color-primary: var(--primary);
+  --color-primary-container: var(--color-primary-container);
+  --color-on-primary: var(--color-on-primary);
+  --color-secondary: var(--secondary);
+  --color-tertiary: var(--tertiary);
+  --color-background: var(--background);
+  --color-surface: var(--color-surface);
+  --color-surface-dim: var(--color-surface-dim);
+  --color-inverse-surface: var(--color-inverse-surface);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-variant: var(--color-on-surface-variant);
+  
   --shadow-luxury: var(--shadow-luxury-soft);
   --shadow-luxury-soft: var(--shadow-luxury-soft);
   --shadow-luxury-deep: var(--shadow-luxury-deep);

@@ -21,6 +21,10 @@ export function MobileBottomNav() {
     { name: "Contact", path: "/contact", icon: MessageSquare },
   ];
 
+  if (pathname.startsWith('/admin')) {
+    return null;
+  }
+
   return (
     <nav className="fixed bottom-0 w-full z-50 bg-white/95 backdrop-blur-xl border-t border-primary/5 pb-safe lg:hidden">
       <div className="flex justify-around items-center py-2 px-2">

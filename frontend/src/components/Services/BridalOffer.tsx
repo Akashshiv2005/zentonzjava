@@ -1,10 +1,63 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Sparkles, Crown, Gift } from "lucide-react";
 import bridalOfferImage from "../../assets/bridal_offer.png";
 
+interface Promotion {
+  id: number;
+  tagText: string;
+  titlePart1: string;
+  titlePart2: string;
+  description: string;
+  offerTag: string;
+  offerTitle: string;
+  discountValue: string;
+  discountSuffix: string;
+  features: string;
+  imageName: string;
+}
+
 const BridalOffer: React.FC = () => {
+  const [promotion, setPromotion] = useState<Promotion | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("http://localhost:8081/api/promotions/active")
+      .then((res) => {
+        if (res.status === 204) {
+          return null;
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setPromotion(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch promotion, using default", err);
+        setLoading(false);
+      });
+  }, []);
+
+  // Use dynamic data if available, otherwise use fallback static data
+  const tagText = promotion?.tagText || "Exclusive Loyalty Reward";
+  const titlePart1 = promotion?.titlePart1 || "Bridal";
+  const titlePart2 = promotion?.titlePart2 || "Makeup Offer";
+  const description = promotion?.description || "A special celebration of our regular clients. Experience the peak of bridal artistry with an exclusive reward.";
+  const offerTag = promotion?.offerTag || "Limited Time";
+  const offerTitle = promotion?.offerTitle || "Loyalty Benefit";
+  const discountValue = promotion?.discountValue || "20%";
+  const discountSuffix = promotion?.discountSuffix || "OFF";
+  
+  const featuresList = promotion?.features 
+    ? promotion.features.split(',').map(f => f.trim()) 
+    : ["Exclusive for Regular Customers", "Complete Bridal Transformation"];
+
+  const imageUrl = promotion?.imageName 
+    ? `http://localhost:8081/api/gallery/uploads/${promotion.imageName}` 
+    : bridalOfferImage;
+
   return (
     <section className="relative py-20 lg:py-32 overflow-hidden bg-surface-dim/30">
       {/* Background Decorative Elements */}
@@ -22,19 +75,21 @@ const BridalOffer: React.FC = () => {
             viewport={{ once: true }}
             className="space-y-8 text-center dt:text-left"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary border border-primary/20 shadow-sm mb-4">
-              <Gift size={16} />
-              <span className="font-bold uppercase tracking-widest text-[10px]">
-                Exclusive Loyalty Reward
-              </span>
-            </div>
+            {tagText && (
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary border border-primary/20 shadow-sm mb-4">
+                <Gift size={16} />
+                <span className="font-bold uppercase tracking-widest text-[10px]">
+                  {tagText}
+                </span>
+              </div>
+            )}
 
             <div className="space-y-4">
               <h2 className="text-5xl lg:text-7xl font-black text-on-surface uppercase tracking-tighter leading-[0.85] font-serif">
-                Bridal <span className="text-primary block">Makeup Offer</span>
+                {titlePart1} <span className="text-primary block">{titlePart2}</span>
               </h2>
               <p className="text-on-surface/80 text-lg lg:text-xl font-medium max-w-xl mx-auto dt:mx-0 leading-relaxed">
-                A special celebration of our regular clients. Experience the peak of bridal artistry with an exclusive reward.
+                {description}
               </p>
             </div>
 
@@ -49,30 +104,28 @@ const BridalOffer: React.FC = () => {
                     </div>
                     <div className="flex flex-col">
                       <span className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface/40">
-                        Limited Time
+                        {offerTag}
                       </span>
                       <span className="text-xl font-black text-on-surface uppercase">
-                        Loyalty Benefit
+                        {offerTitle}
                       </span>
                     </div>
                   </div>
                   <div className="text-right">
-                    <span className="text-4xl font-black text-primary">20%</span>
+                    <span className="text-4xl font-black text-primary">{discountValue}</span>
                     <span className="text-[10px] block font-bold uppercase text-on-surface/60">
-                      OFF
+                      {discountSuffix}
                     </span>
                   </div>
                 </div>
                 
                 <div className="space-y-2 border-t border-on-surface/10 pt-4">
-                  <div className="flex items-center gap-2 text-on-surface/70 text-sm font-semibold">
-                    <Sparkles size={14} className="text-primary" fill="var(--primary)" fillOpacity={0.2} />
-                    <span>Exclusive for Regular Customers</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-on-surface/70 text-sm font-semibold">
-                    <Sparkles size={14} className="text-primary" fill="var(--primary)" fillOpacity={0.2} />
-                    <span>Complete Bridal Transformation</span>
-                  </div>
+                  {featuresList.map((feature, i) => (
+                    <div key={i} className="flex items-center gap-2 text-on-surface/70 text-sm font-semibold">
+                      <Sparkles size={14} className="text-primary" fill="var(--primary)" fillOpacity={0.2} />
+                      <span>{feature}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -96,12 +149,16 @@ const BridalOffer: React.FC = () => {
           >
             <div className="relative aspect-square dt:aspect-4/3 rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white/50 group">
               <img
-                src={bridalOfferImage}
-                alt="Premium Bridal Makeup"
-                loading="lazy"
-                className="w-full h-full object-cover object-top transition-transform duration-1000 group-hover:scale-105"
+                src={imageUrl}
+                alt="Premium Promotion"
+                className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60 mix-blend-overlay" />
             </div>
+            {/* Floating particle effects */}
+            <div className="absolute top-10 right-10 w-4 h-4 bg-primary/40 rounded-full blur-[2px] animate-pulse" />
+            <div className="absolute bottom-10 left-10 w-6 h-6 bg-primary/30 rounded-full blur-[3px] animate-pulse delay-700" />
+            <div className="absolute top-1/2 -left-4 w-3 h-3 bg-[#C9A24A]/50 rounded-full blur-[1px] animate-pulse delay-300" />
           </motion.div>
 
         </div>

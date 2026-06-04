@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Quote, Star } from "lucide-react";
 
@@ -8,10 +8,11 @@ interface Testimonial {
   service: string;
   quote: string;
   rating: number;
-  image: string;
+  image?: string;
+  imageName?: string;
 }
 
-const TESTIMONIALS: Testimonial[] = [
+const FALLBACK_TESTIMONIALS: Testimonial[] = [
   {
     id: 1,
     name: "Kowsalya Shinchan",
@@ -184,44 +185,54 @@ const TESTIMONIALS: Testimonial[] = [
   },
 ];
 
-const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({
+const TestimonialCard: React.FC<{ testimonial: Testimonial; delay: number }> = ({
   testimonial,
+  delay,
 }) => {
+  const imageUrl = testimonial.imageName 
+    ? `http://localhost:8081/api/gallery/images/${testimonial.imageName}` 
+    : (testimonial.image || `https://api.dicebear.com/7.x/lorelei/svg?seed=${testimonial.name.split(' ')[0]}`);
+
   return (
     <motion.div
-      whileHover={{ scale: 1.05, y: -5 }}
-      className="shrink-0 w-[300px] sm:w-[350px] p-6 mx-4 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl shadow-luxury-soft transition-all duration-300 group gpu-accelerated will-change-transform"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.8, delay }}
+      className="bg-white/5 backdrop-blur-md rounded-3xl p-8 shadow-luxury-soft border border-white/10 flex flex-col h-full relative overflow-hidden group"
     >
-      <div className="flex items-center gap-4 mb-4">
-        <div className="w-12 h-12 rounded-2xl overflow-hidden border border-white/20 bg-[#B87333]/10">
+      <Quote
+        size={120}
+        className="absolute -top-6 -left-6 text-[#B87333]/5 group-hover:text-[#B87333]/10 transition-colors duration-500"
+      />
+
+      <div className="flex items-center gap-4 mb-6 relative z-10">
+        <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-[#B87333]/20 p-0.5">
           <img
-            src={testimonial.image}
+            src={imageUrl}
             alt={testimonial.name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover rounded-full"
           />
         </div>
         <div>
-          <h4 className="text-black font-bold text-sm sm:text-base leading-none mb-1">
+          <h4 className="font-bold text-black text-lg leading-tight">
             {testimonial.name}
           </h4>
-          <p className="text-[#B87333] text-[10px] uppercase font-bold tracking-widest">
+          <p className="text-[#B87333] text-xs font-black tracking-widest uppercase mt-1">
             {testimonial.service}
           </p>
         </div>
       </div>
 
-      <div className="flex gap-1 mb-4">
+      <div className="flex gap-1 mb-4 relative z-10">
         {[...Array(testimonial.rating)].map((_, i) => (
-          <Star key={i} size={12} className="fill-[#B87333] text-[#B87333]" />
+          <Star key={i} size={14} className="text-[#B87333] fill-[#B87333]" />
         ))}
       </div>
 
-      <div className="relative">
-        <Quote className="absolute -top-2 -left-2 text-[#B87333]/20 w-8 h-8 -z-10" />
-        <p className="text-[#B87333] text-sm leading-relaxed italic font-medium">
-          "{testimonial.quote}"
-        </p>
-      </div>
+      <p className="text-on-surface/70 leading-relaxed italic relative z-10 flex-grow">
+        "{testimonial.quote}"
+      </p>
 
       <div className="absolute inset-0 rounded-3xl group-hover:bg-[#B87333]/5 transition-colors pointer-events-none" />
     </motion.div>
@@ -229,6 +240,23 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({
 };
 
 const AboutTestimonials: React.FC = () => {
+  const [testimonials, setTestimonials] = useState<Testimonial[]>(FALLBACK_TESTIMONIALS);
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const res = await fetch('http://localhost:8081/api/testimonials');
+        const data = await res.json();
+        if (data && data.length > 0) {
+          setTestimonials(data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch testimonials", err);
+      }
+    };
+    fetchTestimonials();
+  }, []);
+
   const [isMobile, setIsMobile] = React.useState(false);
 
   React.useEffect(() => {
@@ -238,8 +266,8 @@ const AboutTestimonials: React.FC = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  const row1 = TESTIMONIALS.slice(0, 10);
-  const row2 = TESTIMONIALS.slice(10, 19);
+  const row1 = testimonials.slice(0, Math.ceil(testimonials.length / 2));
+  const row2 = testimonials.slice(Math.ceil(testimonials.length / 2));
 
   return (
     <section className="py-20 sm:py-32 bg-surface-dim relative overflow-hidden">
@@ -267,60 +295,39 @@ const AboutTestimonials: React.FC = () => {
       </div>
 
       <div className="relative z-10 flex flex-col gap-8">
-        {/* Row 1: Left to Right */}
-        <div
-          className={`flex ${isMobile ? "overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4 px-4" : "overflow-hidden group"}`}
-        >
+        <div className={`flex ${isMobile ? "overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4 px-4" : "overflow-hidden group"}`}>
           <motion.div
             animate={!isMobile ? { x: ["0%", "-50%"] } : {}}
-            transition={
-              !isMobile
-                ? {
-                    x: {
-                      repeat: Infinity,
-                      repeatType: "loop",
-                      duration: 50,
-                      ease: "linear",
-                    },
-                  }
-                : {}
-            }
+            transition={!isMobile ? { x: { repeat: Infinity, repeatType: "loop", duration: 50, ease: "linear" } } : {}}
             className={`flex ${isMobile ? "" : "hover:[animation-play-state:paused]"}`}
           >
             {isMobile
-              ? row1.map((t, i) => (
-                  <div key={i} className="snap-center">
-                    <TestimonialCard testimonial={t} />
-                  </div>
-                ))
-              : [...row1, ...row1].map((t, i) => (
-                  <TestimonialCard key={i} testimonial={t} />
-                ))}
+              ? row1.map((t, i) => <div key={i} className="snap-center w-[85vw] sm:w-[400px] shrink-0 px-3 h-full"><TestimonialCard testimonial={t} delay={0} /></div>)
+              : [...row1, ...row1].map((t, i) => <div key={i} className="w-[400px] shrink-0 px-4 h-full"><TestimonialCard testimonial={t} delay={0} /></div>)}
           </motion.div>
         </div>
 
-        {/* Row 2: Right to Left */}
-        <div className="hidden lg:flex overflow-hidden">
+        <div className="hidden lg:flex overflow-hidden group">
           <motion.div
             animate={{ x: ["-50%", "0%"] }}
-            transition={{
-              x: {
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 60,
-                ease: "linear",
-              },
-            }}
+            transition={{ x: { repeat: Infinity, repeatType: "loop", duration: 60, ease: "linear" } }}
             className="flex hover:[animation-play-state:paused]"
           >
-            {[...row2, ...row2].map((t, i) => (
-              <TestimonialCard key={i} testimonial={t} />
-            ))}
+            {[...row2, ...row2].map((t, i) => <div key={i} className="w-[400px] shrink-0 px-4 h-full"><TestimonialCard testimonial={t} delay={0} /></div>)}
           </motion.div>
         </div>
       </div>
 
-      {/* Mobile Swipe Text */}
+      <div className="grid grid-cols-1 md:hidden gap-6 mt-8">
+        {testimonials.slice(0, 4).map((testimonial, idx) => (
+          <TestimonialCard
+            key={`mobile-${testimonial.id}`}
+            testimonial={testimonial}
+            delay={idx * 0.1}
+          />
+        ))}
+      </div>
+
       <div className="lg:hidden text-center mt-10">
         <p className="text-on-surface/40 text-[10px] uppercase font-bold tracking-widest">
           Swipe to explore more stories

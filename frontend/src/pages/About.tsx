@@ -5,7 +5,7 @@ import AboutServicesGrid from "../components/About/AboutServicesGrid";
 import AboutTimeline from "../components/About/AboutTimeline";
 import AboutValues from "../components/About/AboutValues";
 import AboutTeam from "../components/About/AboutTeam";
-import AboutTestimonials from "../components/About/AboutTestimonials";
+
 import AboutCTA from "../components/About/AboutCTA";
 import { SocialSidebar } from "../components/ui/SocialSidebar";
 import { Reveal } from "../components/ui/Reveal";
@@ -48,10 +48,7 @@ const About: React.FC = () => {
             <AboutTeam />
           </Reveal>
           
-          <Reveal width="100%" direction="up">
-            <AboutTestimonials />
-          </Reveal>
-          
+
           <Reveal width="100%" direction="up">
             <AboutCTA />
           </Reveal>

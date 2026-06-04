@@ -1,8 +1,9 @@
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import InteractiveBentoGallery from '../ui/interactive-bento-gallery';
 import type { MediaItemType } from '../ui/interactive-bento-gallery';
 
-// Import assets from specified directories
+// Import fallback assets
 import bridal1 from "../../assets/bridalwebpimages/bridal1.webp";
 import facial1 from "../../assets/facialwebpimages/facial1.webp";
 import facial2 from "../../assets/facialwebpimages/facial2.webp";
@@ -13,91 +14,45 @@ import nail1 from "../../assets/nailwebpimages/nail.jpeg";
 import nail2 from "../../assets/nailwebpimages/nail2.webp";
 import butterfly from "../../assets/hairwebp images/butterfly cut.webp";
 
-const mediaItems: MediaItemType[] = [
-  {
-    id: 1,
-    type: "image",
-    title: "Eternal Bridal",
-    desc: "A timeless masterpiece of elegance and radiance.",
-    url: bridal1,
-    span: "md:col-span-2 md:row-span-2 sm:col-span-2 sm:row-span-2",
-    objectPosition: "center 15%",
-  },
-  {
-    id: 2,
-    type: "image",
-    title: "Skin Alchemy",
-    desc: "Transformative rituals for a celestial glow.",
-    url: facial1,
-    span: "md:col-span-1 md:row-span-1 sm:col-span-1 sm:row-span-1",
-    objectPosition: "center 20%",
-  },
-  {
-    id: 3,
-    type: "image",
-    title: "Facial Rituals",
-    desc: "Rejuvenating therapies for mindful beauty.",
-    url: facial2,
-    span: "md:col-span-1 md:row-span-2 sm:col-span-1 sm:row-span-2",
-    objectPosition: "center 25%",
-  },
-  {
-    id: 4,
-    type: "image",
-    title: "Luxe Hair Care",
-    desc: "Premium treatments for the crown you never take off.",
-    url: hairspa1,
-    span: "md:col-span-1 md:row-span-1 sm:col-span-1 sm:row-span-1",
-    objectPosition: "center 20%",
-  },
-  {
-    id: 5,
-    type: "image",
-    title: "Scalp Therapy",
-    desc: "Holistic care for ultimate hair health.",
-    url: hairspa2,
-    span: "md:col-span-2 md:row-span-2 sm:col-span-2 sm:row-span-1", // Changed to 2x2 for better fill
-    objectPosition: "center 25%",
-  },
-  {
-    id: 6,
-    type: "image",
-    title: "Artistic Hands",
-    desc: "Bespoke nail artistry and extensions.",
-    url: manicure1,
-    span: "md:col-span-1 md:row-span-2 sm:col-span-1 sm:row-span-2",
-    objectPosition: "center",
-  },
-  {
-    id: 7,
-    type: "image",
-    title: "Couture Nails",
-    desc: "Precision and detail in every stroke.",
-    url: nail1,
-    span: "md:col-span-2 md:row-span-1 sm:col-span-2 sm:row-span-1",
-    objectPosition: "center",
-  },
-  {
-    id: 8,
-    type: "image",
-    title: "Precision Detail",
-    desc: "The fine art of artisanal beauty.",
-    url: nail2,
-    span: "md:col-span-1 md:row-span-1 sm:col-span-1 sm:row-span-1",
-    objectPosition: "center",
-  },
-  {
-    id: 9,
-    type: "image",
-    title: "Signature Cut",
-    desc: "Avant-garde hair design for the modern woman.",
-    url: butterfly,
-    span: "md:col-span-1 md:row-span-1 sm:col-span-1 sm:row-span-1",
-    objectPosition: "center 35%",
-  },
+const fallbackMediaItems: MediaItemType[] = [
+  { id: 1, type: "image", title: "Eternal Bridal", desc: "A timeless masterpiece", url: bridal1, span: "md:col-span-2 md:row-span-2 sm:col-span-2 sm:row-span-2", objectPosition: "center 15%" },
+  { id: 2, type: "image", title: "Skin Alchemy", desc: "Transformative rituals", url: facial1, span: "md:col-span-1 md:row-span-1 sm:col-span-1 sm:row-span-1", objectPosition: "center 20%" },
+  { id: 3, type: "image", title: "Facial Rituals", desc: "Rejuvenating therapies", url: facial2, span: "md:col-span-1 md:row-span-2 sm:col-span-1 sm:row-span-2", objectPosition: "center 25%" },
+  { id: 4, type: "image", title: "Luxe Hair Care", desc: "Premium treatments", url: hairspa1, span: "md:col-span-1 md:row-span-1 sm:col-span-1 sm:row-span-1", objectPosition: "center 20%" },
+  { id: 5, type: "image", title: "Scalp Therapy", desc: "Holistic care", url: hairspa2, span: "md:col-span-2 md:row-span-2 sm:col-span-2 sm:row-span-1", objectPosition: "center 25%" },
+  { id: 6, type: "image", title: "Artistic Hands", desc: "Bespoke nail artistry", url: manicure1, span: "md:col-span-1 md:row-span-2 sm:col-span-1 sm:row-span-2", objectPosition: "center" },
+  { id: 7, type: "image", title: "Couture Nails", desc: "Precision and detail", url: nail1, span: "md:col-span-2 md:row-span-1 sm:col-span-2 sm:row-span-1", objectPosition: "center" },
+  { id: 8, type: "image", title: "Precision Detail", desc: "Fine art of beauty", url: nail2, span: "md:col-span-1 md:row-span-1 sm:col-span-1 sm:row-span-1", objectPosition: "center" },
+  { id: 9, type: "image", title: "Signature Cut", desc: "Avant-garde design", url: butterfly, span: "md:col-span-1 md:row-span-1 sm:col-span-1 sm:row-span-1", objectPosition: "center 35%" },
 ];
 
+const predefinedSpans = fallbackMediaItems.map(m => m.span);
+
 const ClippedMediaGallery: React.FC = () => {
+  const [items, setItems] = useState<MediaItemType[]>(fallbackMediaItems);
+
+  useEffect(() => {
+    fetch('http://localhost:8081/api/gallery')
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.length > 0) {
+          const dynamicItems: MediaItemType[] = data.map((img: any, index: number) => ({
+            id: 100 + img.id,
+            type: "image",
+            title: img.category.toUpperCase(),
+            desc: "Uploaded via Admin",
+            url: `http://localhost:8081/api/gallery/images/${img.fileName}`,
+            span: predefinedSpans[index % predefinedSpans.length],
+            objectPosition: "center"
+          }));
+          
+          // Prepend dynamic items, keep some fallbacks if we need more to fill the grid nicely
+          setItems([...dynamicItems, ...fallbackMediaItems].slice(0, 9)); 
+        }
+      })
+      .catch(err => console.error("Error fetching gallery", err));
+  }, []);
+
   return (
     <section
       id="gallery-section"
@@ -105,7 +60,7 @@ const ClippedMediaGallery: React.FC = () => {
     >
       <div className="container mx-auto px-4 sm:px-6">
         <InteractiveBentoGallery
-          mediaItems={mediaItems}
+          mediaItems={items}
           title="Curated Masterpieces"
           description="Drag and explore our visual symphony of finest transformations, capturing the essence of artisanal beauty."
         />

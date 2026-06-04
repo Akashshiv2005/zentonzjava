@@ -29,6 +29,10 @@ export function DesktopNav() {
     }
   });
 
+  if (location.pathname.startsWith('/admin')) {
+    return null;
+  }
+
   return (
     <motion.nav
       className="desktop-nav-wrapper hidden lg:block"

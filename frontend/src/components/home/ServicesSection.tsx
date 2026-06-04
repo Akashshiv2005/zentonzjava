@@ -11,6 +11,7 @@ import nailImage from "../../assets/nailwebpimages/nail.jpeg";
 import liceImage from "../../assets/licewebpimages/lice4.webp";
 import wartRemovalImage from "../../assets/wartremovalwebpimages/wartremovalimg.webp";
 
+import React from "react";
 import VoyageSlider from "../VoyageSlider/VoyageSlider";
 import { ScrollReveal } from "./ScrollReveal";
 
@@ -82,6 +83,30 @@ const services = [
 ];
 
 export function ServicesSection() {
+  const [dynamicServices, setDynamicServices] = React.useState(services);
+
+  React.useEffect(() => {
+    fetch('http://localhost:8081/api/services')
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.length > 0) {
+          const merged = data.map((s: any) => {
+            const fallback = services.find(f => f.title === s.title) || services[0];
+            return {
+              title: s.title,
+              description: s.description,
+              image: s.imageName ? `http://localhost:8081/api/gallery/images/${s.imageName}` : fallback.image,
+              icon: fallback.icon,
+              buttonClass: fallback.buttonClass,
+              objectPosition: fallback.objectPosition
+            };
+          });
+          setDynamicServices(merged);
+        }
+      })
+      .catch(console.error);
+  }, []);
+
   return (
     <section className="py-8 tb:py-12 dt:py-16 relative bg-background">
       <div className="max-w-7xl mx-auto px-4 tb:px-6 dt:px-8 relative z-10">
@@ -100,7 +125,7 @@ export function ServicesSection() {
         </ScrollReveal>
 
         <div className="mt-8 sm:mt-12">
-          <VoyageSlider slides={services} />
+          <VoyageSlider slides={dynamicServices} />
         </div>
 
         <ScrollReveal delay={0.2}>

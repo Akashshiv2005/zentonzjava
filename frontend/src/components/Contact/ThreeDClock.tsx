@@ -11,15 +11,35 @@ const DIGIT_BARS = [
   ['end', 'bottom']
 ];
 
-const Digit: React.FC<{ digit: string }> = ({ digit }) => (
-  <div className="metty-digit" data-digit={digit}>
-    {DIGIT_BARS.map((classes, i) => (
-      <span key={i} className={classes.join(" ")} />
-    ))}
-  </div>
-);
+const DIGIT_MAP: Record<string, number[]> = {
+  '0': [1, 1, 1, 0, 1, 1, 1],
+  '1': [0, 0, 1, 0, 0, 1, 0],
+  '2': [1, 0, 1, 1, 1, 0, 1],
+  '3': [1, 0, 1, 1, 0, 1, 1],
+  '4': [0, 1, 1, 1, 0, 1, 0],
+  '5': [1, 1, 0, 1, 0, 1, 1],
+  '6': [1, 1, 0, 1, 1, 1, 1],
+  '7': [1, 0, 1, 0, 0, 1, 0],
+  '8': [1, 1, 1, 1, 1, 1, 1],
+  '9': [1, 1, 1, 1, 0, 1, 1],
+};
 
-const ClockDigits: React.FC<{ h: string; m: string; s: string }> = ({ h, m, s }) => (
+const Digit: React.FC<{ digit: string }> = ({ digit }) => {
+  const activePattern = DIGIT_MAP[digit] || DIGIT_MAP['0'];
+  return (
+    <div className="metty-digit">
+      {DIGIT_BARS.map((classes, i) => (
+        <span 
+          key={i} 
+          className={classes.join(" ")} 
+          style={{ opacity: activePattern[i] ? 1 : 0.02 }} 
+        />
+      ))}
+    </div>
+  );
+};
+
+const ClockDigits: React.FC<{ h: string; m: string; s: string; p: string }> = ({ h, m, s, p }) => (
   <div className="metty-digits-group">
     <div className="metty-digit-pair">
       <Digit digit={h[0]} />
@@ -31,9 +51,10 @@ const ClockDigits: React.FC<{ h: string; m: string; s: string }> = ({ h, m, s })
       <Digit digit={m[1]} />
     </div>
     <div className="metty-colon-dots" />
-    <div className="metty-digit-pair">
+    <div className="metty-digit-pair" style={{ position: "relative" }}>
       <Digit digit={s[0]} />
       <Digit digit={s[1]} />
+      <div className="metty-ampm">{p}</div>
     </div>
   </div>
 );
@@ -69,7 +90,6 @@ const ThreeDClock: React.FC = () => {
   return (
     <div className="metty-wrapper">
       <div className="metty-camera-wrapper">
-        {/* Main Clock Layer - Solo for maximum performance */}
         <div className="metty-clock-main">
           <ClockDigits {...time} />
         </div>

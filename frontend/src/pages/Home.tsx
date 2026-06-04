@@ -5,6 +5,7 @@ import { PromoQuoteSection } from "../components/home/PromoQuoteSection";
 import { ServicesSection } from "../components/home/ServicesSection";
 import { PricingSection } from "../components/home/PricingSection";
 import MembershipSection from "../components/home/MembershipSection";
+import AboutTestimonials from "../components/About/AboutTestimonials";
 import { SocialSidebar } from "../components/ui/SocialSidebar";
 import { Reveal } from "../components/ui/Reveal";
 
@@ -32,6 +33,10 @@ function Home() {
       </Reveal>
       
       <ParallaxServicesSection />
+      
+      <Reveal width="100%" direction="up">
+        <AboutTestimonials />
+      </Reveal>
       
       <Reveal width="100%" direction="up">
         <PromoQuoteSection />

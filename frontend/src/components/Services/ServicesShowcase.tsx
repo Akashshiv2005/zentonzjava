@@ -37,7 +37,7 @@ interface Service {
   objectPosition?: string;
 }
 
-const services: Service[] = [
+const fallbackServices: Service[] = [
   {
     id: 1,
     title: "Skin Care",
@@ -328,6 +328,47 @@ const services: Service[] = [
 ];
 
 const ServicesShowcase: React.FC = () => {
+  const [services, setServices] = React.useState<Service[]>(fallbackServices);
+  
+  useEffect(() => {
+    fetch('http://localhost:8081/api/services')
+      .then(res => res.json())
+      .then(data => {
+        if (data && data.length > 0) {
+          const dynamicServices = data.map((s: any, idx: number) => {
+            const fallbackMatch = fallbackServices.find(f => 
+              f.category === s.category || 
+              f.title.toLowerCase().trim() === s.category.toLowerCase().trim() ||
+              f.title.toLowerCase().trim() === s.title.toLowerCase().trim()
+            ) || fallbackServices[idx % fallbackServices.length];
+            return {
+              id: 100 + s.id,
+              title: s.title,
+              category: s.category,
+              description: s.description,
+              price: s.price,
+              duration: s.duration,
+              highlights: s.highlights ? s.highlights.split(',').map((h:string)=>h.trim()) : [],
+              image: s.imageName ? `http://localhost:8081/api/gallery/images/${s.imageName}` : fallbackMatch.image,
+              color: fallbackMatch.color,
+              icon: fallbackMatch.icon,
+              review: fallbackMatch.review,
+              clientName: fallbackMatch.clientName
+            };
+          });
+
+          // Only keep fallback services that haven't been overwritten by a dynamic service with the exact same title
+          const remainingFallbacks = fallbackServices.filter(f => 
+            !dynamicServices.some((d: any) => d.title.toLowerCase().trim() === f.title.toLowerCase().trim())
+          );
+
+          // We sort to keep a nice order, maybe dynamic ones first
+          setServices([...dynamicServices, ...remainingFallbacks]);
+        }
+      })
+      .catch(err => console.error("Error fetching services", err));
+  }, []);
+
   const [selectedImage, setSelectedImage] = React.useState<{
     url: string;
     title: string;
@@ -389,7 +430,7 @@ const ServicesShowcase: React.FC = () => {
     }, containerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [services]);
 
   return (
     <div id="services-showcase" className="services-arch bg-surface-dim relative overflow-hidden" ref={containerRef}>
@@ -423,13 +464,13 @@ const ServicesShowcase: React.FC = () => {
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 style={{ objectPosition: service.objectPosition || "center" }}
               />
-              <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md border border-white/15 px-3 py-2 rounded-full flex items-center gap-2 shadow-lg scale-90 group-hover:scale-100 transition-transform duration-300">
-                  <div className="bg-primary/20 p-1.5 rounded-full border border-primary/30">
-                    <Star className="text-primary fill-primary" size={12} />
-                  </div>
-                  <span className="text-white text-[9px] font-black uppercase tracking-[0.15em] pr-1">Click to View</span>
+              <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2">
+                <div className="bg-white/20 backdrop-blur-md p-3 rounded-full border border-white/30 animate-pulse">
+                  <Star className="text-white fill-white" size={24} />
                 </div>
+                <span className="text-white text-[10px] font-black uppercase tracking-[0.2em] bg-black/30 px-3 py-1 rounded-full backdrop-blur-sm">
+                  Click to View
+                </span>
               </div>
             </div>
 
@@ -587,13 +628,13 @@ const ServicesShowcase: React.FC = () => {
                   className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                   style={{ objectPosition: service.objectPosition || "center" }}
                 />
-                <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                  <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md border border-white/15 px-3 py-2 rounded-full flex items-center gap-2 shadow-lg scale-90 group-hover:scale-100 transition-transform duration-300">
-                    <div className="bg-primary/20 p-1.5 rounded-full border border-primary/30">
-                      <Star className="text-primary fill-primary" size={12} />
-                    </div>
-                    <span className="text-white text-[9px] font-black uppercase tracking-[0.15em] pr-1">Click to View</span>
+                <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-3">
+                  <div className="bg-white/20 backdrop-blur-md p-4 rounded-full border border-white/30 animate-pulse">
+                    <Star className="text-white fill-white" size={32} />
                   </div>
+                  <span className="text-white text-xs font-black uppercase tracking-[0.3em] bg-black/20 px-4 py-1 rounded-full backdrop-blur-md">
+                    Click to View
+                  </span>
                 </div>
               </div>
             ))}
