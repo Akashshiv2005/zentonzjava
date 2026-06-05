@@ -240,21 +240,7 @@ const AdminPromotions: React.FC = () => {
                   <input type="text" value={currentPromo.features || ""} onChange={e => setCurrentPromo({...currentPromo, features: e.target.value})} className="input-field" placeholder="Feature 1, Feature 2" />
                 </div>
 
-                <div className="space-y-2 md:col-span-2">
-                  <label className="text-xs font-bold text-on-surface/60 uppercase tracking-wider">Promotion Image</label>
-                  <div className="flex items-center gap-4">
-                    <label className="btn-secondary cursor-pointer flex items-center gap-2">
-                      <ImageIcon size={16} />
-                      {selectedFile ? selectedFile.name : (currentPromo.imageName ? 'Change Image' : 'Select Image')}
-                      <input type="file" className="hidden" accept="image/*" onChange={e => {
-                        if (e.target.files && e.target.files[0]) setSelectedFile(e.target.files[0]);
-                      }} />
-                    </label>
-                    {currentPromo.imageName && !selectedFile && (
-                      <span className="text-xs text-on-surface/50 truncate max-w-[200px]">Current: {currentPromo.imageName}</span>
-                    )}
-                  </div>
-                </div>
+                
                 
                 <div className="space-y-2 md:col-span-2 flex items-center gap-3">
                   <input 

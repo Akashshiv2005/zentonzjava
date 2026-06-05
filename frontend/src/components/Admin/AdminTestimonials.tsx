@@ -168,15 +168,6 @@ const AdminTestimonials: React.FC = () => {
               />
             </div>
 
-            <div>
-              <label className="block text-xs font-bold text-on-surface/60 uppercase tracking-wider mb-2">Client Photo (Optional)</label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={e => e.target.files && setSelectedFile(e.target.files[0])}
-                className="w-full bg-background border border-on-surface/10 rounded-xl px-4 py-2 text-on-surface focus:outline-none focus:border-primary file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
-              />
-            </div>
           </div>
 
           <div className="md:col-span-2 pt-4">
