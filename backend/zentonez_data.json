@@ -1,0 +1,559 @@
+{
+    "promotions": [
+        {
+            "is_active": true,
+            "title_part1": "Bridal",
+            "id": 1,
+            "description": "A special celebration of our regular clients. Experience the peak of bridal artistry with an exclusive reward.",
+            "offer_tag": "Limited Time",
+            "discount_suffix": "OFF",
+            "image_name": "\"28a871db526b4f57bcc3e1851afccb2c.png\"",
+            "tag_text": "Exclusive Loyalty Reward",
+            "title_part2": "Makeup Offer",
+            "offer_title": "Loyalty Benefit",
+            "discount_value": "30%",
+            "features": "Exclusive for Regular Customers, Complete Bridal Transformation"
+        }
+    ],
+    "services": [
+        {
+            "id": 5,
+            "category": "Nail Care",
+            "price": "\u20b9599+",
+            "highlights": "Sea Salt Scrub, Paraffin Wax, Gel Polish",
+            "description": "Pamper your hands and feet with our relaxing therapies.",
+            "title": "Manicure & Pedicure",
+            "duration": "60 - 75 Mins",
+            "image_name": null
+        },
+        {
+            "id": 6,
+            "category": "Hair Health",
+            "price": "\u20b9899+",
+            "highlights": "Steam Treatment, Nourishing Mask, Scalp Massage",
+            "description": "Revitalize your hair with nourishing spa treatments designed to repair damage.",
+            "title": "Hair Care",
+            "duration": "45 - 60 Mins",
+            "image_name": null
+        },
+        {
+            "id": 7,
+            "category": "Luxury Bridal",
+            "price": "\u20b915,000+",
+            "highlights": "HD Makeup, Hairstyling, Saree Draping",
+            "description": "Look stunning on your special day with our professional bridal makeup services.",
+            "title": "Bridal Makeup",
+            "duration": "180 - 240 Mins",
+            "image_name": null
+        },
+        {
+            "id": 8,
+            "category": "Nail Artistry",
+            "price": "\u20b91,500+",
+            "highlights": "Extensions, Hand-painted Art, 3D Accents",
+            "description": "Exquisite nail art and extensions to express your unique style.",
+            "title": "Nails",
+            "duration": "60 - 90 Mins",
+            "image_name": null
+        },
+        {
+            "id": 10,
+            "category": "Hair Artistry",
+            "price": "\u20b91,500+",
+            "highlights": "Custom Updos, Blowout, Event Styling",
+            "description": "Expert hair styling for every occasion, from elegant updos to modern trends.",
+            "title": "Hair Styling",
+            "duration": "30 - 45 Mins",
+            "image_name": null
+        },
+        {
+            "id": 11,
+            "category": "Skin Clear",
+            "price": "\u20b9500+",
+            "highlights": "Painless Procedure, Quick Recovery, No Scarring",
+            "description": "Safe and effective removal of warts using advanced dermatological techniques.",
+            "title": "Wart Removal",
+            "duration": "15 - 30 Mins",
+            "image_name": null
+        },
+        {
+            "id": 12,
+            "category": "Specialized Care",
+            "price": "\u20b9299+",
+            "highlights": "Safe & Hygienic, Expert Piercer, Aftercare Support",
+            "description": "Safe and precise ear piercing using professional, sterilized equipment.",
+            "title": "Ear Piercing",
+            "duration": "15 - 30 Mins",
+            "image_name": null
+        },
+        {
+            "id": 3,
+            "category": "Skin Wellness",
+            "price": "\u20b9400+",
+            "highlights": "Deep Cleansing, Hydrating Mask, Facial Massage",
+            "description": "Maintain radiant and healthy skin with our personalized skincare solutions.",
+            "title": "Skin Care",
+            "duration": "45 - 60 Mins",
+            "image_name": null
+        },
+        {
+            "id": 2,
+            "category": "Facial Treatment",
+            "price": "\u20b91,250+",
+            "highlights": "Vitamin C Infusion, Anti-aging",
+            "description": "Refresh and rejuvenate your skin with our advanced facial therapies.",
+            "title": "Facial Treatment",
+            "duration": "60 - 90 Mins",
+            "image_name": null
+        },
+        {
+            "id": 25,
+            "category": "Scalp Care",
+            "price": "\u20b95,000+",
+            "highlights": "",
+            "description": "",
+            "title": "Lice Treatment",
+            "duration": "45 - 60 Min",
+            "image_name": ""
+        }
+    ],
+    "testimonials": [
+        {
+            "quote": "Visited Zen Tonez Salon with my wife and was truly impressed. The layer cutting and hairstyling were perfect. Stylist Yogapriya is skilled, friendly, and understands exactly what you want. Highly recommend for a stylish look in Trichy.",
+            "service": "Layer Cut & Styling",
+            "image_name": "",
+            "name": "Manoj Jeevagan",
+            "id": 2,
+            "rating": 5
+        },
+        {
+            "quote": "I wanted a layer cut and Yogapriya did exactly what I wanted. Good ambience with a warm gesture. She is really talented.",
+            "service": "Layer Cut",
+            "image_name": "",
+            "name": "Meenakshi Janakiram",
+            "id": 3,
+            "rating": 5
+        },
+        {
+            "quote": "Facial service from Yoga was amazing. She explained each step clearly and the massage was very relaxing. My skin felt fresh and glowing. Eyebrow threading was done perfectly with a natural shape.",
+            "service": "Facial & Threading",
+            "image_name": "",
+            "name": "Joe Anjali",
+            "id": 4,
+            "rating": 5
+        },
+        {
+            "quote": "Sarthaj did a great job. I went for facial, haircut, and eyebrows \u2014 everything was very good. Neat and clean services. Excellent experience.",
+            "service": "Facial & Haircut",
+            "image_name": "",
+            "name": "Dharshini Malavika",
+            "id": 5,
+            "rating": 5
+        },
+        {
+            "quote": "Very satisfied! Eyebrow threading was done very well and almost pain-free. I was never satisfied with other salons before, but here the result was perfect.",
+            "service": "Threading",
+            "image_name": "",
+            "name": "Jenifer LD",
+            "id": 6,
+            "rating": 5
+        },
+        {
+            "quote": "Layer haircut, hair spa, and eyebrow services were excellent. Very good service.",
+            "service": "Hair Spa & Cut",
+            "image_name": "",
+            "name": "Vicky Sachithanantham",
+            "id": 7,
+            "rating": 5
+        },
+        {
+            "quote": "I had an amazing experience. Threading was done neatly and painlessly. Ms. Sarthaj is polite, professional, and made me feel very comfortable.",
+            "service": "Threading",
+            "image_name": "",
+            "name": "Sowmi Selvam",
+            "id": 8,
+            "rating": 5
+        },
+        {
+            "quote": "Facial and threading services were very good. Yogapriya\u2019s service was excellent.",
+            "service": "Facial & Threading",
+            "image_name": "",
+            "name": "Shyamaladevi Shyamala",
+            "id": 9,
+            "rating": 5
+        },
+        {
+            "quote": "I visited this salon and had a wonderful experience. The hair spa was exactly as I wanted. Jerlin was polite and efficient.",
+            "service": "Hair Spa",
+            "image_name": "",
+            "name": "Priyabanthavi Sivasubramanian",
+            "id": 10,
+            "rating": 5
+        },
+        {
+            "quote": "Jerlin did wonderful work. She is very friendly and skillful. Great service!",
+            "service": "Salon Service",
+            "image_name": "",
+            "name": "Gopi Harini",
+            "id": 11,
+            "rating": 5
+        },
+        {
+            "quote": "Excellent service by Revathi team. The staff are experienced and the salon atmosphere is very good.",
+            "service": "Salon Service",
+            "image_name": "",
+            "name": "Malathi Vinoth",
+            "id": 12,
+            "rating": 5
+        },
+        {
+            "quote": "The service was fantastic. Everyone was welcoming and kind. They truly care about their clients.",
+            "service": "Salon Service",
+            "image_name": "",
+            "name": "Thulasi Anand",
+            "id": 13,
+            "rating": 5
+        },
+        {
+            "quote": "Yoga gave me a very nice hair spa session. Her service was very good.",
+            "service": "Hair Spa",
+            "image_name": "",
+            "name": "Manesa Manesa",
+            "id": 14,
+            "rating": 5
+        },
+        {
+            "quote": "I visited Zen Tonez Salon for haircut and facial. Sarthaj handled everything with care and suggested the right services for my skin and hair. Overall, the service was excellent and I highly recommend it.",
+            "service": "Haircut & Facial",
+            "image_name": "",
+            "name": "Sharmi Kalai",
+            "id": 15,
+            "rating": 5
+        },
+        {
+            "quote": "I got a layer haircut from Yogapriya. The service was very good. The staff are polite and handle customers very nicely.",
+            "service": "Layer Cut",
+            "image_name": "",
+            "name": "Swarnanjali Nagarajan",
+            "id": 16,
+            "rating": 5
+        },
+        {
+            "quote": "Yasmin did dandruff treatment and a bouncy layer cut. She explained everything well and took great care. Very satisfying service.",
+            "service": "Layer Cut & Treatment",
+            "image_name": "",
+            "name": "Senthil Nathan",
+            "id": 17,
+            "rating": 5
+        },
+        {
+            "quote": "Anti-dandruff treatment by Yoga was very good.",
+            "service": "Anti-Dandruff Treatment",
+            "image_name": "",
+            "name": "Iswarya Sundaresan",
+            "id": 18,
+            "rating": 5
+        },
+        {
+            "quote": "I was confused about choosing a salon, but this was the best decision. Thank you Yoga Akka for the amazing care and excellent service.",
+            "service": "Salon Service",
+            "image_name": "",
+            "name": "Divya Sri",
+            "id": 19,
+            "rating": 5
+        },
+        {
+            "quote": "Updated quote",
+            "service": "Layer Cut & Hair Botox",
+            "image_name": "",
+            "name": "Kowsalya Shinchan UPDATED",
+            "id": 1,
+            "rating": 5
+        }
+    ],
+    "gallery": [
+        {
+            "title": "Skin Care",
+            "id": 2,
+            "description": "Advanced rituals for a timeless, youthful glow.",
+            "file_name": "661194d96cd3481ea00026ce5402a04c.webp",
+            "is_magazine": true
+        },
+        {
+            "title": "Facial Treatment",
+            "id": 3,
+            "description": "Finding harmony in the heart of artisanal beauty.",
+            "file_name": "45274f378ca549bfa0b5d4b7cc18cef7.webp",
+            "is_magazine": true
+        },
+        {
+            "title": "Manicure Deluxe",
+            "id": 4,
+            "description": "Precision couture for your delicate fingertips.",
+            "file_name": "e448d3f519e64967a6576e83e069348d.webp",
+            "is_magazine": true
+        },
+        {
+            "title": "Pedicure Care",
+            "id": 5,
+            "description": "Relaxing and rejuvenating sole therapies.",
+            "file_name": "01324d9a860046d8868e1e6de8a96b25.webp",
+            "is_magazine": true
+        },
+        {
+            "title": "Hair Spa",
+            "id": 6,
+            "description": "Bespoke artistry for the crown you never take off.",
+            "file_name": "1cb2084c5a574fc5a8688abb06f7bcda.webp",
+            "is_magazine": true
+        },
+        {
+            "title": "Bridal Makeup",
+            "id": 7,
+            "description": "Ethereal transformation for your biggest day.",
+            "file_name": "855a1ee318f149aeb5971010b5562f66.webp",
+            "is_magazine": true
+        },
+        {
+            "title": "Nail Art",
+            "id": 8,
+            "description": "Precision and detail for your fingertips.",
+            "file_name": "15f2916d1bfc48e382d3bc73c28ae214.webp",
+            "is_magazine": true
+        },
+        {
+            "title": "Lice Treatment",
+            "id": 9,
+            "description": "Holistic and gentle care therapies.",
+            "file_name": "fa28d16ca23f4159bdf27c7e0e897e40.webp",
+            "is_magazine": true
+        },
+        {
+            "title": "Glow Facial",
+            "id": 11,
+            "description": "Transformative rituals for your skin.",
+            "file_name": "a3309e1f208f4c948ebe310272a396d8.webp",
+            "is_magazine": false
+        },
+        {
+            "title": "Hair Rejuvenation",
+            "id": 12,
+            "description": "Premium hair care treatments.",
+            "file_name": "14672d2295154ba3a9be852529edccc8.webp",
+            "is_magazine": false
+        },
+        {
+            "title": "Bridal Look",
+            "id": 13,
+            "description": "A timeless masterpiece.",
+            "file_name": "ae903a0035f14964bd5306b857f2bbff.webp",
+            "is_magazine": false
+        },
+        {
+            "title": "Acrylic Nails",
+            "id": 14,
+            "description": "Fine art of beauty.",
+            "file_name": "f0d4063fcb3046ea8567e56cc1747676.webp",
+            "is_magazine": false
+        },
+        {
+            "title": "Classic Manicure",
+            "id": 15,
+            "description": "Bespoke nail artistry.",
+            "file_name": "5c10015098a84ce5940769fc1462d820.webp",
+            "is_magazine": false
+        }
+    ],
+    "reservations": [
+        {
+            "date": "2026-05-24",
+            "name": "Guest",
+            "phone": "WhatsApp",
+            "created_at": "2026-05-23 16:11:14.180878",
+            "id": 1,
+            "time": "10:15 AM",
+            "service": "hair-spa",
+            "notes": ""
+        },
+        {
+            "date": "2026-05-24",
+            "name": "Guest",
+            "phone": "WhatsApp",
+            "created_at": "2026-05-23 16:11:18.984023",
+            "id": 2,
+            "time": "10:15 AM",
+            "service": "hair-spa",
+            "notes": ""
+        },
+        {
+            "date": "2026-05-24",
+            "name": "Guest",
+            "phone": "WhatsApp",
+            "created_at": "2026-05-23 16:12:06.865597",
+            "id": 3,
+            "time": "02:30 PM",
+            "service": "hair-spa",
+            "notes": ""
+        },
+        {
+            "date": "2026-05-24",
+            "name": "Guest",
+            "phone": "WhatsApp",
+            "created_at": "2026-05-23 16:15:39.075650",
+            "id": 4,
+            "time": "03:15 PM",
+            "service": "hair-spa",
+            "notes": ""
+        },
+        {
+            "date": "2026-05-23",
+            "name": "Guest",
+            "phone": "WhatsApp",
+            "created_at": "2026-05-23 16:15:51.687200",
+            "id": 5,
+            "time": "04:30 PM",
+            "service": "hair-spa",
+            "notes": ""
+        },
+        {
+            "date": "2026-05-25",
+            "name": "Guest",
+            "phone": "WhatsApp",
+            "created_at": "2026-05-23 16:44:45.775815",
+            "id": 6,
+            "time": "02:30 PM",
+            "service": "hair-spa",
+            "notes": ""
+        },
+        {
+            "date": "2026-05-25",
+            "name": "Guest",
+            "phone": "WhatsApp",
+            "created_at": "2026-05-23 16:45:19.498638",
+            "id": 7,
+            "time": "10:15 AM",
+            "service": "hair-spa",
+            "notes": ""
+        },
+        {
+            "date": "2026-05-23",
+            "name": "Guest",
+            "phone": "WhatsApp",
+            "created_at": "2026-05-23 16:52:12.350834",
+            "id": 8,
+            "time": "05:00 PM",
+            "service": "bridal",
+            "notes": ""
+        },
+        {
+            "date": "2026-05-24",
+            "name": "Guest",
+            "phone": "WhatsApp",
+            "created_at": "2026-05-23 16:57:52.713440",
+            "id": 9,
+            "time": "11:30 AM",
+            "service": "hair-spa",
+            "notes": ""
+        },
+        {
+            "date": "2026-05-25",
+            "name": "akash",
+            "phone": "1234567890",
+            "created_at": "2026-05-23 17:42:13.331768",
+            "id": 10,
+            "time": "10:30 AM",
+            "service": "hair-spa",
+            "notes": ""
+        }
+    ],
+    "contacts": [
+        {
+            "name": "akash",
+            "id": 1,
+            "service": "Facial",
+            "message": "hi",
+            "phone": "123456789",
+            "email": "akash@gmail.com",
+            "created_at": "2026-05-15 12:44:43.571701"
+        },
+        {
+            "name": "aksh",
+            "id": 2,
+            "service": "Lice Treatment",
+            "message": "test",
+            "phone": "123456789",
+            "email": "aksh@gmail.com",
+            "created_at": "2026-05-15 16:49:54.207094"
+        },
+        {
+            "name": "akash",
+            "id": 3,
+            "service": "Skin Care",
+            "message": "hi ",
+            "phone": "1234567890",
+            "email": "akash@gmail.com",
+            "created_at": "2026-05-15 16:55:34.869266"
+        },
+        {
+            "name": "akash",
+            "id": 4,
+            "service": "Manicure",
+            "message": "hi",
+            "phone": "123456789",
+            "email": "aksah@gmail.com",
+            "created_at": "2026-05-15 16:57:56.053820"
+        },
+        {
+            "name": "akash",
+            "id": 5,
+            "service": "Hair Styling",
+            "message": "hi",
+            "phone": "8489320906fghj",
+            "email": "akash@gmail.com",
+            "created_at": "2026-05-15 17:02:54.645687"
+        },
+        {
+            "name": "akash",
+            "id": 6,
+            "service": "Skin Care",
+            "message": "test",
+            "phone": "1234567899",
+            "email": "akash@gmail.com",
+            "created_at": "2026-05-15 17:38:20.591933"
+        },
+        {
+            "name": "akash",
+            "id": 7,
+            "service": "Hair Spa",
+            "message": "gu",
+            "phone": "34567",
+            "email": "akash@gmail.com",
+            "created_at": "2026-05-30 17:28:08.139298"
+        },
+        {
+            "name": "akash",
+            "id": 8,
+            "service": "Facial",
+            "message": "hi",
+            "phone": "1212345678",
+            "email": "akash@gmail.com",
+            "created_at": "2026-05-30 17:31:43.456523"
+        },
+        {
+            "name": "akash",
+            "id": 9,
+            "service": "Skin Care",
+            "message": "hi\n",
+            "phone": "1234567894",
+            "email": "akash@gmail.com",
+            "created_at": "2026-06-04 12:14:15.360668"
+        }
+    ],
+    "admin_users": [
+        {
+            "username": "admin",
+            "id": 1,
+            "password_hash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918"
+        }
+    ]
+}
