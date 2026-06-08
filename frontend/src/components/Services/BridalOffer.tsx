@@ -6,16 +6,16 @@ import bridalOfferImage from "../../assets/bridal_offer.png";
 
 interface Promotion {
   id: number;
-  tagText: string;
-  titlePart1: string;
-  titlePart2: string;
+  tag_text: string;
+  title_part1: string;
+  title_part2: string;
   description: string;
-  offerTag: string;
-  offerTitle: string;
-  discountValue: string;
-  discountSuffix: string;
+  offer_tag: string;
+  offer_title: string;
+  discount_value: string;
+  discount_suffix: string;
   features: string;
-  imageName: string;
+  image_name: string;
 }
 
 const BridalOffer: React.FC = () => {
@@ -41,21 +41,21 @@ const BridalOffer: React.FC = () => {
   }, []);
 
   // Use dynamic data if available, otherwise use fallback static data
-  const tagText = promotion?.tagText || "Exclusive Loyalty Reward";
-  const titlePart1 = promotion?.titlePart1 || "Bridal";
-  const titlePart2 = promotion?.titlePart2 || "Makeup Offer";
+  const tagText = promotion?.tag_text || "Exclusive Loyalty Reward";
+  const titlePart1 = promotion?.title_part1 || "Bridal";
+  const titlePart2 = promotion?.title_part2 || "Makeup Offer";
   const description = promotion?.description || "A special celebration of our regular clients. Experience the peak of bridal artistry with an exclusive reward.";
-  const offerTag = promotion?.offerTag || "Limited Time";
-  const offerTitle = promotion?.offerTitle || "Loyalty Benefit";
-  const discountValue = promotion?.discountValue || "20%";
-  const discountSuffix = promotion?.discountSuffix || "OFF";
+  const offerTag = promotion?.offer_tag || "Limited Time";
+  const offerTitle = promotion?.offer_title || "Loyalty Benefit";
+  const discountValue = promotion?.discount_value || "20%";
+  const discountSuffix = promotion?.discount_suffix || "OFF";
   
   const featuresList = promotion?.features 
     ? promotion.features.split(',').map(f => f.trim()) 
     : ["Exclusive for Regular Customers", "Complete Bridal Transformation"];
 
-  const imageUrl = promotion?.imageName 
-    ? `http://localhost:8081/api/gallery/uploads/${promotion.imageName}` 
+  const imageUrl = promotion?.image_name 
+    ? `http://localhost:8081/api/gallery/images/${promotion.image_name.replace(/"/g, '')}` 
     : bridalOfferImage;
 
   return (

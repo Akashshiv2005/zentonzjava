@@ -13,6 +13,7 @@ export type MediaItemType = {
     url: string;
     span: string;
     objectPosition?: string;
+    objectFit?: "cover" | "contain";
 }
 // MediaItem component renders either a video or image based on item.type
 const MediaItem = ({ item, className, onClick }: { item: MediaItemType, className?: string, onClick?: () => void }) => {
@@ -125,8 +126,11 @@ const MediaItem = ({ item, className, onClick }: { item: MediaItemType, classNam
         <img
             src={item.url} // Image source URL
             alt={item.title} // Alt text for the image
-            className={`${className} object-cover cursor-pointer`} // Style the image
-            style={{ objectPosition: item.objectPosition || 'center top' }}
+            className={`${className} cursor-pointer`} // Style the image
+            style={{ 
+                objectPosition: item.objectPosition || 'center top',
+                objectFit: item.objectFit || 'cover' 
+            }}
             onClick={onClick} // Trigger onClick when the image is clicked
             loading="lazy" // Lazy load the image for performance
             decoding="async" // Decode the image asynchronously
@@ -326,6 +330,10 @@ const InteractiveBentoGallery: React.FC<InteractiveBentoGalleryProps> = ({ media
     const [selectedItem, setSelectedItem] = useState<MediaItemType | null>(null);
     const [items, setItems] = useState(mediaItems);
     const [isDragging, setIsDragging] = useState(false);
+
+    useEffect(() => {
+        setItems(mediaItems);
+    }, [mediaItems]);
 
     return (
         <div className="container mx-auto px-4 py-8 max-w-6xl">

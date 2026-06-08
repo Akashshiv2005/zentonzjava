@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Scissors, Droplets, CheckCircle, ChevronLeft, ShieldCheck, User, Phone, Clock } from 'lucide-react';
 
@@ -10,7 +10,7 @@ type ServiceType = {
   icon: React.ReactNode;
 };
 
-const SERVICES: ServiceType[] = [
+const SERVICES_FALLBACK: ServiceType[] = [
   { id: 'hair-spa', name: 'Artisan Hair Spa', duration: '45 - 60 Min', price: '₹1,049', icon: <Droplets size={24} /> },
   { id: 'facial', name: 'Premium Facial', duration: '60 - 90 Min', price: '₹1,150', icon: <Sparkles size={24} /> },
   { id: 'skincare', name: 'Skin Care Ritual', duration: '45 - 60 Min', price: '₹400', icon: <Droplets size={24} /> },
@@ -41,6 +41,41 @@ export const BookingSystem: React.FC = () => {
     time: null,
     user: { name: '', phone: '', notes: '' }
   });
+
+  const [services, setServices] = useState<ServiceType[]>(SERVICES_FALLBACK);
+
+  useEffect(() => {
+    fetch('http://localhost:8081/api/services')
+      .then(res => res.json())
+      .then((fetchedData: any[]) => {
+        const merged = SERVICES_FALLBACK.map(fs => {
+           let matchTitle = '';
+           if (fs.id === 'hair-spa') matchTitle = 'Hair Care';
+           else if (fs.id === 'facial') matchTitle = 'Facial Treatment';
+           else if (fs.id === 'skincare') matchTitle = 'Skin Care';
+           else if (fs.id === 'hair-styling') matchTitle = 'Hair Styling';
+           else if (fs.id === 'nails') matchTitle = 'Nails';
+           else if (fs.id === 'manicure' || fs.id === 'pedicure') matchTitle = 'Manicure & Pedicure';
+           else if (fs.id === 'lice-treatment') matchTitle = 'Lice Removal';
+           else if (fs.id === 'bridal') matchTitle = 'Bridal Makeup';
+           else if (fs.id === 'wart-removal') matchTitle = 'Wart Removal';
+           else if (fs.id === 'ear-piercing') matchTitle = 'Ear Piercing';
+
+           const match = fetchedData.find(d => {
+             const dTitle = d.title?.trim().toLowerCase() || '';
+             const dCat = d.category?.trim().toLowerCase() || '';
+             const sTitle = matchTitle.trim().toLowerCase();
+             return dTitle === sTitle || dCat === sTitle;
+           });
+           if (match) {
+              return { ...fs, price: match.price, duration: match.duration };
+           }
+           return fs;
+        });
+        setServices(merged);
+      })
+      .catch(console.error);
+  }, []);
 
   const nextStep = () => setStep(s => Math.min(s + 1, 6));
   const prevStep = () => setStep(s => Math.max(s - 1, 1));
@@ -98,7 +133,7 @@ export const BookingSystem: React.FC = () => {
         <p className="text-on-surface/60 text-sm mt-2 font-medium">Choose your transformation journey</p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {SERVICES.map(service => {
+        {services.map(service => {
           const isSelected = data.service?.id === service.id;
           return (
             <div

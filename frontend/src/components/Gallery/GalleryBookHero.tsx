@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -10,8 +10,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 const GalleryBookHero: React.FC = () => {
   const heroRef = useRef<HTMLDivElement>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
+    if (!isLoaded) return;
+    
     const mm = gsap.matchMedia();
     const bookHero = heroRef.current;
 
@@ -37,7 +40,7 @@ const GalleryBookHero: React.FC = () => {
             scrollTrigger: {
               trigger: bookHero,
               start: "top top",
-              end: isMobile ? "+=500%" : "+=400%",
+              end: isMobile ? `+=${pages.length * 100}%` : `+=${pages.length * 80}%`,
               scrub: 1,
               pin: true,
               pinSpacing: true,
@@ -49,23 +52,8 @@ const GalleryBookHero: React.FC = () => {
           // This ensures the open spread has equal gaps on both sides
           const shiftPercent = 60;
 
-          // Initial reset for stability - starts at center (0)
-          gsap.set(bookScaleContainer, { x: 0, xPercent: 0, scale: 1 });
-
-          // Entrance Animation for Desktop Only
-          if (!isMobile && !isTablet) {
-            tl.from(
-              bookScaleContainer,
-              {
-                y: 800,
-                scale: 0.2,
-                opacity: 0,
-                duration: 2.5,
-                ease: "expo.out",
-              },
-              0,
-            );
-          }
+          // Initial reset for stability - starts hidden at the bottom
+          gsap.set(bookScaleContainer, { x: 0, xPercent: 0, y: isMobile ? 400 : 800, scale: isMobile ? 0.6 : 0.4, opacity: 0 });
 
           // Fade out hero text, scroll guide and dark overlay at the start
           tl.to(
@@ -76,7 +64,7 @@ const GalleryBookHero: React.FC = () => {
             ],
             {
               opacity: 0,
-              y: -30,
+              y: -50,
               duration: 1.5,
               ease: "power2.inOut",
               stagger: 0.1, // Slightly staggered for a nicer feel
@@ -84,17 +72,19 @@ const GalleryBookHero: React.FC = () => {
             0,
           );
 
-          // Step 1: Expansion & Centering Shift (Replaces the pure scale step)
+          // Step 1: Fly up, fade in, expand & shift
           tl.to(
             bookScaleContainer,
             {
+              y: 0,
+              opacity: 1,
               xPercent: shiftPercent,
               scale: isMobile ? 1.2 : 1.3,
               duration: 2,
               ease: "power2.inOut",
               force3D: true,
             },
-            !isMobile && !isTablet ? 1 : 0.3, // Slight delay on mobile for cleaner fade
+            0.3, // Start as soon as text starts fading
           ).addLabel("expandEnd");
 
           // Step 2: Open Book (Starts strictly after expandEnd on mobile)
@@ -140,7 +130,7 @@ const GalleryBookHero: React.FC = () => {
         clearTimeout(timer);
         mm.revert();
       };
-  }, []);
+  }, [isLoaded]);
 
   return (
     <section
@@ -178,7 +168,9 @@ const GalleryBookHero: React.FC = () => {
         <div className="mouse-icon" />
         <span className="scroll-text">Scroll to Flip Chapters</span>
       </div>
-      <BookGallery />
+      <div className={`absolute inset-0 w-full h-full transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+        <BookGallery onLoaded={() => setIsLoaded(true)} />
+      </div>
     </section>
   );
 };

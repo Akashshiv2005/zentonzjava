@@ -336,11 +336,18 @@ const ServicesShowcase: React.FC = () => {
       .then(data => {
         if (data && data.length > 0) {
           const dynamicServices = data.map((s: any, idx: number) => {
-            const fallbackMatch = fallbackServices.find(f => 
-              f.category === s.category || 
-              f.title.toLowerCase().trim() === s.category.toLowerCase().trim() ||
+            let fallbackMatch = fallbackServices.find(f => 
               f.title.toLowerCase().trim() === s.title.toLowerCase().trim()
-            ) || fallbackServices[idx % fallbackServices.length];
+            );
+            if (!fallbackMatch) {
+              fallbackMatch = fallbackServices.find(f => 
+                f.category === s.category || 
+                f.title.toLowerCase().trim() === s.category.toLowerCase().trim()
+              );
+            }
+            if (!fallbackMatch) {
+              fallbackMatch = fallbackServices[idx % fallbackServices.length];
+            }
             return {
               id: 100 + s.id,
               title: s.title,
@@ -353,17 +360,31 @@ const ServicesShowcase: React.FC = () => {
               color: fallbackMatch.color,
               icon: fallbackMatch.icon,
               review: fallbackMatch.review,
-              clientName: fallbackMatch.clientName
+              clientName: fallbackMatch.clientName,
+              _originalId: fallbackMatch.id
             };
           });
 
-          // Only keep fallback services that haven't been overwritten by a dynamic service with the exact same title
-          const remainingFallbacks = fallbackServices.filter(f => 
-            !dynamicServices.some((d: any) => d.title.toLowerCase().trim() === f.title.toLowerCase().trim())
-          );
+          // Preserve the original order of fallbackServices
+          const orderedServices: any[] = [];
+          
+          fallbackServices.forEach(f => {
+            const matches = dynamicServices.filter(d => d._originalId === f.id);
+            if (matches.length > 0) {
+              orderedServices.push(...matches);
+            } else {
+              orderedServices.push(f);
+            }
+          });
 
-          // We sort to keep a nice order, maybe dynamic ones first
-          setServices([...dynamicServices, ...remainingFallbacks]);
+          // In case any dynamic service didn't match anything (which shouldn't happen with our modulo fallback, but just in case)
+          dynamicServices.forEach(d => {
+            if (!orderedServices.some(o => o.id === d.id)) {
+              orderedServices.push(d);
+            }
+          });
+
+          setServices(orderedServices);
         }
       })
       .catch(err => console.error("Error fetching services", err));

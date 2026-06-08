@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Save, X, Edit2, Trash2, Image as ImageIcon, Star } from 'lucide-react';
+import ConfirmModal from '../ui/ConfirmModal';
 
 interface Testimonial {
   id: number;
@@ -14,6 +15,7 @@ const AdminTestimonials: React.FC = () => {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState<number | null>(null);
   const [currentTestimonial, setCurrentTestimonial] = useState<Partial<Testimonial>>({
     name: '',
     service: '',
@@ -71,24 +73,27 @@ const AdminTestimonials: React.FC = () => {
     }
   };
 
-  const handleDelete = async (id: number) => {
-    if (!window.confirm("Are you sure you want to delete this Client Story?")) return;
-
+  const confirmDelete = async (id: number) => {
     try {
       await fetch(`http://localhost:8081/api/testimonials/${id}`, {
         method: 'DELETE',
       });
+      setItemToDelete(null);
       fetchTestimonials();
-      alert("Client story deleted successfully!");
     } catch (err) {
       console.error("Error deleting testimonial", err);
     }
+  };
+
+  const handleDelete = (id: number) => {
+    setItemToDelete(id);
   };
 
   const editTestimonial = (testimonial: Testimonial) => {
     setCurrentTestimonial(testimonial);
     setIsEditing(true);
     setSelectedFile(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const resetForm = () => {
@@ -240,6 +245,17 @@ const AdminTestimonials: React.FC = () => {
           </table>
         </div>
       </div>
+
+      <ConfirmModal 
+        isOpen={itemToDelete !== null}
+        message="Are you sure you want to delete this Client Story? This action cannot be undone."
+        onConfirm={() => {
+          if (itemToDelete !== null) {
+            confirmDelete(itemToDelete);
+          }
+        }}
+        onCancel={() => setItemToDelete(null)}
+      />
     </div>
   );
 };

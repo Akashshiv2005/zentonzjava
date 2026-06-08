@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Shield, Calendar, MessageSquare, Clock, Phone, RefreshCw, Gift } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import logo from '../assets/zentonez-logo.png';
+import { Shield, Calendar, MessageSquare, Clock, Phone, RefreshCw, Gift, Camera, Scissors, BookOpen } from 'lucide-react';
 import { AdminGallery } from '../components/Admin/AdminGallery';
+import { AdminMagazine } from '../components/Admin/AdminMagazine';
 import AdminServices from '../components/Admin/AdminServices';
 import AdminTestimonials from '../components/Admin/AdminTestimonials';
 import AdminPromotions from '../components/Admin/AdminPromotions';
@@ -16,9 +20,47 @@ interface Booking {
 }
 
 const Admin: React.FC = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return localStorage.getItem('zt_admin_token') !== null;
+  });
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'bookings' | 'stories' | 'services' | 'gallery' | 'promotions'>('bookings');
+  const [activeTab, setActiveTab] = useState<'bookings' | 'stories' | 'services' | 'gallery' | 'promotions' | 'magazine'>('bookings');
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoggingIn(true);
+    setLoginError('');
+    try {
+      const res = await fetch('http://localhost:8081/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: username.trim(), password: password.trim() })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        localStorage.setItem('zt_admin_token', data.token);
+        setIsAuthenticated(true);
+        fetchData();
+      } else {
+        setLoginError('Invalid credentials');
+      }
+    } catch (err) {
+      setLoginError('Server error. Please try again.');
+    } finally {
+      setIsLoggingIn(false);
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('zt_admin_token');
+    setIsAuthenticated(false);
+  };
 
   const fetchData = async () => {
     setLoading(true);
@@ -34,82 +76,239 @@ const Admin: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (isAuthenticated) {
+      fetchData();
+    }
+  }, [isAuthenticated]);
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-[#0a0a0a] selection:bg-primary/30 selection:text-white font-sans">
+        
+        {/* Background Image & Overlay */}
+        <div 
+          className="absolute inset-0 z-0 opacity-40 mix-blend-luminosity scale-105"
+          style={{
+            backgroundImage: 'url("https://images.unsplash.com/photo-1600948836101-f9ffda59d250?q=80&w=2036&auto=format&fit=crop")',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            filter: 'blur(4px)'
+          }}
+        />
+        <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent" />
+        <div className="absolute inset-0 z-0 bg-gradient-to-r from-[#0a0a0a] via-transparent to-[#0a0a0a]" />
+
+        {/* Floating Particles/Dust */}
+        <div className="absolute inset-0 pointer-events-none opacity-20 z-0" style={{ backgroundImage: 'url("https://img.freepik.com/premium-photo/white-dust-scratches-black-background_279525-2.jpg?w=640")', backgroundRepeat: 'repeat' }} />
+
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95, y: 30 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="relative z-10 w-full max-w-5xl mx-4 rounded-[2.5rem] overflow-hidden flex flex-col md:flex-row shadow-2xl shadow-black/50 border border-white/10 bg-black/40 backdrop-blur-3xl"
+        >
+          {/* Left Side - Branding */}
+          <div className="w-full md:w-5/12 p-10 md:p-14 flex flex-col justify-between relative overflow-hidden hidden md:flex border-r border-white/5 bg-gradient-to-br from-black/80 to-black/20">
+            <div className="absolute top-0 left-0 w-full h-full opacity-30 mix-blend-overlay">
+              <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=1974&auto=format&fit=crop" alt="Texture" className="w-full h-full object-cover" />
+            </div>
+            
+            <div className="relative z-10">
+              <motion.div 
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3, duration: 0.8 }}
+                className="bg-white/10 backdrop-blur-md p-4 rounded-2xl inline-block border border-white/20 shadow-xl"
+              >
+                <img src={logo} alt="Zen Tonez" className="h-10 object-contain brightness-0 invert" />
+              </motion.div>
+            </div>
+            
+            <div className="relative z-10 mt-20">
+              <motion.h2 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.8 }}
+                className="text-4xl lg:text-5xl font-black font-serif text-white leading-tight mb-4"
+              >
+                Exclusive <br/><span className="text-primary italic font-light">Access</span>
+              </motion.h2>
+              <motion.p 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.7, duration: 0.8 }}
+                className="text-white/50 text-sm font-medium leading-relaxed max-w-xs"
+              >
+                Welcome to the Zen Tonez command center. Authorize to orchestrate the ultimate beauty experience.
+              </motion.p>
+            </div>
+          </div>
+
+          {/* Right Side - Form */}
+          <div className="w-full md:w-7/12 p-8 sm:p-12 md:p-16 flex items-center justify-center relative bg-black/20">
+            <div className="w-full max-w-sm relative z-10">
+              
+              {/* Mobile Header (Hidden on Desktop) */}
+              <div className="md:hidden text-center mb-10">
+                <div className="bg-white/10 backdrop-blur-md p-3 rounded-2xl inline-block border border-white/20 mb-6">
+                  <img src={logo} alt="Zen Tonez" className="h-8 object-contain brightness-0 invert" />
+                </div>
+                <h1 className="text-2xl font-black font-serif text-white">Admin Portal</h1>
+                <p className="text-white/40 text-xs mt-2 uppercase tracking-widest">Secure Login</p>
+              </div>
+
+              <div className="hidden md:block mb-10">
+                <div className="flex items-center gap-3 text-primary mb-2">
+                  <Shield size={20} />
+                  <span className="text-xs font-black uppercase tracking-[0.2em]">Secure Gateway</span>
+                </div>
+                <h3 className="text-2xl font-black text-white">Sign In</h3>
+              </div>
+
+              <form onSubmit={handleLogin} className="space-y-6">
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/50 ml-1">Username</label>
+                  <div className="relative">
+                    <input
+                      type="text"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary/50 focus:bg-white/10 transition-all placeholder:text-white/20"
+                      placeholder="admin"
+                      required
+                    />
+                  </div>
+                </div>
+                
+                <div className="space-y-1.5">
+                  <label className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/50 ml-1">Password</label>
+                  <div className="relative">
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary/50 focus:bg-white/10 transition-all placeholder:text-white/20"
+                      placeholder="••••••••"
+                      required
+                    />
+                  </div>
+                </div>
+                
+                <AnimatePresence>
+                  {loginError && (
+                    <motion.div 
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="text-[#ff5c5c] text-xs font-medium bg-[#ff5c5c]/10 p-4 rounded-xl border border-[#ff5c5c]/20 flex items-center justify-center gap-2"
+                    >
+                      {loginError}
+                      {loginError.includes('Invalid') && <span className="text-white/50 text-[10px]">(Did you restart the backend?)</span>}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
+                <button
+                  type="submit"
+                  disabled={isLoggingIn}
+                  className="group relative w-full bg-primary hover:bg-white text-black font-black uppercase tracking-widest py-4 rounded-2xl transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.2)] hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] disabled:opacity-50 disabled:cursor-not-allowed mt-2 overflow-hidden"
+                >
+                  <span className="relative z-10 flex items-center justify-center gap-2">
+                    {isLoggingIn ? (
+                      <span className="flex items-center gap-2">
+                        <RefreshCw size={16} className="animate-spin" /> Authenticating
+                      </span>
+                    ) : 'Enter Portal'}
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-[150%] group-hover:translate-x-[150%] transition-transform duration-700 ease-in-out" />
+                </button>
+              </form>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background text-on-surface font-sans selection:bg-primary-container selection:text-on-primary-container relative">
-      <div className="pt-32 pb-20 px-6 sm:px-10 max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
-          <div>
-            <h1 className="text-4xl font-black text-on-surface font-serif uppercase flex items-center gap-4">
-              <Shield className="text-primary w-10 h-10" />
-              Admin Command Center
+      
+      {/* Premium Admin Header */}
+      <div className="fixed top-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-2xl border-b border-on-surface/5 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-10 h-20 sm:h-24 flex items-center justify-between">
+          <div className="flex items-center gap-3 sm:gap-6">
+            {/* Clickable Logo with White Background for Visibility */}
+            <Link to="/" className="h-10 sm:h-12 w-auto bg-white/95 px-2 py-1.5 rounded-lg hover:scale-105 transition-transform duration-500 shadow-md">
+              <img src={logo} alt="ZenTonez Logo" className="h-full w-auto object-contain" />
+            </Link>
+            
+            <div className="w-px h-6 sm:h-8 bg-on-surface/10" />
+            
+            {/* Header Title (Visible on Mobile too) */}
+            <h1 className="text-sm sm:text-xl md:text-2xl font-black text-on-surface font-serif uppercase tracking-widest flex items-center gap-2 sm:gap-3">
+              <Shield className="text-primary w-4 h-4 sm:w-6 sm:h-6 hidden xs:block" />
+              <span className="hidden xs:inline">Admin Portal</span>
+              <span className="xs:hidden">Admin</span>
             </h1>
-            <p className="text-slate-400 mt-2 font-medium">Manage your rituals and client stories</p>
           </div>
-          
-          <button 
-            onClick={fetchData}
-            className="flex items-center gap-2 bg-on-surface/5 hover:bg-on-surface/10 text-on-surface px-6 py-3 rounded-2xl transition-all border border-white/10 font-bold"
-          >
-            <RefreshCw size={18} className={loading ? 'animate-spin' : ''} />
-            Refresh Data
-          </button>
+
+          <div className="flex items-center gap-4">
+            <span className="text-on-surface/30 text-[10px] font-black tracking-widest uppercase hidden md:inline-block">System Active</span>
+            <button 
+              onClick={handleLogout}
+              className="flex items-center gap-2 bg-on-surface/5 hover:bg-red-500/20 text-on-surface/60 hover:text-red-400 px-4 sm:px-6 py-2 sm:py-3 rounded-full transition-all font-black uppercase tracking-widest text-[10px] sm:text-xs"
+            >
+              <span className="hidden sm:inline">Logout</span>
+              <span className="sm:hidden">Exit</span>
+            </button>
+            <button 
+              onClick={fetchData}
+              className="flex items-center gap-2 bg-primary/10 hover:bg-primary border border-primary/20 text-primary hover:text-black px-4 sm:px-6 py-2 sm:py-3 rounded-full transition-all font-black uppercase tracking-widest text-[10px] sm:text-xs shadow-luxury"
+            >
+              <RefreshCw size={14} className={loading ? 'animate-spin' : ''} />
+              <span className="hidden sm:inline">Refresh Data</span>
+              <span className="sm:hidden">Refresh</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div className="pt-24 pb-20 px-6 sm:px-10 max-w-7xl mx-auto">
+        <div className="text-center mb-10">
+          <p className="text-primary/80 font-bold uppercase tracking-[0.2em] text-[10px] mb-2">Dashboard</p>
+          <h2 className="text-2xl sm:text-3xl font-black text-on-surface font-serif uppercase tracking-widest">Manage Your Kingdom</h2>
         </div>
 
-      {/* Tabs */}
-      <div className="flex gap-4 mb-8 overflow-x-auto pb-4 scrollbar-hide">
-        <button
-          onClick={() => setActiveTab('bookings')}
-          className={`px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-all whitespace-nowrap ${
-            activeTab === 'bookings' 
-            ? 'bg-primary text-background shadow-luxury' 
-            : 'bg-on-surface/5 text-on-surface/50 hover:bg-on-surface/10'
-          }`}
-        >
-          Bookings ({bookings.length})
-        </button>
-        <button
-          onClick={() => setActiveTab('stories')}
-          className={`px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-all whitespace-nowrap ${
-            activeTab === 'stories' 
-            ? 'bg-primary text-background shadow-luxury' 
-            : 'bg-on-surface/5 text-on-surface/50 hover:bg-on-surface/10'
-          }`}
-        >
-          Client Stories
-        </button>
-        <button
-          onClick={() => setActiveTab('services')}
-          className={`px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-all whitespace-nowrap ${
-            activeTab === 'services' 
-            ? 'bg-primary text-background shadow-luxury' 
-            : 'bg-on-surface/5 text-on-surface/50 hover:bg-on-surface/10'
-          }`}
-        >
-          Services
-        </button>
-        <button
-          onClick={() => setActiveTab('gallery')}
-          className={`px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-all whitespace-nowrap ${
-            activeTab === 'gallery' 
-            ? 'bg-primary text-background shadow-luxury' 
-            : 'bg-on-surface/5 text-on-surface/50 hover:bg-on-surface/10'
-          }`}
-        >
-          Gallery Images
-        </button>
-        <button
-          onClick={() => setActiveTab('promotions')}
-          className={`px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-all whitespace-nowrap flex items-center gap-2 ${
-            activeTab === 'promotions' 
-            ? 'bg-primary text-background shadow-luxury' 
-            : 'bg-on-surface/5 text-on-surface/50 hover:bg-on-surface/10'
-          }`}
-        >
-          <Gift size={14} /> Offers
-        </button>
+      {/* Tabs - Pill Design (Desktop Only) */}
+      <div className="hidden md:flex justify-center mb-12 w-full">
+        <div className="inline-flex items-center p-1.5 bg-[#2B2B2B]/90 backdrop-blur-md border border-white/10 rounded-full shadow-2xl shrink-0">
+          {[
+            { id: 'bookings', label: `Bookings (${bookings.length})` },
+            { id: 'stories', label: 'Client Stories' },
+            { id: 'services', label: 'Services' },
+            { id: 'gallery', label: 'Gallery Images' },
+            { id: 'magazine', label: 'Magazine Pages' },
+            { id: 'promotions', label: 'Offers', icon: <Gift size={14} className="inline mr-1" /> }
+          ].map(tab => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as any)}
+                className={`relative px-6 py-2.5 text-sm font-medium rounded-full transition-opacity whitespace-nowrap ${isActive ? 'text-white' : 'text-white hover:opacity-80'}`}
+              >
+                <span className="relative z-20 flex items-center">{tab.icon}{tab.label}</span>
+                {isActive && (
+                  <motion.div
+                    layoutId="admin-active-tab"
+                    className="absolute inset-0 bg-primary rounded-full shadow-luxury-soft z-10 mix-blend-difference"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       <div className="bg-on-surface/[0.02] border border-white/5 rounded-[2rem] overflow-hidden shadow-luxury-deep">
@@ -169,13 +368,54 @@ const Admin: React.FC = () => {
         )}
 
         {activeTab === 'gallery' && (
-          <AdminGallery />
+          <div className="bg-on-surface/5 rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+            <AdminGallery />
+          </div>
+        )}
+
+        {activeTab === 'magazine' && (
+          <div className="bg-on-surface/5 rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+            <AdminMagazine />
+          </div>
         )}
 
         {activeTab === 'promotions' && (
           <AdminPromotions />
         )}
       </div>
+      </div>
+
+      {/* Admin Mobile Bottom Navigation */}
+      <div className="md:hidden fixed bottom-0 left-0 w-full z-50 bg-background/95 backdrop-blur-xl border-t border-on-surface/5 pb-safe pt-2 px-2 overflow-x-auto scrollbar-hide">
+        <div className="flex justify-between items-center mb-2 min-w-[320px]">
+          {[
+            { id: 'bookings', label: 'Bookings', icon: Calendar },
+            { id: 'stories', label: 'Stories', icon: MessageSquare },
+            { id: 'services', label: 'Services', icon: Scissors },
+            { id: 'gallery', label: 'Gallery', icon: Camera },
+            { id: 'magazine', label: 'Magazine', icon: BookOpen },
+            { id: 'promotions', label: 'Offers', icon: Gift }
+          ].map((tab) => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as any)}
+                className={`flex flex-col items-center justify-center w-14 transition-colors ${
+                  isActive ? 'text-primary' : 'text-on-surface/40 hover:text-on-surface/80'
+                }`}
+              >
+                <div className={`p-1.5 rounded-xl transition-all ${isActive ? 'bg-primary/10' : ''}`}>
+                  <Icon size={20} strokeWidth={isActive ? 2.5 : 1.5} />
+                </div>
+                <span className={`text-[9px] font-black tracking-widest mt-1 ${isActive ? 'opacity-100' : 'opacity-70'}`}>
+                  {tab.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

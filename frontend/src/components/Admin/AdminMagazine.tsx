@@ -10,7 +10,7 @@ interface GalleryImage {
   is_magazine?: boolean;
 }
 
-export function AdminGallery() {
+export function AdminMagazine() {
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
@@ -29,10 +29,10 @@ export function AdminGallery() {
       const res = await fetch('http://localhost:8081/api/gallery');
       if (res.ok) {
         const data = await res.json();
-        setImages(data.filter((img: GalleryImage) => !img.is_magazine));
+        setImages(data.filter((img: GalleryImage) => img.is_magazine));
       }
     } catch (err) {
-      console.error("Failed to fetch gallery images", err);
+      console.error("Failed to fetch magazine images", err);
     } finally {
       setLoading(false);
     }
@@ -51,6 +51,7 @@ export function AdminGallery() {
     formData.append('file', file);
     formData.append('title', title);
     formData.append('description', description);
+    formData.append('is_magazine', 'true');
 
     try {
       const res = await fetch('http://localhost:8081/api/gallery/upload', {
@@ -123,7 +124,7 @@ export function AdminGallery() {
   return (
     <div className="p-6">
       <div className="bg-on-surface/5 p-6 rounded-2xl mb-8 border border-white/10">
-        <h3 className="text-xl font-bold mb-4 font-serif text-on-surface">Upload New Gallery Image</h3>
+        <h3 className="text-xl font-bold mb-4 font-serif text-on-surface">Upload New Magazine Page</h3>
         <form onSubmit={handleUpload} className="flex flex-col md:flex-row gap-4 items-start md:items-end">
           <div className="flex-1">
             <label className="block text-xs font-bold uppercase tracking-widest text-on-surface/60 mb-2">Title</label>
@@ -131,7 +132,7 @@ export function AdminGallery() {
               type="text"
               value={title} 
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. Couture Nails"
+              placeholder="e.g. Chapter 1"
               required
               className="w-full bg-background border border-white/10 rounded-xl px-4 py-3 text-on-surface outline-none focus:border-primary transition-colors"
             />
@@ -142,7 +143,7 @@ export function AdminGallery() {
               type="text"
               value={description} 
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="e.g. Precision and detail"
+              placeholder="e.g. The Beginning"
               className="w-full bg-background border border-white/10 rounded-xl px-4 py-3 text-on-surface outline-none focus:border-primary transition-colors"
             />
           </div>
@@ -175,7 +176,7 @@ export function AdminGallery() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {images.map((img) => (
             <div key={img.id} className="relative group rounded-2xl overflow-hidden border border-white/10 bg-on-surface/5 flex flex-col h-full">
-              <div className="relative overflow-hidden aspect-square bg-black/20">
+              <div className="relative overflow-hidden aspect-[3/4] bg-black/20">
                 <img 
                   src={`http://localhost:8081/api/gallery/images/${img.file_name}`} 
                   alt={img.file_name}
@@ -227,7 +228,7 @@ export function AdminGallery() {
           ))}
           {images.length === 0 && (
             <div className="col-span-full text-center py-12 text-on-surface/40">
-              No gallery images uploaded yet.
+              No magazine pages uploaded yet.
             </div>
           )}
         </div>
@@ -235,7 +236,7 @@ export function AdminGallery() {
 
       <ConfirmModal 
         isOpen={itemToDelete !== null}
-        message="Are you sure you want to delete this gallery image? This action cannot be undone."
+        message="Are you sure you want to delete this magazine page? This action cannot be undone."
         onConfirm={() => {
           if (itemToDelete !== null) {
             confirmDelete(itemToDelete);

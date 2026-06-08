@@ -58,6 +58,28 @@ const ScrollToTop = () => {
   return null;
 };
 
+const GlobalHeader = () => {
+  const { pathname } = useLocation();
+  if (pathname.startsWith('/admin')) return null;
+
+  return (
+    <>
+      <BrandLogo />
+      <DesktopNav />
+      <MobileBookingButton />
+    </>
+  );
+};
+
+const GlobalFooter = () => {
+  return (
+    <>
+      <Footer />
+      <MobileBottomNav />
+    </>
+  );
+};
+
 const App: React.FC = () => {
   return (
     <Router>
@@ -65,9 +87,7 @@ const App: React.FC = () => {
       <Scene3D />
       <ScrollToTop />
       <div className="flex flex-col min-h-screen bg-background relative">
-        <BrandLogo />
-        <DesktopNav />
-        <MobileBookingButton />
+        <GlobalHeader />
 
         <main className="grow">
             <Routes>
@@ -81,10 +101,8 @@ const App: React.FC = () => {
               <Route path="/admin" element={<Admin />} />
             </Routes>
         </main>
-        <Footer />
-
-        {/* Global Mobile Bottom Navigation */}
-        <MobileBottomNav />
+        
+        <GlobalFooter />
       </div>
     </Router>
   );

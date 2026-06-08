@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Plus, Trash2, Edit2, Check, X, Image as ImageIcon } from "lucide-react";
+import { Plus, Trash2, Edit2, Check, X, Image as ImageIcon, Gift } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import ConfirmModal from '../ui/ConfirmModal';
 
 interface Promotion {
   id: number;
@@ -19,7 +20,7 @@ interface Promotion {
 
 const API_BASE_URL = "http://localhost:8081/api/promotions";
 const UPLOAD_URL = "http://localhost:8081/api/promotions/upload";
-const GALLERY_IMAGE_URL = "http://localhost:8081/api/gallery/uploads";
+const GALLERY_IMAGE_URL = "http://localhost:8081/api/gallery/images";
 
 const defaultPromotion: Promotion = {
   id: 0,
@@ -36,12 +37,63 @@ const defaultPromotion: Promotion = {
   imageName: ""
 };
 
+const mapToCamel = (data: any): Promotion => ({
+  id: data.id,
+  isActive: data.is_active ?? data.isActive,
+  tagText: data.tag_text ?? data.tagText,
+  titlePart1: data.title_part1 ?? data.titlePart1,
+  titlePart2: data.title_part2 ?? data.titlePart2,
+  description: data.description,
+  offerTag: data.offer_tag ?? data.offerTag,
+  offerTitle: data.offer_title ?? data.offerTitle,
+  discountValue: data.discount_value ?? data.discountValue,
+  discountSuffix: data.discount_suffix ?? data.discountSuffix,
+  features: data.features,
+  imageName: data.image_name ?? data.imageName,
+});
+
+const mapToSnake = (data: any) => ({
+  id: data.id,
+  is_active: data.isActive,
+  tag_text: data.tagText,
+  title_part1: data.titlePart1,
+  title_part2: data.titlePart2,
+  description: data.description,
+  offer_tag: data.offerTag,
+  offer_title: data.offerTitle,
+  discount_value: data.discountValue,
+  discount_suffix: data.discountSuffix,
+  features: data.features,
+  image_name: data.imageName,
+});
+
+const LoadedImage = ({ src, alt, className }: { src: string, alt: string, className: string }) => {
+  const [loaded, setLoaded] = useState(false);
+  return (
+    <div className="relative w-full h-full overflow-hidden">
+      {!loaded && (
+        <div className="absolute inset-0 bg-surface-light animate-pulse flex items-center justify-center">
+           <span className="text-xs text-on-surface/30 font-bold uppercase tracking-widest">Loading Media...</span>
+        </div>
+      )}
+      <img 
+        src={src} 
+        alt={alt} 
+        className={`${className} transition-opacity duration-1000 ${loaded ? 'opacity-100 relative' : 'opacity-0 absolute inset-0'}`}
+        onLoad={() => setLoaded(true)}
+        loading="lazy"
+      />
+    </div>
+  );
+};
+
 const AdminPromotions: React.FC = () => {
   const [promotions, setPromotions] = useState<Promotion[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const [isEditing, setIsEditing] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState<number | null>(null);
   const [currentPromo, setCurrentPromo] = useState<Partial<Promotion>>({});
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -58,7 +110,7 @@ const AdminPromotions: React.FC = () => {
       const data = await response.json();
       
       if (data && data.length > 0) {
-        setPromotions(data);
+        setPromotions(data.map(mapToCamel));
       } else {
         // Show default data if DB is empty
         setPromotions([defaultPromotion]);
@@ -96,15 +148,19 @@ const AdminPromotions: React.FC = () => {
     setIsEditing(true);
   };
 
-  const handleDelete = async (id: number) => {
-    if (!window.confirm("Are you sure you want to delete this promotion?")) return;
+  const confirmDelete = async (id: number) => {
     try {
       const response = await fetch(`${API_BASE_URL}/${id}`, { method: "DELETE" });
       if (!response.ok) throw new Error("Failed to delete");
+      setItemToDelete(null);
       fetchPromotions();
     } catch (err: any) {
       alert(err.message);
     }
+  };
+
+  const handleDelete = (id: number) => {
+    setItemToDelete(id);
   };
 
   const handleToggleActive = async (promo: Promotion) => {
@@ -113,7 +169,7 @@ const AdminPromotions: React.FC = () => {
       const response = await fetch(`${API_BASE_URL}/${promo.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedPromo)
+        body: JSON.stringify(mapToSnake(updatedPromo))
       });
       if (!response.ok) throw new Error("Failed to update status");
       fetchPromotions();
@@ -148,7 +204,7 @@ const AdminPromotions: React.FC = () => {
       const response = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(promoToSave)
+        body: JSON.stringify(mapToSnake(promoToSave))
       });
 
       if (!response.ok) throw new Error("Failed to save promotion");
@@ -172,10 +228,6 @@ const AdminPromotions: React.FC = () => {
           <h2 className="text-xl font-bold text-on-surface">Manage Offers</h2>
           <p className="text-sm text-on-surface/60 mt-1">Create and manage your special offers and discounts.</p>
         </div>
-        <button onClick={handleAddNew} className="btn-premium flex items-center gap-2">
-          <Plus size={18} />
-          New Offer
-        </button>
       </div>
 
       <AnimatePresence mode="wait">
@@ -193,54 +245,58 @@ const AdminPromotions: React.FC = () => {
             
             <form onSubmit={handleSave} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-on-surface/60 uppercase tracking-wider">Top Tagline</label>
-                  <input type="text" value={currentPromo.tagText || ""} onChange={e => setCurrentPromo({...currentPromo, tagText: e.target.value})} className="input-field" placeholder="e.g. Exclusive Loyalty Reward" required />
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-on-surface/60 uppercase tracking-wider">Title Part 1</label>
-                    <input type="text" value={currentPromo.titlePart1 || ""} onChange={e => setCurrentPromo({...currentPromo, titlePart1: e.target.value})} className="input-field" placeholder="e.g. Bridal" required />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold text-primary uppercase tracking-wider">Title Part 2 (Highlight)</label>
-                    <input type="text" value={currentPromo.titlePart2 || ""} onChange={e => setCurrentPromo({...currentPromo, titlePart2: e.target.value})} className="input-field border-primary/30 focus:border-primary/60" placeholder="e.g. Makeup Offer" required />
-                  </div>
-                </div>
 
-                <div className="space-y-2 md:col-span-2">
-                  <label className="text-xs font-bold text-on-surface/60 uppercase tracking-wider">Description</label>
-                  <textarea value={currentPromo.description || ""} onChange={e => setCurrentPromo({...currentPromo, description: e.target.value})} className="input-field min-h-[80px]" placeholder="Brief description of the offer..." required />
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-on-surface/60 uppercase tracking-wider">Offer Tag (Small)</label>
-                  <input type="text" value={currentPromo.offerTag || ""} onChange={e => setCurrentPromo({...currentPromo, offerTag: e.target.value})} className="input-field" placeholder="e.g. Limited Time" required />
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-on-surface/60 uppercase tracking-wider">Offer Title</label>
-                  <input type="text" value={currentPromo.offerTitle || ""} onChange={e => setCurrentPromo({...currentPromo, offerTitle: e.target.value})} className="input-field" placeholder="e.g. Loyalty Benefit" required />
-                </div>
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className="text-xs font-bold text-on-surface/60 uppercase tracking-wider">Discount Value</label>
-                    <input type="text" value={currentPromo.discountValue || ""} onChange={e => setCurrentPromo({...currentPromo, discountValue: e.target.value})} className="input-field font-bold text-primary" placeholder="e.g. 20%" required />
+                    <input type="text" value={currentPromo.discountValue || ""} onChange={e => setCurrentPromo({...currentPromo, discountValue: e.target.value})} className="w-full bg-background border border-white/10 rounded-xl px-4 py-3 font-bold text-primary outline-none focus:border-primary transition-colors" placeholder="e.g. 20%" required />
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs font-bold text-on-surface/60 uppercase tracking-wider">Discount Suffix</label>
-                    <input type="text" value={currentPromo.discountSuffix || ""} onChange={e => setCurrentPromo({...currentPromo, discountSuffix: e.target.value})} className="input-field" placeholder="e.g. OFF" />
+                    <input type="text" value={currentPromo.discountSuffix || ""} onChange={e => setCurrentPromo({...currentPromo, discountSuffix: e.target.value})} className="w-full bg-background border border-white/10 rounded-xl px-4 py-3 text-on-surface outline-none focus:border-primary transition-colors" placeholder="e.g. OFF" />
                   </div>
                 </div>
 
-                <div className="space-y-2">
+                {/* <div className="space-y-2">
                   <label className="text-xs font-bold text-on-surface/60 uppercase tracking-wider">Features (Comma Separated)</label>
-                  <input type="text" value={currentPromo.features || ""} onChange={e => setCurrentPromo({...currentPromo, features: e.target.value})} className="input-field" placeholder="Feature 1, Feature 2" />
-                </div>
+                  <input type="text" value={currentPromo.features || ""} onChange={e => setCurrentPromo({...currentPromo, features: e.target.value})} className="w-full bg-background border border-white/10 rounded-xl px-4 py-3 text-on-surface outline-none focus:border-primary transition-colors" placeholder="Feature 1, Feature 2" />
+                </div> */}
 
-                
+                <div className="space-y-2 md:col-span-2">
+                  <label className="text-xs font-bold text-on-surface/60 uppercase tracking-wider">Offer Background Image</label>
+                  <input 
+                    type="file" 
+                    accept="image/*"
+                    onChange={e => setSelectedFile(e.target.files?.[0] || null)}
+                    className="w-full bg-background border border-white/10 rounded-xl px-4 py-3 text-on-surface outline-none focus:border-primary transition-colors file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-primary/20 file:text-primary hover:file:bg-primary/30 file:transition-colors cursor-pointer" 
+                  />
+                  
+                  {/* Image Preview */}
+                  <div className="mt-4">
+                    {selectedFile ? (
+                      <div className="relative inline-block w-full">
+                        <LoadedImage 
+                          src={URL.createObjectURL(selectedFile)} 
+                          alt="New preview" 
+                          className="h-32 w-full rounded-xl object-cover border border-white/10 shadow-sm"
+                        />
+                        <span className="absolute -top-2 -right-2 bg-primary text-on-primary text-[10px] font-bold px-2 py-1 rounded-full shadow-md z-10">
+                          NEW
+                        </span>
+                      </div>
+                    ) : currentPromo.imageName ? (
+                      <div className="relative inline-block w-full">
+                        <LoadedImage 
+                          src={`${GALLERY_IMAGE_URL}/${currentPromo.imageName.replace(/"/g, '')}`} 
+                          alt="Current image" 
+                          className="h-32 w-full rounded-xl object-cover border border-white/10 shadow-sm"
+                        />
+                        <p className="text-xs text-on-surface/50 mt-2">Current image will be kept if no new file is selected.</p>
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
                 
                 <div className="space-y-2 md:col-span-2 flex items-center gap-3">
                   <input 
@@ -276,46 +332,44 @@ const AdminPromotions: React.FC = () => {
               promotions.map(promo => (
                 <motion.div
                   key={promo.id}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className={`bg-surface-light rounded-2xl overflow-hidden border ${promo.isActive ? 'border-primary shadow-[0_0_15px_rgba(201,162,74,0.1)]' : 'border-white/5'}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={`relative bg-surface rounded-2xl ${promo.isActive ? 'border-2 border-primary shadow-[0_10px_30px_rgba(201,162,74,0.15)]' : 'border border-on-surface/10'}`}
                 >
-                  <div className="h-32 relative bg-surface-dim overflow-hidden">
+                  <div className={`relative bg-surface-dim rounded-t-2xl overflow-hidden ${promo.imageName ? 'min-h-[200px]' : 'h-48'}`}>
                     {promo.imageName ? (
-                      <img src={`${GALLERY_IMAGE_URL}/${promo.imageName}`} alt={promo.titlePart1} className="w-full h-full object-cover opacity-60" />
+                      <LoadedImage src={`${GALLERY_IMAGE_URL}/${promo.imageName.replace(/"/g, '')}`} alt="Offer background" className="w-full h-auto block min-h-[200px] object-cover" />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-on-surface/20">
-                        <ImageIcon size={32} />
+                        <ImageIcon size={48} />
                       </div>
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-surface-light to-transparent" />
-                    <div className="absolute bottom-3 left-4">
-                      <div className="text-[10px] font-bold text-primary uppercase tracking-widest">{promo.tagText}</div>
-                      <div className="text-xl font-black">{promo.titlePart1} <span className="text-primary">{promo.titlePart2}</span></div>
-                    </div>
                   </div>
                   
                   <div className="p-5 space-y-4">
-                    <div className="flex justify-between items-center p-3 bg-surface rounded-xl border border-white/5">
-                      <div>
-                        <div className="text-[10px] text-on-surface/50 uppercase font-bold">{promo.offerTitle}</div>
-                        <div className="text-xl font-black text-primary">{promo.discountValue} <span className="text-sm text-on-surface/50">{promo.discountSuffix}</span></div>
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-3xl font-black text-primary">{promo.discountValue}</span>
+                        <span className="text-sm font-bold text-on-surface/50">{promo.discountSuffix}</span>
                       </div>
                       <button 
                         onClick={() => handleToggleActive(promo)}
-                        className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest transition-colors ${promo.isActive ? 'bg-primary/20 text-primary border border-primary/30' : 'bg-surface-dim text-on-surface/40 hover:text-on-surface'}`}
+                        className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest transition-colors ${promo.isActive ? 'bg-primary text-on-primary shadow-lg shadow-primary/20' : 'bg-surface-dim text-on-surface/40 hover:text-on-surface'}`}
                       >
                         {promo.isActive ? 'Active' : 'Set Active'}
                       </button>
                     </div>
 
-                    <div className="flex justify-end gap-2 pt-2">
-                      <button onClick={() => handleEdit(promo)} className="p-2 rounded-lg bg-white/5 text-on-surface/60 hover:text-white hover:bg-white/10 transition-colors" title="Edit">
-                        <Edit2 size={16} />
-                      </button>
-                      <button onClick={() => handleDelete(promo.id)} className="p-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors" title="Delete">
-                        <Trash2 size={16} />
-                      </button>
+                    <div className="flex justify-between items-center pt-4 border-t border-white/5">
+                      <span className="text-xs text-on-surface/40 font-medium">Offer #{promo.id}</span>
+                      <div className="flex gap-2">
+                        <button onClick={() => handleEdit(promo)} className="p-2 rounded-lg bg-surface hover:bg-white/10 text-on-surface/60 hover:text-white transition-colors shadow-sm" title="Edit">
+                          <Edit2 size={16} />
+                        </button>
+                        <button onClick={() => handleDelete(promo.id)} className="p-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors shadow-sm" title="Delete">
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </motion.div>
@@ -324,6 +378,17 @@ const AdminPromotions: React.FC = () => {
           </div>
         )}
       </AnimatePresence>
+
+      <ConfirmModal 
+        isOpen={itemToDelete !== null}
+        message="Are you sure you want to delete this promotion? This action cannot be undone."
+        onConfirm={() => {
+          if (itemToDelete !== null) {
+            confirmDelete(itemToDelete);
+          }
+        }}
+        onCancel={() => setItemToDelete(null)}
+      />
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 import skinImage from "../../assets/facialwebpimages/facial6.png";
 import facialImage from "../../assets/facialwebpimages/facial2.webp";
@@ -28,7 +29,7 @@ interface ParallaxService {
   backgroundPosition?: string;
 }
 
-const parallaxServices: ParallaxService[] = [
+const parallaxServicesFallback: ParallaxService[] = [
   {
     title: "Skin Care",
     description: "Maintain radiant and healthy skin with our personalized skincare solutions.",
@@ -58,8 +59,8 @@ const parallaxServices: ParallaxService[] = [
     description: "Revitalize your hair with nourishing spa treatments designed to repair damage.",
     image: hairSpaImage,
     price: "₹1,049",
-    benefits: ["Scalp Massage", "Steam Therapy", "Serum Infusion"],
-    color: "#0EA5E9",
+    benefits: ["Keratin Repair", "Scalp Detox", "Hair Fall Control"],
+    color: "#A78BFA",
   },
   {
     title: "Hair Styling",
@@ -67,8 +68,8 @@ const parallaxServices: ParallaxService[] = [
     image: hairStyleImage,
     price: "₹399",
     backgroundPosition: "top center",
-    benefits: ["Elegant Updos", "Modern Braids", "Event Styling"],
-    color: "#EC4899",
+    benefits: ["Custom Updos", "Blowout", "Event Styling"],
+    color: "#F472B6",
   },
   {
     title: "Bridal Makeup",
@@ -76,46 +77,46 @@ const parallaxServices: ParallaxService[] = [
     image: bridalImage,
     price: "₹15,000",
     backgroundPosition: "top center",
-    benefits: ["Airbrushing", "Saree Draping", "Hair Styling"],
-    color: "#D97706",
+    benefits: ["HD & Airbrush Makeup", "Pre-bridal Packages", "Hair Styling", "Saree Draping"],
+    color: "#F43F5E",
   },
   {
     title: "Nails",
     description: "Exquisite nail art and extensions to express your unique style.",
     image: nailImage,
     price: "₹999",
-    benefits: ["Acrylic Extensions", "Gel Polish & Overlay", "Hand-Painted Designs", "Cuticle Care"],
-    color: "#8B5CF6",
+    benefits: ["Gel Extensions", "Acrylic Overlays", "3D Nail Art", "Classic French Polish"],
+    color: "#34D399",
   },
   {
     title: "Lice Removal",
     description: "Gentle and effective treatments to ensure a healthy, lice-free scalp.",
     image: liceImage,
     price: "₹4,999",
-    benefits: ["Chemical-free", "Scalp Health", "Follow-up Check", "Child Friendly"],
-    color: "#10B981",
+    benefits: ["100% Natural Treatment", "Discreet Service", "Scalp Health Restoration"],
+    color: "#FBBF24",
   },
   {
     title: "Wart Removal",
-    description: "Safe and effective removal of warts and skin tags using advanced techniques.",
+    description: "Safe and effective removal of warts using advanced dermatological techniques.",
     image: wartRemovalImage,
     price: "₹119",
-    benefits: ["Quick Procedure", "Minimal Scarring", "Expert Care"],
-    color: "#EA580C",
+    benefits: ["Painless Procedure", "Quick Recovery", "No Scarring", "Expert Care"],
+    color: "#60A5FA",
   },
   {
     title: "Ear Piercing",
     description: "Safe and precise ear piercing using professional, sterilized equipment.",
     image: earPiercingImage,
     price: "₹299",
-    benefits: ["Safe & Hygienic", "Expert Piercer", "Aftercare Support"],
-    color: "#F472B6",
+    benefits: ["Safe & Hygienic", "Expert Piercer", "Aftercare Support", "Painless Experience"],
+    color: "#A78BFA",
   },
 ];
 
 export function ParallaxServicesSection() {
   const [selectedImage, setSelectedImage] = React.useState<{ url: string; title: string } | null>(null);
-  const [dynamicServices, setDynamicServices] = React.useState(parallaxServices);
+  const [dynamicServices, setDynamicServices] = React.useState(parallaxServicesFallback);
 
   React.useEffect(() => {
     fetch('http://localhost:8081/api/services')
@@ -123,7 +124,12 @@ export function ParallaxServicesSection() {
       .then(data => {
         if (data && data.length > 0) {
           const merged = data.map((s: any) => {
-            const fallback = parallaxServices.find(f => f.title === s.title) || parallaxServices[0];
+            const fallback = parallaxServicesFallback.find(f => {
+              const fTitle = f.title.trim().toLowerCase();
+              const sTitle = s.title?.trim().toLowerCase() || '';
+              const sCat = s.category?.trim().toLowerCase() || '';
+              return fTitle === sTitle || fTitle === sCat;
+            }) || parallaxServicesFallback[0];
             return {
               title: s.title,
               description: s.description,

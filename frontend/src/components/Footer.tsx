@@ -116,7 +116,6 @@ const Footer: React.FC = () => {
                 { name: "Bridal Makeup", hash: "#bridal-makeup" },
                 { name: "Nail Artistry", hash: "#nails" },
                 { name: "Lice Removal", hash: "#lice-removal" },
-                { name: "Threading & Waxing", hash: "" },
                 { name: "Wart Removal", hash: "#wart-removal" },
               ].map((s) => (
                 <li

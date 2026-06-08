@@ -1,22 +1,49 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ScrollReveal } from "./ScrollReveal";
+import { useState, useEffect } from "react";
 
-const pricingData = [
-  { name: "Skin Care", price: "₹400" },
-  { name: "Facial Treatment", price: "₹1,150" },
-  { name: "Manicure", price: "₹519" },
-  { name: "Pedicure", price: "₹699" },
-  { name: "Hair Care", price: "₹1,049" },
-  { name: "Hair Styling", price: "₹399" },
-  { name: "Bridal Makeup", price: "₹15,000" },
-  { name: "Nails", price: "₹999" },
-  { name: "Lice Removal", price: "₹4,999" },
-  { name: "Wart Removal", price: "₹119" },
-  { name: "Ear Piercing", price: "₹299" },
+const pricingDataFallback = [
+  { name: "Skin Care", price: "₹400+" },
+  { name: "Facial Treatment", price: "₹1,150+" },
+  { name: "Manicure & Pedicure", price: "₹519+" },
+  { name: "Hair Care", price: "₹1,049+" },
+  { name: "Hair Styling", price: "₹399+" },
+  { name: "Bridal Makeup", price: "₹15,000+" },
+  { name: "Nails", price: "₹999+" },
+  { name: "Lice Removal", price: "₹4,999+" },
+  { name: "Wart Removal", price: "₹119+" },
+  { name: "Ear Piercing", price: "₹299+" },
 ];
 
 export function PricingSection() {
+  const [pricingData, setPricingData] = useState(pricingDataFallback);
+
+  useEffect(() => {
+    fetch('http://localhost:8081/api/services')
+      .then(r => r.json())
+      .then((data: any[]) => {
+        const merged = pricingDataFallback.map(fallback => {
+          let searchName = fallback.name;
+          if (searchName === 'Manicure') searchName = 'Manicure & Pedicure';
+          if (searchName === 'Pedicure') searchName = 'Manicure & Pedicure';
+          
+          const match = data.find(d => {
+            const dTitle = d.title?.trim().toLowerCase() || '';
+            const dCat = d.category?.trim().toLowerCase() || '';
+            const sName = searchName.trim().toLowerCase();
+            return dTitle === sName || dCat === sName;
+          });
+          if (match) {
+            return { ...fallback, price: match.price };
+          }
+          return fallback;
+        });
+        setPricingData(merged);
+      })
+      .catch(console.error);
+  }, []);
+
   return (
     <section className="py-10 tb:py-16 dt:py-20 relative bg-surface overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 tb:px-6 dt:px-8 relative z-10">
