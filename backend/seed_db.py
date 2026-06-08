@@ -69,14 +69,16 @@ def seed_database():
         'testimonials', 
         'reservations', 
         'contacts', 
-        'gallery_images', 
+        'gallery_images',
         'admin_users'
     ]
     
+    from sqlalchemy import text
+
     try:
         for table in tables:
             query = f"SELECT setval(pg_get_serial_sequence('{table}', 'id'), coalesce(max(id),1), max(id) IS NOT null) FROM {table};"
-            session.execute(query)
+            session.execute(text(query))
         session.commit()
         print("Sequences fixed successfully!")
     except Exception as e:
