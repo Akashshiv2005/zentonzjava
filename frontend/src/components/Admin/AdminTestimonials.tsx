@@ -8,9 +8,6 @@ interface Testimonial {
   service: string;
   quote: string;
   rating: number;
-  imageName: string;
-}
-
 const AdminTestimonials: React.FC = () => {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [loading, setLoading] = useState(true);

@@ -72,6 +72,9 @@ const GlobalHeader = () => {
 };
 
 const GlobalFooter = () => {
+  const { pathname } = useLocation();
+  if (pathname.startsWith('/admin')) return null;
+
   return (
     <>
       <Footer />

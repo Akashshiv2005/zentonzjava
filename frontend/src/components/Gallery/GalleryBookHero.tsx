@@ -52,9 +52,6 @@ const GalleryBookHero: React.FC = () => {
           // This ensures the open spread has equal gaps on both sides
           const shiftPercent = 60;
 
-          // Initial reset for stability - starts hidden at the bottom
-          gsap.set(bookScaleContainer, { x: 0, xPercent: 0, y: isMobile ? 400 : 800, scale: isMobile ? 0.6 : 0.4, opacity: 0 });
-
           // Fade out hero text, scroll guide and dark overlay at the start
           tl.to(
             [
@@ -73,8 +70,15 @@ const GalleryBookHero: React.FC = () => {
           );
 
           // Step 1: Fly up, fade in, expand & shift
-          tl.to(
+          tl.fromTo(
             bookScaleContainer,
+            {
+              y: isMobile ? 400 : 800,
+              opacity: 0,
+              scale: isMobile ? 0.6 : 0.4,
+              x: 0,
+              xPercent: 0,
+            },
             {
               y: 0,
               opacity: 1,

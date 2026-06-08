@@ -158,11 +158,13 @@ const BookGallery: React.FC<BookGalleryProps> = ({ onLoaded }) => {
                 src={page.front} 
                 alt={`Front ${index + 1}`} 
                 className={page.front === logoImg ? "is-logo" : "object-cover"} 
+                loading={index === 0 ? "eager" : "lazy"}
               />
               <img 
                 src={page.back} 
                 alt={`Back ${index + 1}`} 
                 className={page.back === logoImg ? "is-logo" : "object-cover"} 
+                loading={index === 0 ? "eager" : "lazy"}
               />
             </div>
           ))}

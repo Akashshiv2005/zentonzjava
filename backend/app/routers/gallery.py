@@ -38,6 +38,8 @@ def upload_image(
         db.refresh(new_image)
         return new_image
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=str(e))
 
 @router.put("/{id}", response_model=schemas.GalleryImage)
@@ -68,14 +70,25 @@ def delete_image(id: int, db: Session = Depends(get_db)):
     db.commit()
     return {"ok": True}
 
+from fastapi.responses import RedirectResponse
+from datetime import timedelta
+
 @router.get("/images/{file_name}")
 def serve_image(file_name: str):
     try:
         if not minio_client:
             raise HTTPException(status_code=500, detail="Minio client not initialized")
         
-        response = minio_client.get_object(MINIO_BUCKET, file_name)
-        # Content type should ideally be fetched from stat, but we can rely on standard mimetypes or let StreamingResponse handle it.
-        return StreamingResponse(io.BytesIO(response.read()), media_type="image/jpeg")
+        # Generate a direct download link that expires in 1 hour
+        # This completely bypasses Python streaming and lets MinIO serve the file instantly
+        url = minio_client.presigned_get_object(
+            MINIO_BUCKET, 
+            file_name, 
+            expires=timedelta(hours=1)
+        )
+        
+        # We redirect the browser directly to MinIO
+        return RedirectResponse(url=url, status_code=302)
+        
     except Exception as e:
         raise HTTPException(status_code=404, detail="File not found")
