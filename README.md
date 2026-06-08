@@ -26,7 +26,7 @@ The backend runs on Python 3.10+ using FastAPI and SQLAlchemy.
    ```
 3. Install dependencies:
    ```bash
-   pip install fastapi uvicorn sqlalchemy psycopg2 pydantic python-multipart
+   pip install -r requirements.txt
    ```
 4. **Import the Database!** (This will load all the services, testimonials, gallery, and admin login):
    ```bash
