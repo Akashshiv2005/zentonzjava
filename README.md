@@ -32,7 +32,11 @@ The backend runs on Python 3.10+ using FastAPI and SQLAlchemy.
    ```bash
    python import_db.py
    ```
-5. Start the backend server:
+5. **Import the MinIO Images!** (This will upload all the physical image files to your local MinIO server):
+   ```bash
+   python import_minio.py
+   ```
+6. Start the backend server:
    ```bash
    uvicorn app.main:app --reload --port 8081
    ```
