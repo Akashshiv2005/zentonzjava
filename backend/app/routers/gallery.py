@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, UploadFile, File, HTTPException, Form
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, RedirectResponse
 from sqlalchemy.orm import Session
 from typing import List
+from datetime import timedelta
 import io
 
 from .. import models, schemas
@@ -69,9 +70,6 @@ def delete_image(id: int, db: Session = Depends(get_db)):
     db.delete(image)
     db.commit()
     return {"ok": True}
-
-from fastapi.responses import RedirectResponse
-from datetime import timedelta
 
 @router.get("/images/{file_name}")
 def serve_image(file_name: str):
