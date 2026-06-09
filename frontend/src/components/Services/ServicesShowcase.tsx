@@ -369,7 +369,7 @@ const ServicesShowcase: React.FC = () => {
           const orderedServices: any[] = [];
           
           fallbackServices.forEach(f => {
-            const matches = dynamicServices.filter(d => d._originalId === f.id);
+            const matches = dynamicServices.filter((d: any) => d._originalId === f.id);
             if (matches.length > 0) {
               orderedServices.push(...matches);
             } else {
@@ -378,8 +378,8 @@ const ServicesShowcase: React.FC = () => {
           });
 
           // In case any dynamic service didn't match anything (which shouldn't happen with our modulo fallback, but just in case)
-          dynamicServices.forEach(d => {
-            if (!orderedServices.some(o => o.id === d.id)) {
+          dynamicServices.forEach((d: any) => {
+            if (!orderedServices.some((o: any) => o.id === d.id)) {
               orderedServices.push(d);
             }
           });
