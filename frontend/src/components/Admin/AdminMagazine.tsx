@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ImagePlus, Trash2, Loader2, Edit2, Check, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { ImagePlus, Trash2, Loader2 } from 'lucide-react';
 import ConfirmModal from '../ui/ConfirmModal';
 import { AdminToast } from '../ui/AdminToast';
 
@@ -17,12 +16,7 @@ export function AdminMagazine() {
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
   
-  const [editingId, setEditingId] = useState<number | null>(null);
-  const [editTitle, setEditTitle] = useState('');
-  const [editDescription, setEditDescription] = useState('');
   const [itemToDelete, setItemToDelete] = useState<number | null>(null);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'error'; isOpen: boolean }>({
     message: '',
@@ -60,8 +54,8 @@ export function AdminMagazine() {
     setUploading(true);
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('title', title);
-    formData.append('description', description);
+    formData.append('title', 'Magazine Page');
+    formData.append('description', 'Magazine Page');
     formData.append('is_magazine', 'true');
 
     try {
@@ -71,8 +65,6 @@ export function AdminMagazine() {
       });
       if (res.ok) {
         setFile(null);
-        setTitle('');
-        setDescription('');
         fetchImages();
         showToast("Magazine page uploaded successfully!");
       } else {
@@ -108,63 +100,11 @@ export function AdminMagazine() {
     setItemToDelete(id);
   };
 
-  const handleEditClick = (img: GalleryImage) => {
-    setEditingId(img.id);
-    setEditTitle(img.title);
-    setEditDescription(img.description);
-  };
-
-  const handleUpdate = async (id: number) => {
-    try {
-      const res = await fetch(`http://localhost:8081/api/gallery/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          title: editTitle,
-          description: editDescription
-        }),
-      });
-      if (res.ok) {
-        setEditingId(null);
-        fetchImages();
-        showToast("Magazine page updated successfully!");
-      } else {
-        showToast("Update failed.", "error");
-      }
-    } catch (err) {
-      console.error("Update error:", err);
-      showToast("An error occurred during update.", "error");
-    }
-  };
-
   return (
     <div className="p-6">
       <div className="bg-on-surface/5 p-6 rounded-2xl mb-8 border border-white/10">
         <h3 className="text-xl font-bold mb-4 font-serif text-on-surface">Upload New Magazine Page</h3>
         <form onSubmit={handleUpload} className="flex flex-col md:flex-row gap-4 items-start md:items-end">
-          <div className="flex-1">
-            <label className="block text-xs font-bold uppercase tracking-widest text-on-surface/60 mb-2">Title</label>
-            <input 
-              type="text"
-              value={title} 
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. Page 1 - Autumn Glow"
-              required
-              className="w-full bg-background border border-white/10 rounded-xl px-4 py-3 text-on-surface outline-none focus:border-primary transition-colors"
-            />
-          </div>
-          <div className="flex-1">
-            <label className="block text-xs font-bold uppercase tracking-widest text-on-surface/60 mb-2">Description</label>
-            <input 
-              type="text"
-              value={description} 
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="e.g. Featured bridal look"
-              className="w-full bg-background border border-white/10 rounded-xl px-4 py-3 text-on-surface outline-none focus:border-primary transition-colors"
-            />
-          </div>
           <div className="flex-1">
             <label className="block text-xs font-bold uppercase tracking-widest text-on-surface/60 mb-2">Select File</label>
             <input 
@@ -177,11 +117,11 @@ export function AdminMagazine() {
           </div>
           <button 
             type="submit"
-            disabled={!file || !title || uploading}
+            disabled={!file || uploading}
             className="btn-premium-gold px-8 py-3 disabled:opacity-50 flex items-center gap-2"
           >
             {uploading ? <Loader2 size={18} className="animate-spin" /> : <ImagePlus size={18} />}
-            Upload
+            Upload Image
           </button>
         </form>
       </div>
@@ -201,25 +141,14 @@ export function AdminMagazine() {
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
               </div>
-              <div className="bg-background/80 backdrop-blur p-4 border-t border-white/10 flex flex-col justify-between flex-1">
-                <div>
-                  <h4 className="text-on-surface font-bold text-sm truncate">{img.title}</h4>
-                  {img.description && <p className="text-on-surface/60 text-xs truncate mt-1">{img.description}</p>}
-                </div>
-                <div className="flex items-center gap-2 mt-3">
-                  <button 
-                    onClick={() => handleEditClick(img)}
-                    className="flex-1 bg-primary/10 text-primary py-1.5 rounded-lg text-xs font-bold uppercase hover:bg-primary hover:text-background transition-colors flex items-center justify-center gap-1"
-                  >
-                    <Edit2 size={12} /> Edit
-                  </button>
-                  <button 
-                    onClick={() => handleDelete(img.id)}
-                    className="bg-red-500/20 text-red-400 p-1.5 rounded-lg hover:bg-red-500 hover:text-on-surface transition-colors"
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                </div>
+              <div className="bg-background/80 backdrop-blur p-4 border-t border-white/10 flex items-center justify-between">
+                <span className="text-xs font-semibold text-on-surface/50">Magazine Page</span>
+                <button 
+                  onClick={() => handleDelete(img.id)}
+                  className="bg-red-500/20 text-red-400 p-2 rounded-xl hover:bg-red-500 hover:text-white transition-colors flex items-center gap-1.5 text-xs font-bold"
+                >
+                  <Trash2 size={14} /> Delete
+                </button>
               </div>
             </div>
           ))}
@@ -230,84 +159,6 @@ export function AdminMagazine() {
           )}
         </div>
       )}
-
-      {/* Edit Modal */}
-      <AnimatePresence>
-        {editingId !== null && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-[#2B2B2B]/40 backdrop-blur-md"
-              onClick={() => setEditingId(null)}
-            />
-            
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ type: "spring", duration: 0.5, bounce: 0.3 }}
-              className="relative bg-[#FAF9F6] border border-[#C9A24A]/30 p-8 rounded-2xl shadow-luxury-deep max-w-md w-full overflow-hidden z-10 text-[#2B2B2B]"
-            >
-              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#C9A24A] via-primary to-[#C9A24A]" />
-              
-              <h3 className="text-2xl font-serif font-bold mb-4 text-[#2B2B2B] tracking-wide">
-                Edit Magazine Page Details
-              </h3>
-              
-              {(() => {
-                const editingImage = images.find(img => img.id === editingId);
-                return editingImage ? (
-                  <div className="mb-6 rounded-xl overflow-hidden max-h-48 flex justify-center items-center bg-black/5 relative border border-[#C9A24A]/10 mx-auto w-fit">
-                    <img 
-                      src={`http://localhost:8081/api/gallery/images/${editingImage.file_name}`} 
-                      alt="Preview"
-                      className="max-h-48 w-auto object-contain block rounded-lg shadow-sm"
-                    />
-                  </div>
-                ) : null;
-              })()}
-
-              <div className="space-y-4">
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-widest text-[#2B2B2B]/60 mb-2">Title</label>
-                  <input 
-                    type="text" 
-                    value={editTitle}
-                    onChange={e => setEditTitle(e.target.value)}
-                    className="w-full bg-white border border-[#2B2B2B]/10 rounded-xl px-4 py-3 text-[#2B2B2B] outline-none focus:border-primary transition-colors font-bold"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-widest text-[#2B2B2B]/60 mb-2">Description</label>
-                  <textarea 
-                    value={editDescription}
-                    onChange={e => setEditDescription(e.target.value)}
-                    rows={3}
-                    className="w-full bg-white border border-[#2B2B2B]/10 rounded-xl px-4 py-3 text-[#2B2B2B] outline-none focus:border-primary transition-colors font-semibold resize-none"
-                  />
-                </div>
-              </div>
-
-              <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-[#2B2B2B]/10">
-                <button 
-                  onClick={() => setEditingId(null)} 
-                  className="px-6 py-2.5 rounded-full font-bold text-[#2B2B2B]/60 hover:bg-[#2B2B2B]/5 transition-colors text-sm"
-                >
-                  Cancel
-                </button>
-                <button 
-                  onClick={() => handleUpdate(editingId)} 
-                  className="btn-premium-gold px-6 py-2.5 text-sm"
-                >
-                  Save Changes
-                </button>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
 
       <ConfirmModal 
         isOpen={itemToDelete !== null}
