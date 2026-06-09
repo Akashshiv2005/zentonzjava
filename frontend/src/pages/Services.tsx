@@ -13,9 +13,9 @@ import { useSEO } from "../lib/useSEO";
 
 const Services: FC = () => {
   useSEO({
-    title: "Premium Beauty Services & Rituals",
-    description: "Explore our full range of salon treatments at Zen Tonez: glow facials, specialized hair spa, luxury manicure/pedicures, acrylic nail art, and custom bridal makeup packages.",
-    keywords: "hair spa Trichy, acrylic nails, glow facial, salon rituals, bridal makeup package"
+    title: "Best Hair, Skin & Nail Services in Trichy",
+    description: "Explore the best salon services in Trichy at Zen Tonez. Professional hair spa, glow facials, luxury pedicure, manicures, custom nail art, and bridal makeup package rates.",
+    keywords: "best salon services trichy, top hair spa in trichy, best nail art in trichy, bridal packages trichy, salon price list"
   });
   const location = useLocation();
 

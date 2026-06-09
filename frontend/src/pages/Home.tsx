@@ -14,9 +14,9 @@ import { useSEO } from "../lib/useSEO";
 
 function Home() {
   useSEO({
-    title: "Luxury Beauty Salon",
-    description: "Welcome to Zen Tonez Beauty Parlour & Salon in Thillai Nagar, Trichy. Discover premium bridal makeup, skin rituals, couture nails, and luxury hair styling treatments.",
-    keywords: "beauty parlour, luxury salon, Trichy, bridal makeup, nails, skin treatment"
+    title: "Best Beauty Parlour & Salon in Trichy | Thillai Nagar",
+    description: "Zen Tonez is the best luxury beauty parlour & salon in Thillai Nagar, Trichy. Experience premium bridal makeup, glow facials, couture nail art, and expert hair treatments.",
+    keywords: "best salon in trichy, top beauty parlour in trichy, premium salon thillai nagar, bridal makeup trichy, hair salon trichy"
   });
 
   return (

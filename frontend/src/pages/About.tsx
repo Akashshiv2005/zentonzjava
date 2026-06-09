@@ -14,9 +14,9 @@ import { useSEO } from "../lib/useSEO";
 
 const About: React.FC = () => {
   useSEO({
-    title: "About Our Salon",
-    description: "Learn about Zen Tonez Beauty Parlour, our story, core values, timeline, and the team of expert stylists behind our premium salon and wellness experiences.",
-    keywords: "about zentonez, salon story, professional stylists, beauty team Trichy"
+    title: "Best Makeup Artists & Hair Stylists in Trichy",
+    description: "Learn about Zen Tonez, the best beauty parlour & luxury salon in Thillai Nagar, Trichy. Read our story, meet our expert team of professional makeup artists and stylists.",
+    keywords: "best makeup artist in trichy, top beauty stylists trichy, zentonez story, hair experts trichy"
   });
   // Defer rendering of heavy below-the-fold components to prevent main-thread blocking lag
   const [isMounted, setIsMounted] = useState(false);
