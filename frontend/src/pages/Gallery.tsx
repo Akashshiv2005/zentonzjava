@@ -5,7 +5,14 @@ import GalleryFooter from "../components/Gallery/GalleryFooter";
 import { SocialSidebar } from "../components/ui/SocialSidebar";
 import { Reveal } from "../components/ui/Reveal";
 
+import { useSEO } from "../lib/useSEO";
+
 const Gallery: React.FC = () => {
+  useSEO({
+    title: "Bridal Makeup & Nail Art Gallery",
+    description: "View our interactive lookbook and clippings gallery featuring professional bridal makeovers, nail art, hair styles, and custom salon rituals designed at Zen Tonez.",
+    keywords: "bridal lookbook, salon gallery, nail art photos, hairstyle lookbook Trichy"
+  });
   return (
     <div className="overflow-x-hidden bg-background text-slate-900 font-sans relative min-h-screen">
       

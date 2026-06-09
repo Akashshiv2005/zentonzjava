@@ -10,7 +10,15 @@ import { SocialSidebar } from "../components/ui/SocialSidebar";
 import { Reveal } from "../components/ui/Reveal";
 
 
+import { useSEO } from "../lib/useSEO";
+
 function Home() {
+  useSEO({
+    title: "Luxury Beauty Salon",
+    description: "Welcome to Zen Tonez Beauty Parlour & Salon in Thillai Nagar, Trichy. Discover premium bridal makeup, skin rituals, couture nails, and luxury hair styling treatments.",
+    keywords: "beauty parlour, luxury salon, Trichy, bridal makeup, nails, skin treatment"
+  });
+
   return (
     <div className="overflow-x-hidden bg-background text-on-surface font-sans selection:bg-primary-container selection:text-on-primary-container relative">
       

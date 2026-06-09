@@ -2,7 +2,14 @@ import React from 'react';
 import { BookingSystem } from '../components/Booking/BookingSystem';
 import ThreeDClock from '../components/Contact/ThreeDClock';
 
+import { useSEO } from '../lib/useSEO';
+
 const Book: React.FC = () => {
+  useSEO({
+    title: "Book an Appointment Online",
+    description: "Schedule your premium beauty rituals, hair styling, skin care, or makeup services online at Zen Tonez. Pick your custom time slot and reserve easily.",
+    keywords: "book appointment, online booking salon, salon reservation Trichy"
+  });
   return (
     <div className="min-h-screen bg-background pt-32 pb-24 px-4 sm:px-6 relative overflow-hidden">
       {/* Background Decor */}

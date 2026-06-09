@@ -10,7 +10,14 @@ import AboutCTA from "../components/About/AboutCTA";
 import { SocialSidebar } from "../components/ui/SocialSidebar";
 import { Reveal } from "../components/ui/Reveal";
 
+import { useSEO } from "../lib/useSEO";
+
 const About: React.FC = () => {
+  useSEO({
+    title: "About Our Salon",
+    description: "Learn about Zen Tonez Beauty Parlour, our story, core values, timeline, and the team of expert stylists behind our premium salon and wellness experiences.",
+    keywords: "about zentonez, salon story, professional stylists, beauty team Trichy"
+  });
   // Defer rendering of heavy below-the-fold components to prevent main-thread blocking lag
   const [isMounted, setIsMounted] = useState(false);
 

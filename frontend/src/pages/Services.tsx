@@ -9,7 +9,14 @@ import ServicesCTA from "../components/Services/ServicesCTA";
 import { SocialSidebar } from "../components/ui/SocialSidebar";
 import { Reveal } from "../components/ui/Reveal";
 
+import { useSEO } from "../lib/useSEO";
+
 const Services: FC = () => {
+  useSEO({
+    title: "Premium Beauty Services & Rituals",
+    description: "Explore our full range of salon treatments at Zen Tonez: glow facials, specialized hair spa, luxury manicure/pedicures, acrylic nail art, and custom bridal makeup packages.",
+    keywords: "hair spa Trichy, acrylic nails, glow facial, salon rituals, bridal makeup package"
+  });
   const location = useLocation();
 
   useEffect(() => {

@@ -13,7 +13,14 @@ import {
 import { LuxuryMembershipHero } from "../components/ui/LuxuryMembershipHero";
 import { Reveal } from "../components/ui/Reveal";
 
+import { useSEO } from "../lib/useSEO";
+
 const Membership: React.FC = () => {
+  useSEO({
+    title: "Exclusive Gold Membership Plan",
+    description: "Join the Zen Tonez Gold Membership for just Rs.199/year. Enjoy a flat 15% discount on all beauty, hair, skin, and bridal makeup services, with booking priority.",
+    keywords: "salon membership, Zen Tonez members, beauty discounts, priority booking Trichy"
+  });
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,

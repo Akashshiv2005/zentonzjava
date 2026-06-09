@@ -6,7 +6,14 @@ import ContactMap from "../components/Contact/ContactMap";
 import { FloatingSocialMenu } from "../components/ui/FloatingSocialMenu";
 import { Reveal } from "../components/ui/Reveal";
 
+import { useSEO } from "../lib/useSEO";
+
 const Contact: React.FC = () => {
+  useSEO({
+    title: "Contact Us & Location Map",
+    description: "Get in touch with Zen Tonez Beauty Parlour in Thillai Nagar, Trichy. Book appointments, find directions on the map, call us, or send an inquiry.",
+    keywords: "contact salon, salon location Trichy, booking beauty parlour, Zen Tonez phone"
+  });
   useEffect(() => {
     return () => {
       ScrollTrigger.getAll().forEach((t) => t.kill());
