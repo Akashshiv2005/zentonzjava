@@ -231,7 +231,7 @@ const Admin: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background text-on-surface font-sans selection:bg-primary-container selection:text-on-primary-container relative">
+    <div className="min-h-screen bg-background text-on-surface font-sans selection:bg-primary-container selection:text-on-primary-container relative admin-portal">
       
       {/* Premium Admin Header */}
       <div className="fixed top-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-2xl border-b border-on-surface/5 shadow-sm">
@@ -295,13 +295,13 @@ const Admin: React.FC = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`relative px-6 py-2.5 text-sm font-medium rounded-full transition-opacity whitespace-nowrap ${isActive ? 'text-white' : 'text-white hover:opacity-80'}`}
+                className={`relative px-6 py-2.5 text-sm font-bold rounded-full transition-all duration-300 whitespace-nowrap ${isActive ? 'text-black' : 'text-white/60 hover:text-white'}`}
               >
                 <span className="relative z-20 flex items-center">{tab.icon}{tab.label}</span>
                 {isActive && (
                   <motion.div
                     layoutId="admin-active-tab"
-                    className="absolute inset-0 bg-primary rounded-full shadow-luxury-soft z-10 mix-blend-difference"
+                    className="absolute inset-0 bg-primary rounded-full shadow-luxury z-10"
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}

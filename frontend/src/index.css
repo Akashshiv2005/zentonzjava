@@ -727,3 +727,93 @@ html {
     scroll-behavior: auto !important;
   }
 }
+
+/* ─── Premium Admin Portal Themes & High Contrast Inputs ─── */
+.admin-portal {
+  /* Elevate input fields to high contrast, premium design */
+  input[type="text"],
+  input[type="password"],
+  input[type="number"],
+  input[type="file"],
+  textarea,
+  select {
+    background-color: #ffffff !important;
+    color: #2b2b2b !important;
+    border: 1.5px solid rgba(201, 162, 74, 0.2) !important;
+    box-shadow: 0 3px 10px rgba(43, 43, 43, 0.04) !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    font-weight: 600 !important;
+  }
+  
+  input[type="text"]:focus,
+  input[type="password"]:focus,
+  input[type="number"]:focus,
+  textarea:focus,
+  select:focus {
+    border-color: #c9a24a !important;
+    box-shadow: 0 0 0 4px rgba(201, 162, 74, 0.18) !important;
+    background-color: #ffffff !important;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: #7a7a7a !important;
+    font-weight: 500 !important;
+    opacity: 0.75 !important;
+  }
+
+  /* Make form options look extremely premium */
+  select option {
+    background-color: #ffffff !important;
+    color: #2b2b2b !important;
+    font-weight: 600 !important;
+  }
+
+  /* Elevate form cards & dashboard containers to elegant light surfaces */
+  .bg-surface,
+  .bg-on-surface\/5,
+  .bg-surface-light,
+  .bg-surface-dim\/30 {
+    background-color: #ffffff !important;
+    border: 1px solid rgba(201, 162, 74, 0.15) !important;
+    box-shadow: 0 12px 35px rgba(43, 43, 43, 0.05) !important;
+    border-radius: 1.5rem !important;
+  }
+
+  /* Elevate the table styling to match the luxury aesthetic */
+  table {
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  table th {
+    color: #c9a24a !important;
+    font-weight: 800 !important;
+    background-color: rgba(201, 162, 74, 0.04) !important;
+    border-bottom: 2px solid rgba(201, 162, 74, 0.15) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.12em !important;
+    font-size: 11px !important;
+    padding: 1.25rem 1.5rem !important;
+  }
+
+  table tr {
+    border-bottom: 1px solid rgba(201, 162, 74, 0.08) !important;
+    background-color: #ffffff !important;
+    transition: background-color 0.25s ease !important;
+  }
+
+  table tr:hover {
+    background-color: rgba(201, 162, 74, 0.02) !important;
+  }
+
+  table td {
+    border-bottom: 1px solid rgba(201, 162, 74, 0.06) !important;
+  }
+
+  /* Headings gold accent */
+  h2, h3 {
+    letter-spacing: -0.01em;
+    font-weight: 800;
+  }
+}
