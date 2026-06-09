@@ -72,6 +72,8 @@ class WhatsappNotificationService:
     def send_reservation_notification(reservation):
         logger.info(f"Sending WhatsApp notification for reservation: {reservation.name} for {reservation.service}")
 
+# Trigger reload: MinIO bucket updated to zentonez.
+
     @staticmethod
     def send_contact_notification(contact):
         logger.info(f"Sending WhatsApp notification for contact from: {contact.name}")
