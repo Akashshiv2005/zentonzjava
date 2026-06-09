@@ -231,10 +231,14 @@ const Admin: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background text-on-surface font-sans selection:bg-primary-container selection:text-on-primary-container relative admin-portal">
+    <div className="min-h-screen bg-background text-on-surface font-sans selection:bg-primary-container selection:text-on-primary-container relative admin-portal overflow-hidden">
+      {/* Decorative Blur Blobs */}
+      <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] pointer-events-none z-0" />
+      <div className="absolute bottom-20 left-0 w-[400px] h-[400px] bg-secondary/15 rounded-full blur-[100px] pointer-events-none z-0" />
+      <div className="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-primary/5 rounded-full blur-[80px] pointer-events-none z-0" />
       
       {/* Premium Admin Header */}
-      <div className="fixed top-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-2xl border-b border-on-surface/5 shadow-sm">
+      <div className="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-md border-b border-[#C9A24A]/10 shadow-[0_2px_15px_rgba(43,43,43,0.02)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-10 h-20 sm:h-24 flex items-center justify-between">
           <div className="flex items-center gap-3 sm:gap-6">
             {/* Clickable Logo with White Background for Visibility */}
@@ -280,8 +284,8 @@ const Admin: React.FC = () => {
         </div>
 
       {/* Tabs - Pill Design (Desktop Only) */}
-      <div className="hidden md:flex justify-center mb-12 w-full">
-        <div className="inline-flex items-center p-1.5 bg-[#2B2B2B]/90 backdrop-blur-md border border-white/10 rounded-full shadow-2xl shrink-0">
+      <div className="hidden md:flex justify-center mb-12 w-full relative z-10">
+        <div className="inline-flex items-center p-1.5 bg-white/80 backdrop-blur-md border border-[#C9A24A]/20 rounded-full shadow-luxury shrink-0">
           {[
             { id: 'bookings', label: `Bookings (${bookings.length})` },
             { id: 'stories', label: 'Client Stories' },
@@ -295,13 +299,13 @@ const Admin: React.FC = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`relative px-6 py-2.5 text-sm font-bold rounded-full transition-all duration-300 whitespace-nowrap ${isActive ? 'text-black' : 'text-white/60 hover:text-white'}`}
+                className={`relative px-6 py-2.5 text-sm font-bold rounded-full transition-all duration-300 whitespace-nowrap ${isActive ? 'text-white' : 'text-[#2b2b2b]/60 hover:text-[#2b2b2b]'}`}
               >
                 <span className="relative z-20 flex items-center">{tab.icon}{tab.label}</span>
                 {isActive && (
                   <motion.div
                     layoutId="admin-active-tab"
-                    className="absolute inset-0 bg-primary rounded-full shadow-luxury z-10"
+                    className="absolute inset-0 bg-primary rounded-full shadow-luxury-gold z-10"
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}
@@ -311,7 +315,7 @@ const Admin: React.FC = () => {
         </div>
       </div>
 
-      <div className="bg-on-surface/[0.02] border border-white/5 rounded-[2rem] overflow-hidden shadow-luxury-deep relative min-h-[400px]">
+      <div className="bg-white/80 backdrop-blur-md border border-[#C9A24A]/15 rounded-[2rem] overflow-hidden shadow-luxury-deep relative min-h-[400px] z-10">
         <AnimatePresence mode="popLayout">
           <motion.div
             key={activeTab}

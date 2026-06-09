@@ -740,8 +740,8 @@ html {
     background-color: #ffffff !important;
     color: #2b2b2b !important;
     border: 1.5px solid rgba(201, 162, 74, 0.2) !important;
-    box-shadow: 0 3px 10px rgba(43, 43, 43, 0.04) !important;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-shadow: 0 4px 12px rgba(43, 43, 43, 0.03) !important;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
     font-weight: 600 !important;
   }
   
@@ -751,8 +751,9 @@ html {
   textarea:focus,
   select:focus {
     border-color: #c9a24a !important;
-    box-shadow: 0 0 0 4px rgba(201, 162, 74, 0.18) !important;
+    box-shadow: 0 0 0 5px rgba(201, 162, 74, 0.2) !important;
     background-color: #ffffff !important;
+    transform: translateY(-1px);
   }
 
   input::placeholder,
@@ -769,15 +770,26 @@ html {
     font-weight: 600 !important;
   }
 
-  /* Elevate form cards & dashboard containers to elegant light surfaces */
+  /* Elevate form cards & dashboard containers to elegant light surfaces with glassmorphism */
   .bg-surface,
   .bg-on-surface\/5,
   .bg-surface-light,
-  .bg-surface-dim\/30 {
-    background-color: #ffffff !important;
-    border: 1px solid rgba(201, 162, 74, 0.15) !important;
-    box-shadow: 0 12px 35px rgba(43, 43, 43, 0.05) !important;
-    border-radius: 1.5rem !important;
+  .bg-surface-dim\/30,
+  .bg-surface-dim\/20 {
+    background-color: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(201, 162, 74, 0.18) !important;
+    box-shadow: 0 20px 40px rgba(43, 43, 43, 0.04) !important;
+    border-radius: 1.75rem !important;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  /* Card interactive hovers */
+  .bg-on-surface\/5:hover,
+  .bg-surface-light:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: 0 25px 50px rgba(201, 162, 74, 0.08) !important;
+    border-color: rgba(201, 162, 74, 0.3) !important;
   }
 
   /* Elevate the table styling to match the luxury aesthetic */
@@ -790,25 +802,27 @@ html {
     color: #c9a24a !important;
     font-weight: 800 !important;
     background-color: rgba(201, 162, 74, 0.04) !important;
-    border-bottom: 2px solid rgba(201, 162, 74, 0.15) !important;
+    border-bottom: 2.5px solid rgba(201, 162, 74, 0.18) !important;
     text-transform: uppercase !important;
-    letter-spacing: 0.12em !important;
+    letter-spacing: 0.15em !important;
     font-size: 11px !important;
-    padding: 1.25rem 1.5rem !important;
+    padding: 1.4rem 1.5rem !important;
   }
 
   table tr {
     border-bottom: 1px solid rgba(201, 162, 74, 0.08) !important;
-    background-color: #ffffff !important;
-    transition: background-color 0.25s ease !important;
+    background-color: transparent !important;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
   }
 
   table tr:hover {
-    background-color: rgba(201, 162, 74, 0.02) !important;
+    background-color: rgba(201, 162, 74, 0.03) !important;
+    transform: scale(1.003) translateZ(0);
   }
 
   table td {
     border-bottom: 1px solid rgba(201, 162, 74, 0.06) !important;
+    padding: 1.25rem 1.5rem !important;
   }
 
   /* Headings gold accent */
