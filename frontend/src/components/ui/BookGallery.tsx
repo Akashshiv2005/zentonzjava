@@ -95,14 +95,15 @@ const BookGallery: React.FC<BookGalleryProps> = ({ onLoaded }) => {
         }
 
         .book-page img {
-          width: 100%;
-          height: 100%;
+          width: 100% !important;
+          height: 100% !important;
           position: absolute;
           top: 0;
           left: 0;
           background: #fdfcfb;
           backface-visibility: hidden;
           border: 1px solid rgba(0, 0, 0, 0.05);
+          object-fit: contain !important;
         }
 
         .book-page img:nth-child(2) {

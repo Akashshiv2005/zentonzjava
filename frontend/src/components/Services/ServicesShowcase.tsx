@@ -485,11 +485,9 @@ const ServicesShowcase: React.FC = () => {
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 style={{ objectPosition: service.objectPosition || "center" }}
               />
-              <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2">
-                <div className="bg-white/20 backdrop-blur-md p-3 rounded-full border border-white/30 animate-pulse">
-                  <Star className="text-white fill-white" size={24} />
-                </div>
-                <span className="text-white text-[10px] font-black uppercase tracking-[0.2em] bg-black/30 px-3 py-1 rounded-full backdrop-blur-sm">
+              <div className="absolute bottom-4 right-4 bg-black/50 backdrop-blur-md px-3 py-2 rounded-2xl border border-white/20 flex items-center gap-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                <Star className="text-white fill-white" size={12} />
+                <span className="text-white text-[9px] font-black uppercase tracking-wider">
                   Click to View
                 </span>
               </div>
@@ -630,10 +628,10 @@ const ServicesShowcase: React.FC = () => {
 
         {/* Right Column: Pinned Visualization */}
         <div
-          className="h-screen flex items-center justify-center overflow-hidden"
+          className="h-screen flex items-center justify-center overflow-hidden pt-24 pb-8"
           ref={rightColRef}
         >
-          <div className="relative w-full max-w-[380px] xl:max-w-[420px] aspect-4/5 rounded-[3rem] overflow-hidden shadow-luxury-deep border-4 border-white bg-white group cursor-zoom-in">
+          <div className="relative w-full max-w-[320px] xl:max-w-[360px] aspect-4/5 rounded-[3rem] overflow-hidden shadow-luxury-deep border-4 border-white bg-white group cursor-zoom-in">
             {services.map((service) => (
               <div
                 key={service.id}
@@ -649,11 +647,9 @@ const ServicesShowcase: React.FC = () => {
                   className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                   style={{ objectPosition: service.objectPosition || "center" }}
                 />
-                <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-3">
-                  <div className="bg-white/20 backdrop-blur-md p-4 rounded-full border border-white/30 animate-pulse">
-                    <Star className="text-white fill-white" size={32} />
-                  </div>
-                  <span className="text-white text-xs font-black uppercase tracking-[0.3em] bg-black/20 px-4 py-1 rounded-full backdrop-blur-md">
+                <div className="absolute bottom-4 right-4 bg-black/50 backdrop-blur-md px-3 py-2 rounded-2xl border border-white/20 flex items-center gap-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                  <Star className="text-white fill-white" size={14} />
+                  <span className="text-white text-[10px] font-black uppercase tracking-wider">
                     Click to View
                   </span>
                 </div>

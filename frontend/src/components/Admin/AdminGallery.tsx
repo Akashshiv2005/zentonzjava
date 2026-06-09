@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ImagePlus, Trash2, Loader2, Edit2, Check, X } from 'lucide-react';
+import { ImagePlus, Trash2, Loader2, Edit2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ConfirmModal from '../ui/ConfirmModal';
 import { AdminToast } from '../ui/AdminToast';

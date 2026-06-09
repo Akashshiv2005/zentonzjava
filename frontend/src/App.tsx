@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -6,7 +6,7 @@ import {
   useLocation,
   Navigate,
 } from "react-router-dom";
-import { useEffect, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import Lenis from "lenis";
 
 declare global {

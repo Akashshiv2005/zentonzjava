@@ -6,6 +6,7 @@ const ContactMap: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: "200px" });
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isInteractive, setIsInteractive] = useState(false);
 
   return (
     <section className="py-12 sm:py-20 bg-white relative overflow-hidden">
@@ -15,7 +16,11 @@ const ContactMap: React.FC = () => {
           ref={containerRef}
           className="relative group p-2 sm:p-3 bg-[#B87333]/5 rounded-4xl sm:rounded-5xl border border-[#B87333]/10 shadow-soft overflow-hidden"
         >
-          <div className="relative h-[400px] sm:h-[500px] md:h-[600px] w-full overflow-hidden rounded-3xl sm:rounded-5xl border border-[#B87333]/20 shadow-inner bg-slate-100">
+          <div 
+            className="relative h-[400px] sm:h-[500px] md:h-[600px] w-full overflow-hidden rounded-3xl sm:rounded-5xl border border-[#B87333]/20 shadow-inner bg-slate-100 cursor-pointer"
+            onClick={() => setIsInteractive(true)}
+            onMouseLeave={() => setIsInteractive(false)}
+          >
             {/* Loading Placeholder */}
             {!isLoaded && (
               <div className="absolute inset-0 flex items-center justify-center bg-slate-100 z-10">
@@ -33,13 +38,21 @@ const ContactMap: React.FC = () => {
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.784523314!2d78.683567!3d10.8264819!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3baaf5c6ab3ec563%3A0xb6e4149c8e7aa646!2sZEN%20TONEZ%20SALON!5e0!3m2!1sen!2sin!4v1714210000000!5m2!1sen!2sin"
                 className={`absolute inset-0 w-full h-full contrast-[1.05] transition-opacity duration-1000 ${isLoaded ? "opacity-100" : "opacity-0"}`}
-                style={{ border: 0 }}
+                style={{ border: 0, pointerEvents: isInteractive ? 'auto' : 'none' }}
                 allowFullScreen
                 loading="lazy"
                 onLoad={() => setIsLoaded(true)}
                 referrerPolicy="no-referrer-when-downgrade"
                 title="Zen Tonez Location"
               />
+            )}
+
+            {!isInteractive && isLoaded && (
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                <span className="bg-slate-900/95 text-white backdrop-blur-md px-5 py-2.5 rounded-full text-xs font-black uppercase tracking-widest border border-white/10 shadow-lg transition-transform duration-300 group-hover:scale-105 pointer-events-auto">
+                  Click to Interact with Map
+                </span>
+              </div>
             )}
           </div>
 

@@ -85,7 +85,7 @@ const BridalOffer: React.FC = () => {
             )}
 
             <div className="space-y-4">
-              <h2 className="text-5xl lg:text-7xl font-black text-on-surface uppercase tracking-tighter leading-[0.85] font-serif">
+              <h2 className="text-5xl lg:text-7xl font-black text-on-surface uppercase tracking-tighter leading-tight font-serif">
                 {titlePart1} <span className="text-primary block">{titlePart2}</span>
               </h2>
               <p className="text-on-surface/80 text-lg lg:text-xl font-medium max-w-xl mx-auto dt:mx-0 leading-relaxed">

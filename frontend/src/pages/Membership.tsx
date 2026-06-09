@@ -109,13 +109,6 @@ const Membership: React.FC = () => {
       </section>
 
       <section className="py-20 lg:py-32 bg-slate-50 overflow-hidden relative">
-        <motion.div
-          initial={{ x: -100, opacity: 0 }}
-          whileInView={{ x: 0, opacity: 0.1 }}
-          className="absolute -left-20 top-1/2 -translate-y-1/2 text-[20vw] font-black text-[#B87333] pointer-events-none select-none whitespace-nowrap uppercase tracking-tighter"
-        >
-          Compare
-        </motion.div>
 
         <div className="max-w-5xl mx-auto px-4 tb:px-6 dt:px-8 relative z-10">
           <Reveal width="100%" direction="up">

@@ -6,7 +6,7 @@ const ServicesCTA: React.FC = () => {
   return (
     <section className="py-10 sm:py-16 lg:py-20 text-center relative px-4 sm:px-6 border-t border-slate-900/10">
       <div className="max-w-4xl mx-auto relative z-10">
-        <h2 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black mb-6 sm:mb-8 uppercase tracking-tighter font-serif leading-[0.9]">
+        <h2 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black mb-6 sm:mb-8 uppercase tracking-tighter font-serif leading-tight">
           Join the <br />
           <span className="text-primary">Zen Tonez Circle</span>
         </h2>

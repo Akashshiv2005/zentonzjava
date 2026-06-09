@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import logo from '../assets/zentonez-logo.png';
-import { Shield, Calendar, MessageSquare, Clock, Phone, RefreshCw, Gift, Camera, Scissors, BookOpen } from 'lucide-react';
+import { Shield, Calendar, MessageSquare, Clock, Phone, RefreshCw, Gift, Camera, Scissors, BookOpen, Trash2 } from 'lucide-react';
 import { AdminGallery } from '../components/Admin/AdminGallery';
 import { AdminMagazine } from '../components/Admin/AdminMagazine';
 import AdminServices from '../components/Admin/AdminServices';
 import AdminTestimonials from '../components/Admin/AdminTestimonials';
 import AdminPromotions from '../components/Admin/AdminPromotions';
+import ConfirmModal from '../components/ui/ConfirmModal';
+import { AdminToast } from '../components/ui/AdminToast';
 
 interface Booking {
   id: number;
@@ -31,6 +33,28 @@ const Admin: React.FC = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'bookings' | 'stories' | 'services' | 'gallery' | 'promotions' | 'magazine'>('bookings');
+
+  const [deleteConfirmId, setDeleteConfirmId] = useState<number | null>(null);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
+
+  const handleDeleteBooking = async (id: number) => {
+    try {
+      const res = await fetch(`http://localhost:8081/api/reservations/${id}`, {
+        method: 'DELETE',
+      });
+      if (res.ok) {
+        setToast({ message: "Booking deleted successfully", type: 'success' });
+        setBookings(prev => prev.filter(b => b.id !== id));
+      } else {
+        setToast({ message: "Failed to delete booking", type: 'error' });
+      }
+    } catch (err) {
+      console.error(err);
+      setToast({ message: "Error deleting booking", type: 'error' });
+    } finally {
+      setDeleteConfirmId(null);
+    }
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,7 +91,10 @@ const Admin: React.FC = () => {
     try {
       const bookRes = await fetch('http://localhost:8081/api/reservations');
       
-      if (bookRes.ok) setBookings(await bookRes.json());
+      if (bookRes.ok) {
+        const data: Booking[] = await bookRes.json();
+        setBookings(data.sort((a, b) => b.id - a.id));
+      }
     } catch (err) {
       console.error("Failed to fetch admin data", err);
     } finally {
@@ -328,7 +355,7 @@ const Admin: React.FC = () => {
             {activeTab === 'bookings' && (
               <div>
                 {/* Desktop View: Interactive Table */}
-                <div className="hidden md:block overflow-x-auto">
+                <div className="hidden md:block overflow-x-auto scrollbar-hide">
                   <table className="w-full text-left">
                     <thead>
                       <tr className="bg-[#C9A24A]/5 border-b border-[#C9A24A]/15">
@@ -336,6 +363,7 @@ const Admin: React.FC = () => {
                         <th className="px-6 py-5 text-[10px] font-black uppercase tracking-widest text-primary">Ritual</th>
                         <th className="px-6 py-5 text-[10px] font-black uppercase tracking-widest text-primary">Schedule</th>
                         <th className="px-6 py-5 text-[10px] font-black uppercase tracking-widest text-primary">Notes</th>
+                        <th className="px-6 py-5 text-[10px] font-black uppercase tracking-widest text-primary text-right">Actions</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-[#C9A24A]/10">
@@ -363,11 +391,20 @@ const Admin: React.FC = () => {
                           <td className="px-6 py-6">
                             <p className="text-sm text-on-surface/60 max-w-xs line-clamp-2">{booking.notes || '—'}</p>
                           </td>
+                          <td className="px-6 py-6 text-right">
+                            <button
+                              onClick={() => setDeleteConfirmId(booking.id)}
+                              className="text-red-500 hover:text-red-700 p-2 rounded-xl hover:bg-red-50 transition-colors"
+                              title="Delete Booking"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </td>
                         </tr>
                       ))}
                       {bookings.length === 0 && !loading && (
                         <tr>
-                          <td colSpan={4} className="px-6 py-20 text-center text-on-surface/30 font-medium">No bookings found yet.</td>
+                          <td colSpan={5} className="px-6 py-20 text-center text-on-surface/30 font-medium">No bookings found yet.</td>
                         </tr>
                       )}
                     </tbody>
@@ -385,9 +422,18 @@ const Admin: React.FC = () => {
                             <Phone size={12} /> {booking.phone}
                           </a>
                         </div>
-                        <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider">
-                          {booking.service}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider">
+                            {booking.service}
+                          </span>
+                          <button
+                            onClick={() => setDeleteConfirmId(booking.id)}
+                            className="text-red-500 hover:text-red-700 p-1.5 rounded-lg hover:bg-red-50 transition-colors"
+                            title="Delete Booking"
+                          >
+                            <Trash2 size={16} />
+                          </button>
+                        </div>
                       </div>
 
                       <div className="flex gap-4 text-xs font-semibold text-on-surface/75 bg-on-surface/5 p-3 rounded-xl border border-[#C9A24A]/10">
@@ -473,6 +519,20 @@ const Admin: React.FC = () => {
           })}
         </div>
       </div>
+      <ConfirmModal
+        isOpen={deleteConfirmId !== null}
+        onCancel={() => setDeleteConfirmId(null)}
+        onConfirm={() => deleteConfirmId && handleDeleteBooking(deleteConfirmId)}
+        title="Delete Booking"
+        message="Are you sure you want to delete this booking request? This action cannot be undone."
+      />
+
+      <AdminToast
+        isOpen={toast !== null}
+        message={toast?.message || ""}
+        type={toast?.type || "success"}
+        onClose={() => setToast(null)}
+      />
     </div>
   );
 };

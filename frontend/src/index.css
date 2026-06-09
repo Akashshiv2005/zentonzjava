@@ -630,10 +630,12 @@ html {
   }
 
   /* Hide scrollbar utility */
-  .no-scrollbar::-webkit-scrollbar {
+  .no-scrollbar::-webkit-scrollbar,
+  .scrollbar-hide::-webkit-scrollbar {
     display: none !important;
   }
-  .no-scrollbar {
+  .no-scrollbar,
+  .scrollbar-hide {
     -ms-overflow-style: none !important;
     scrollbar-width: none !important;
   }

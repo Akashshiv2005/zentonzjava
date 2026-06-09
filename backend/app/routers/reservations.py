@@ -29,3 +29,14 @@ def get_booked_slots(service: str, date: str, db: Session = Depends(get_db)):
         models.Reservation.date == date
     ).all()
     return [r.time for r in reservations]
+
+@router.delete("/{reservation_id}")
+def delete_reservation(reservation_id: int, db: Session = Depends(get_db)):
+    from fastapi import HTTPException
+    res = db.query(models.Reservation).filter(models.Reservation.id == reservation_id).first()
+    if not res:
+        raise HTTPException(status_code=404, detail="Reservation not found")
+    db.delete(res)
+    db.commit()
+    return {"message": "Reservation deleted successfully"}
+
