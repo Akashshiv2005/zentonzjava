@@ -28,7 +28,12 @@ const Services: FC = () => {
   useEffect(() => {
     const hash = location.hash;
     if (hash) {
-      const serviceKey = hash.replace("#", "");
+      let serviceKey = hash.replace("#", "");
+      // Map 'lice-removal' hash to 'lice-treatment' to match the database service title
+      if (serviceKey === "lice-removal") {
+        serviceKey = "lice-treatment";
+      }
+      
       // Short delay to ensure elements are fully rendered and layout shifts are resolved
       setTimeout(() => {
         const elements = document.querySelectorAll(`[data-service="${serviceKey}"]`);
@@ -43,13 +48,21 @@ const Services: FC = () => {
 
         // Fallback to absolute query selector if offsetParent check yields nothing
         if (!targetElement) {
-          targetElement = document.querySelector(hash);
+          // If we mapped to lice-treatment but need to fallback, try both
+          targetElement = document.querySelector(`#mobile-${serviceKey}`) || 
+                          document.querySelector(`#desktop-${serviceKey}`) ||
+                          document.querySelector(hash);
         }
 
         if (targetElement) {
-          targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+          const lenis = (window as any).lenisInstance;
+          if (lenis) {
+            lenis.scrollTo(targetElement, { offset: -80, duration: 1.5 });
+          } else {
+            targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
         }
-      }, 500);
+      }, 600);
     }
   }, [location.hash, location.pathname]);
 

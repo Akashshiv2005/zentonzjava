@@ -348,7 +348,8 @@ const ServicesShowcase: React.FC = () => {
             if (!fallbackMatch) {
               fallbackMatch = fallbackServices[idx % fallbackServices.length];
             }
-            return {
+             const imageName = s.image_name || s.imageName;
+             return {
               id: 100 + s.id,
               title: s.title,
               category: s.category,
@@ -356,7 +357,7 @@ const ServicesShowcase: React.FC = () => {
               price: s.price,
               duration: s.duration,
               highlights: s.highlights ? s.highlights.split(',').map((h:string)=>h.trim()) : [],
-              image: s.imageName ? `http://localhost:8081/api/gallery/images/${s.imageName}` : fallbackMatch.image,
+              image: imageName ? `http://localhost:8081/api/gallery/images/${imageName}` : fallbackMatch.image,
               color: fallbackMatch.color,
               icon: fallbackMatch.icon,
               review: fallbackMatch.review,

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Trash2, Save, X, Check, Plus } from 'lucide-react';
+import { Save, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { defaultServices } from '../../data/defaultServices';
-import ConfirmModal from '../ui/ConfirmModal';
 import { AdminToast } from '../ui/AdminToast';
 
 interface Service {
@@ -18,14 +16,12 @@ interface Service {
 
 const AdminServices: React.FC = () => {
   const [services, setServices] = useState<Service[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [activeCategory, setActiveCategory] = useState<string>("All Services");
+  const [showForm, setShowForm] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   
   // Dynamically compute categories from services
   const CATEGORIES = ["All Services", ...Array.from(new Set(services.map(s => s.category).filter(Boolean)))];
   
-  const [isEditing, setIsEditing] = useState(false);
-  const [showForm, setShowForm] = useState(false);
   const [currentService, setCurrentService] = useState<Partial<Service>>({
     title: '',
     category: CATEGORIES[0],
@@ -35,7 +31,6 @@ const AdminServices: React.FC = () => {
     highlights: '',
   });
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [itemToDelete, setItemToDelete] = useState<number | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const showToast = (msg: string) => {
@@ -45,9 +40,8 @@ const AdminServices: React.FC = () => {
 
   useEffect(() => {
     fetchServices().then((fetchedServices) => {
-      // Auto-select the first category and populate form
-      if (fetchedServices) {
-        handleCategoryClick(CATEGORIES[0], fetchedServices);
+      if (fetchedServices && fetchedServices.length > 0) {
+        handleCategoryClick(CATEGORIES[0]);
       }
     });
   }, []);
@@ -61,16 +55,13 @@ const AdminServices: React.FC = () => {
     } catch (err) {
       console.error("Failed to fetch services", err);
       return [];
-    } finally {
-      setLoading(false);
     }
   };
 
-  const handleCategoryClick = (category: string, currentServicesList: Service[] = services) => {
-    setActiveCategory(category);
+  const handleCategoryClick = (category: string) => {
     setShowForm(false);
     
-    // Reset form for a new entry in this category instead of auto-editing the first item
+    // Reset form for a new entry in this category
     setCurrentService({
       title: '',
       category: category === "All Services" ? "" : category,
@@ -120,26 +111,6 @@ const AdminServices: React.FC = () => {
     }
   };
 
-  const confirmDelete = async (id: number) => {
-    try {
-      const res = await fetch(`http://localhost:8081/api/services/${id}`, {
-        method: 'DELETE',
-      });
-      if (res.ok) {
-        setItemToDelete(null);
-        fetchServices();
-      } else {
-        console.error("Failed to delete service");
-      }
-    } catch (err) {
-      console.error("Error deleting service", err);
-    }
-  };
-
-  const handleDelete = (id: number) => {
-    setItemToDelete(id);
-  };
-
   const editService = (service: Service) => {
     setCurrentService(service);
     setIsEditing(true);
@@ -180,8 +151,14 @@ const AdminServices: React.FC = () => {
         <div className="flex justify-between items-center bg-surface-dim/30 p-6 rounded-2xl border border-white/5">
           <div>
             <h2 className="text-xl font-bold text-on-surface">Manage Services</h2>
-            <p className="text-sm text-on-surface/60 mt-1">Update or delete services offered in your salon.</p>
+            <p className="text-sm text-on-surface/60 mt-1">Update services offered in your salon.</p>
           </div>
+          <button 
+            onClick={handleAddNew}
+            className="px-6 py-3 bg-primary text-background font-black uppercase tracking-widest text-xs rounded-xl hover:opacity-90 transition-opacity"
+          >
+            Add New Service
+          </button>
         </div>
 
         <AnimatePresence mode="wait">
@@ -202,56 +179,45 @@ const AdminServices: React.FC = () => {
               </div>
 
               <form onSubmit={handleSave} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <div>
-                <label className="block text-xs font-bold text-on-surface/60 uppercase tracking-wider mb-2">Service Title</label>
-                <input 
-                  required
-                  type="text" 
-                  value={currentService.title || ''}
-                  onChange={e => setCurrentService({...currentService, title: e.target.value})}
-                  className="w-full bg-background border border-on-surface/10 rounded-xl px-4 py-3 text-on-surface focus:outline-none focus:border-primary"
-                  placeholder="e.g. Signature Bridal Makeup"
-                />
-              </div>
-            </div>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-bold text-on-surface/60 uppercase tracking-wider mb-2">Service Title</label>
+                    <input 
+                      required
+                      type="text" 
+                      value={currentService.title || ''}
+                      onChange={e => setCurrentService({...currentService, title: e.target.value})}
+                      className="w-full bg-background border border-on-surface/10 rounded-xl px-4 py-3 text-on-surface focus:outline-none focus:border-primary"
+                      placeholder="e.g. Signature Bridal Makeup"
+                    />
+                  </div>
+                </div>
 
-            <div className="space-y-4">
-              <div>
-                <label className="block text-xs font-bold text-on-surface/60 uppercase tracking-wider mb-2">Price</label>
-                <input 
-                  required
-                  type="text" 
-                  value={currentService.price || ''}
-                  onChange={e => setCurrentService({...currentService, price: e.target.value})}
-                  className="w-full bg-background border border-on-surface/10 rounded-xl px-4 py-3 text-on-surface focus:outline-none focus:border-primary"
-                  placeholder="e.g. ₹599+"
-                />
-              </div>
-            </div>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-bold text-on-surface/60 uppercase tracking-wider mb-2">Price</label>
+                    <input 
+                      required
+                      type="text" 
+                      value={currentService.price || ''}
+                      onChange={e => setCurrentService({...currentService, price: e.target.value})}
+                      className="w-full bg-background border border-on-surface/10 rounded-xl px-4 py-3 text-on-surface focus:outline-none focus:border-primary"
+                      placeholder="e.g. ₹599+"
+                    />
+                  </div>
+                </div>
 
-
-            <div className="md:col-span-2 pt-4 flex gap-4">
-              <button type="submit" className="flex-1 md:flex-none px-8 py-4 bg-primary text-background font-black uppercase tracking-widest text-sm rounded-2xl flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
-                <Save size={18} />
-                {isEditing ? 'Update Service' : 'Save New Service'}
-              </button>
-              {isEditing && currentService.id && (
-                <button 
-                  type="button"
-                  onClick={() => handleDelete(currentService.id!)}
-                  className="px-6 py-4 bg-red-500/10 text-red-500 font-black uppercase tracking-widest text-sm rounded-2xl flex items-center justify-center gap-2 hover:bg-red-500/20 transition-colors"
-                >
-                  <Trash2 size={18} />
-                  Delete
-                </button>
-              )}
-            </div>
-          </form>
+                <div className="md:col-span-2 pt-4 flex gap-4">
+                  <button type="submit" className="flex-1 md:flex-none px-8 py-4 bg-primary text-background font-black uppercase tracking-widest text-sm rounded-2xl flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+                    <Save size={18} />
+                    {isEditing ? 'Update Service' : 'Save New Service'}
+                  </button>
+                </div>
+              </form>
             </motion.div>
           )}
         </AnimatePresence>
-
+ 
         {/* Existing Services List */}
         {filteredServices.length > 0 && (
           <div className="space-y-4">
@@ -272,12 +238,6 @@ const AdminServices: React.FC = () => {
                     >
                       Edit
                     </button>
-                    <button 
-                      onClick={() => handleDelete(service.id!)}
-                      className="p-2 rounded-xl bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white transition-colors"
-                    >
-                      <Trash2 size={16} />
-                    </button>
                   </div>
                 </div>
               ))}
@@ -286,17 +246,6 @@ const AdminServices: React.FC = () => {
         )}
 
       </div>
-
-      <ConfirmModal 
-        isOpen={itemToDelete !== null}
-        message="Are you sure you want to delete this service? This action cannot be undone."
-        onConfirm={() => {
-          if (itemToDelete !== null) {
-            confirmDelete(itemToDelete);
-          }
-        }}
-        onCancel={() => setItemToDelete(null)}
-      />
     </div>
   );
 };

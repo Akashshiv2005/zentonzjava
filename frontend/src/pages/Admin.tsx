@@ -110,11 +110,11 @@ const Admin: React.FC = () => {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-[#0a0a0a] selection:bg-primary/30 selection:text-white font-sans">
+      <div className="min-h-screen flex items-center justify-center relative overflow-hidden bg-background selection:bg-primary/30 selection:text-on-surface font-sans">
         
         {/* Background Image & Overlay */}
         <div 
-          className="absolute inset-0 z-0 opacity-40 mix-blend-luminosity scale-105"
+          className="absolute inset-0 z-0 opacity-10 mix-blend-multiply scale-105"
           style={{
             backgroundImage: 'url("https://images.unsplash.com/photo-1600948836101-f9ffda59d250?q=80&w=2036&auto=format&fit=crop")',
             backgroundSize: 'cover',
@@ -122,21 +122,18 @@ const Admin: React.FC = () => {
             filter: 'blur(4px)'
           }}
         />
-        <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent" />
-        <div className="absolute inset-0 z-0 bg-gradient-to-r from-[#0a0a0a] via-transparent to-[#0a0a0a]" />
-
-        {/* Floating Particles/Dust */}
-        <div className="absolute inset-0 pointer-events-none opacity-20 z-0" style={{ backgroundImage: 'url("https://img.freepik.com/premium-photo/white-dust-scratches-black-background_279525-2.jpg?w=640")', backgroundRepeat: 'repeat' }} />
+        <div className="absolute inset-0 z-0 bg-gradient-to-t from-background via-background/80 to-transparent" />
+        <div className="absolute inset-0 z-0 bg-gradient-to-r from-background via-transparent to-background" />
 
         <motion.div 
           initial={{ opacity: 0, scale: 0.95, y: 30 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="relative z-10 w-full max-w-5xl mx-4 rounded-[2.5rem] overflow-hidden flex flex-col md:flex-row shadow-2xl shadow-black/50 border border-white/10 bg-black/40 backdrop-blur-3xl"
+          className="relative z-10 w-full max-w-5xl mx-4 rounded-[2.5rem] overflow-hidden flex flex-col md:flex-row shadow-luxury-deep border border-on-surface/10 bg-white/80 backdrop-blur-xl"
         >
           {/* Left Side - Branding */}
-          <div className="w-full md:w-5/12 p-10 md:p-14 flex flex-col justify-between relative overflow-hidden hidden md:flex border-r border-white/5 bg-gradient-to-br from-black/80 to-black/20">
-            <div className="absolute top-0 left-0 w-full h-full opacity-30 mix-blend-overlay">
+          <div className="w-full md:w-5/12 p-10 md:p-14 flex flex-col justify-between relative overflow-hidden hidden md:flex border-r border-on-surface/5 bg-gradient-to-br from-primary/15 via-background to-surface-dim/40">
+            <div className="absolute top-0 left-0 w-full h-full opacity-10 mix-blend-overlay">
               <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=1974&auto=format&fit=crop" alt="Texture" className="w-full h-full object-cover" />
             </div>
             
@@ -145,9 +142,9 @@ const Admin: React.FC = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3, duration: 0.8 }}
-                className="bg-white/10 backdrop-blur-md p-4 rounded-2xl inline-block border border-white/20 shadow-xl"
+                className="bg-white/80 backdrop-blur-md p-4 rounded-2xl inline-block border border-on-surface/10 shadow-md"
               >
-                <img src={logo} alt="Zen Tonez" className="h-10 object-contain brightness-0 invert" />
+                <img src={logo} alt="Zen Tonez" className="h-10 object-contain" />
               </motion.div>
             </div>
             
@@ -156,32 +153,32 @@ const Admin: React.FC = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.8 }}
-                className="text-4xl lg:text-5xl font-black font-serif text-white leading-tight mb-4"
+                className="text-4xl lg:text-5xl font-black font-serif text-on-surface leading-tight mb-4"
               >
-                Exclusive <br/><span className="text-primary italic font-light">Access</span>
+                Admin <br/><span className="text-primary italic font-light">Portal</span>
               </motion.h2>
               <motion.p 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.7, duration: 0.8 }}
-                className="text-white/50 text-sm font-medium leading-relaxed max-w-xs"
+                className="text-on-surface/60 text-sm font-medium leading-relaxed max-w-xs"
               >
-                Welcome to the Zen Tonez command center. Authorize to orchestrate the ultimate beauty experience.
+                Welcome back. Enter your credentials to access the management tools.
               </motion.p>
             </div>
           </div>
 
           {/* Right Side - Form */}
-          <div className="w-full md:w-7/12 p-8 sm:p-12 md:p-16 flex items-center justify-center relative bg-black/20">
+          <div className="w-full md:w-7/12 p-8 sm:p-12 md:p-16 flex items-center justify-center relative bg-white/30 backdrop-blur-md">
             <div className="w-full max-w-sm relative z-10">
               
               {/* Mobile Header (Hidden on Desktop) */}
               <div className="md:hidden text-center mb-10">
-                <div className="bg-white/10 backdrop-blur-md p-3 rounded-2xl inline-block border border-white/20 mb-6">
-                  <img src={logo} alt="Zen Tonez" className="h-8 object-contain brightness-0 invert" />
+                <div className="bg-white/80 backdrop-blur-md p-3 rounded-2xl inline-block border border-on-surface/10 mb-6">
+                  <img src={logo} alt="Zen Tonez" className="h-8 object-contain" />
                 </div>
-                <h1 className="text-2xl font-black font-serif text-white">Admin Portal</h1>
-                <p className="text-white/40 text-xs mt-2 uppercase tracking-widest">Secure Login</p>
+                <h1 className="text-2xl font-black font-serif text-on-surface">Admin Portal</h1>
+                <p className="text-on-surface/40 text-xs mt-2 uppercase tracking-widest">Secure Login</p>
               </div>
 
               <div className="hidden md:block mb-10">
@@ -189,18 +186,18 @@ const Admin: React.FC = () => {
                   <Shield size={20} />
                   <span className="text-xs font-black uppercase tracking-[0.2em]">Secure Gateway</span>
                 </div>
-                <h3 className="text-2xl font-black text-white">Sign In</h3>
+                <h3 className="text-2xl font-black text-on-surface">Sign In</h3>
               </div>
 
               <form onSubmit={handleLogin} className="space-y-6">
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/50 ml-1">Username</label>
+                  <label className="text-[10px] font-bold uppercase tracking-[0.15em] text-on-surface/60 ml-1">Username</label>
                   <div className="relative">
                     <input
                       type="text"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary/50 focus:bg-white/10 transition-all placeholder:text-white/20"
+                      className="w-full bg-white border border-on-surface/10 rounded-2xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary/50 focus:bg-white transition-all placeholder:text-on-surface/30"
                       placeholder="admin"
                       required
                     />
@@ -208,13 +205,13 @@ const Admin: React.FC = () => {
                 </div>
                 
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold uppercase tracking-[0.15em] text-white/50 ml-1">Password</label>
+                  <label className="text-[10px] font-bold uppercase tracking-[0.15em] text-on-surface/60 ml-1">Password</label>
                   <div className="relative">
                     <input
                       type="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-primary/50 focus:bg-white/10 transition-all placeholder:text-white/20"
+                      className="w-full bg-white border border-on-surface/10 rounded-2xl px-5 py-4 text-on-surface focus:outline-none focus:border-primary/50 focus:bg-white transition-all placeholder:text-on-surface/30"
                       placeholder="••••••••"
                       required
                     />
@@ -227,10 +224,10 @@ const Admin: React.FC = () => {
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
                       exit={{ opacity: 0, height: 0 }}
-                      className="text-[#ff5c5c] text-xs font-medium bg-[#ff5c5c]/10 p-4 rounded-xl border border-[#ff5c5c]/20 flex items-center justify-center gap-2"
+                      className="text-error text-xs font-medium bg-error/10 p-4 rounded-xl border border-error/20 flex items-center justify-center gap-2"
                     >
                       {loginError}
-                      {loginError.includes('Invalid') && <span className="text-white/50 text-[10px]">(Did you restart the backend?)</span>}
+                      {loginError.includes('Invalid') && <span className="text-on-surface/50 text-[10px]">(Did you restart the backend?)</span>}
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -238,7 +235,7 @@ const Admin: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isLoggingIn}
-                  className="group relative w-full bg-primary hover:bg-white text-black font-black uppercase tracking-widest py-4 rounded-2xl transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.2)] hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] disabled:opacity-50 disabled:cursor-not-allowed mt-2 overflow-hidden"
+                  className="group relative w-full bg-primary hover:bg-on-surface hover:text-white text-background font-black uppercase tracking-widest py-4 rounded-2xl transition-all duration-300 shadow-luxury hover:shadow-luxury-deep disabled:opacity-50 disabled:cursor-not-allowed mt-2 overflow-hidden"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     {isLoggingIn ? (
@@ -284,7 +281,6 @@ const Admin: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-2 sm:gap-4">
-            <span className="text-on-surface/30 text-[10px] font-black tracking-widest uppercase hidden md:inline-block">System Active</span>
             <button 
               onClick={handleLogout}
               className="flex items-center gap-1.5 bg-on-surface/5 hover:bg-red-500/20 text-on-surface/60 hover:text-red-400 px-3 sm:px-6 py-2 sm:py-3 rounded-full transition-all font-black uppercase tracking-widest text-[10px] sm:text-xs"
@@ -410,7 +406,7 @@ const Admin: React.FC = () => {
                     </tbody>
                   </table>
                 </div>
-
+ 
                 {/* Mobile View: High-contrast Cards List */}
                 <div className="md:hidden divide-y divide-[#C9A24A]/10">
                   {bookings.map((booking) => (

@@ -130,10 +130,11 @@ export function ParallaxServicesSection() {
               const sCat = s.category?.trim().toLowerCase() || '';
               return fTitle === sTitle || fTitle === sCat;
             }) || parallaxServicesFallback[0];
+            const imageName = s.image_name || s.imageName;
             return {
               title: s.title,
               description: s.description,
-              image: s.imageName ? `http://localhost:8081/api/gallery/images/${s.imageName}` : fallback.image,
+              image: imageName ? `http://localhost:8081/api/gallery/images/${imageName}` : fallback.image,
               price: s.price,
               benefits: s.highlights ? s.highlights.split(',').map((h: string) => h.trim()) : fallback.benefits,
               color: fallback.color,

@@ -10,6 +10,8 @@ import bridalImage from "../../assets/bridalwebpimages/bridal1.webp";
 import nailImage from "../../assets/nailwebpimages/nail.jpeg";
 import liceImage from "../../assets/licewebpimages/lice4.webp";
 import wartRemovalImage from "../../assets/wartremovalwebpimages/wartremovalimg.webp";
+import hairStyleImage from "../../assets/hairwebp images/curlyhairstyle.webp";
+import earPiercingImage from "../../assets/earpiercingimages/earpiercing.webp";
 
 import React from "react";
 import VoyageSlider from "../VoyageSlider/VoyageSlider";
@@ -48,6 +50,14 @@ const services = [
     buttonClass: "btn-premium-gold",
   },
   {
+    title: "Hair Styling",
+    description:
+      "Expert hair styling for every occasion, from elegant updos to modern trends.",
+    image: hairStyleImage,
+    icon: <Scissors size={24} />,
+    buttonClass: "btn-premium-gold",
+  },
+  {
     title: "Bridal Makeup",
     description:
       "Look stunning on your special day with our professional bridal makeup services.",
@@ -65,7 +75,7 @@ const services = [
     buttonClass: "btn-premium-gold",
   },
   {
-    title: "Lice Removal",
+    title: "Lice Treatment",
     description:
       "Gentle and effective treatments to ensure a healthy, lice-free scalp.",
     image: liceImage,
@@ -80,6 +90,14 @@ const services = [
     icon: <Sparkles size={24} />,
     buttonClass: "btn-premium-gold",
   },
+  {
+    title: "Ear Piercing",
+    description:
+      "Safe and precise ear piercing using professional, sterilized equipment.",
+    image: earPiercingImage,
+    icon: <Sparkles size={24} />,
+    buttonClass: "btn-premium-gold",
+  },
 ];
 
 export function ServicesSection() {
@@ -91,11 +109,14 @@ export function ServicesSection() {
       .then(data => {
         if (data && data.length > 0) {
           const merged = data.map((s: any) => {
-            const fallback = services.find(f => f.title === s.title) || services[0];
+            const fallback = services.find(f => 
+              f.title.toLowerCase().trim() === s.title.toLowerCase().trim()
+            ) || services[0];
+            const imageName = s.image_name || s.imageName;
             return {
               title: s.title,
               description: s.description,
-              image: s.imageName ? `http://localhost:8081/api/gallery/images/${s.imageName}` : fallback.image,
+              image: imageName ? `http://localhost:8081/api/gallery/images/${imageName}` : fallback.image,
               icon: fallback.icon,
               buttonClass: fallback.buttonClass,
               objectPosition: fallback.objectPosition

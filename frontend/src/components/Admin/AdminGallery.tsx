@@ -193,6 +193,25 @@ export function AdminGallery() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {images.map((img) => (
             <div key={img.id} className="relative group rounded-2xl overflow-hidden border border-white/10 bg-on-surface/5 flex flex-col h-full">
+              {itemToDelete === img.id && (
+                <div className="absolute inset-0 bg-background/95 backdrop-blur-sm z-20 flex flex-col items-center justify-center p-4 text-center">
+                  <span className="text-sm font-bold text-on-surface mb-4">Delete this image?</span>
+                  <div className="flex gap-2 w-full max-w-[180px]">
+                    <button 
+                      onClick={() => setItemToDelete(null)}
+                      className="flex-1 py-2 rounded-xl text-xs font-bold bg-on-surface/5 text-on-surface hover:bg-on-surface/10 transition-colors"
+                    >
+                      Cancel
+                    </button>
+                    <button 
+                      onClick={() => confirmDelete(img.id)}
+                      className="flex-1 py-2 rounded-xl bg-red-600 text-white text-xs font-bold hover:bg-red-700 transition-colors shadow-md"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              )}
               <div className="relative overflow-hidden aspect-square bg-black/20">
                 <img
                   src={`http://localhost:8081/api/gallery/images/${img.file_name}`}
@@ -214,9 +233,9 @@ export function AdminGallery() {
                   </button>
                   <button
                     onClick={() => handleDelete(img.id)}
-                    className="bg-red-500/20 text-red-400 p-1.5 rounded-lg hover:bg-red-500 hover:text-on-surface transition-colors"
+                    className="bg-red-500/20 text-red-400 p-2 rounded-lg hover:bg-red-500 hover:text-white transition-colors"
                   >
-                    <Trash2 size={16} />
+                    <Trash2 size={12} />
                   </button>
                 </div>
               </div>
@@ -307,17 +326,6 @@ export function AdminGallery() {
           </div>
         )}
       </AnimatePresence>
-
-      <ConfirmModal
-        isOpen={itemToDelete !== null}
-        message="Are you sure you want to delete this gallery image? This action cannot be undone."
-        onConfirm={() => {
-          if (itemToDelete !== null) {
-            confirmDelete(itemToDelete);
-          }
-        }}
-        onCancel={() => setItemToDelete(null)}
-      />
 
       <AdminToast
         message={toast.message}

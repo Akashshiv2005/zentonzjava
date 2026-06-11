@@ -219,8 +219,8 @@ const AdminTestimonials: React.FC = () => {
                   <tr key={testimonial.id} className="border-b border-on-surface/5 hover:bg-background/50 transition-colors">
                     <td className="px-6 py-6 min-w-[200px]">
                       <div className="flex items-center gap-4">
-                        {testimonial.imageName ? (
-                          <img src={`http://localhost:8081/api/gallery/images/${testimonial.imageName}`} alt={testimonial.name} className="w-12 h-12 rounded-full object-cover" />
+                        {(testimonial.image_name || testimonial.imageName) ? (
+                          <img src={`http://localhost:8081/api/gallery/images/${testimonial.image_name || testimonial.imageName}`} alt={testimonial.name} className="w-12 h-12 rounded-full object-cover" />
                         ) : (
                           <div className="w-12 h-12 rounded-full bg-on-surface/5 flex items-center justify-center text-on-surface/30">
                             <ImageIcon size={20} />

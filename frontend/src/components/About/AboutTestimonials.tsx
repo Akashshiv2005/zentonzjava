@@ -229,8 +229,9 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial; delay: number }> = (
   const isBrokenAvatar = testimonial.image?.includes('avatar.iran.li') || testimonial.image?.includes('xsgames');
   const isDicebear = testimonial.image?.includes('dicebear');
 
-  const imageUrl = testimonial.imageName
-    ? `http://localhost:8081/api/gallery/images/${testimonial.imageName}`
+  const imageName = testimonial.image_name || testimonial.imageName;
+  const imageUrl = imageName
+    ? `http://localhost:8081/api/gallery/images/${imageName}`
     : ((testimonial.image && !isDicebear && !isBrokenAvatar) ? testimonial.image : fallbackAvatar);
 
   return (

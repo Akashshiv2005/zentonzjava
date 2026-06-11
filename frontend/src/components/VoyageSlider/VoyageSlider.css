@@ -8,12 +8,14 @@
 
   position: relative;
   width: 100%;
-  min-height: 420px;
-  height: clamp(420px, 60vh, 600px);
+  max-width: 1000px;
+  margin: 0 auto;
+  min-height: 460px;
+  height: clamp(460px, 62vh, 580px);
   display: grid;
   place-items: center;
   overflow: hidden;
-  background: var(--background, #F4F1EC);
+  background: #ffffff;
   border-radius: clamp(1.5rem, 4vw, 3rem);
   box-shadow: 0 40px 100px rgba(115, 92, 0, 0.15);
 }
@@ -21,15 +23,16 @@
 @media (min-width: 481px) {
   .voyage-slider-root {
     --slide-width: min(35vw, 300px);
-    min-height: 500px;
-    height: clamp(500px, 75vh, 750px);
+    min-height: 540px;
+    height: clamp(540px, 70vh, 700px);
   }
 }
 
 @media (min-width: 769px) {
   .voyage-slider-root {
     --slide-width: min(25vw, 300px);
-    height: 80vh;
+    height: 75vh;
+    min-height: 580px;
   }
 }
 
@@ -60,9 +63,9 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  opacity: 0.5;
+  opacity: 1;
   transition: all 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
-  z-index: 1001;
+  z-index: 2000 !important;
   width: 50px;
   height: 50px;
 }
@@ -72,9 +75,9 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   border-radius: 50%;
   transition: all 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
   z-index: -1;
@@ -118,7 +121,7 @@
 .voyage-slider--btn svg {
   width: var(--size);
   height: var(--size);
-  stroke: white;
+  stroke: var(--color-brand-charcoal, #2B2B2B);
   transition: all 300ms cubic-bezier(0.215, 0.61, 0.355, 1);
   position: relative;
   z-index: 1;
@@ -135,6 +138,7 @@
 }
 
 .voyage-slider--btn:hover svg {
+  stroke: white;
   transform: translateY(-5px);
 }
 
@@ -269,6 +273,21 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
+.voyage-slide__inner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.45) 35%,
+    rgba(0, 0, 0, 0.1) 60%,
+    transparent 85%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
 .voyage-slide--image__wrapper {
   position: absolute;
   inset: 0;
@@ -290,32 +309,7 @@
 
 /* ─── Background blur ─── */
 .voyage-slide__bg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 200%;
-  height: 200%;
-  transform: translate(-50%, -50%);
-  background-image: var(--bg);
-  background-size: cover;
-  background-position: center center;
-  z-index: 0;
-  pointer-events: none;
-  filter: blur(80px);
-  transition: opacity var(--slide-transition-duration) ease;
-}
-
-.voyage-slide__bg::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.02);
-}
-
-.voyage-slide__bg[data-previous],
-.voyage-slide__bg[data-next] {
-  opacity: 0;
-  transform: translate(-50%, -50%);
+  display: none;
 }
 
 /* ─── Slide Info ─── */
@@ -330,17 +324,38 @@
   z-index: 100;
 }
 
-.voyage-slide-info[data-current] .voyage-slide-info--text span,
 .voyage-slide-info[data-current] .voyage-slide-info--icon {
   opacity: 1;
   transform: translate3d(0, 0, 0);
-  transition-delay: 250ms;
+  transition: all 500ms cubic-bezier(0.25, 1, 0.5, 1);
+  transition-delay: 150ms;
 }
 
-.voyage-slide-info:not([data-current]) .voyage-slide-info--text span,
+.voyage-slide-info[data-current] .voyage-slide-info--text[data-title] span {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition: all 500ms cubic-bezier(0.25, 1, 0.5, 1);
+  transition-delay: 260ms;
+}
+
+.voyage-slide-info[data-current] .voyage-slide-info--text[data-description] span {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition: all 500ms cubic-bezier(0.25, 1, 0.5, 1);
+  transition-delay: 380ms;
+}
+
 .voyage-slide-info:not([data-current]) .voyage-slide-info--icon {
   opacity: 0;
-  transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, 20px, 0);
+  transition: all 300ms ease;
+  transition-delay: 0ms;
+}
+
+.voyage-slide-info:not([data-current]) .voyage-slide-info--text span {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  transition: all 300ms ease;
   transition-delay: 0ms;
 }
 
@@ -400,7 +415,7 @@
 
 .voyage-slide-info--text {
   font-family: var(--font-clash-display);
-  color: #9e8300;
+  color: #ffffff;
   overflow: hidden;
 }
 
@@ -409,12 +424,8 @@
   white-space: normal;
   transition: var(--slide-transition-duration) var(--slide-transition-easing);
   transition-property: opacity, transform;
-  animation: text-light-blink 3s infinite ease-in-out;
-}
-
-@keyframes text-light-blink {
-  0%, 100% { color: #0c080a; filter: brightness(1); text-shadow: 0 0 0px transparent; }
-  50% { color: #ffffff; filter: brightness(1.2); text-shadow: 0 0 15px rgba(255, 255, 255, 0.5); }
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 .voyage-slide-info--text[data-title] {
@@ -424,14 +435,16 @@
   text-transform: uppercase;
   line-height: 1;
   margin-bottom: 6px;
-  color: #0c080a;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
 .voyage-slide-info--text[data-subtitle] {
   font-size: clamp(0.9rem, 2cqw, 2rem);
   font-weight: 600;
   margin-left: 0.5rem;
-  color: #0c080a;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
 .voyage-slide-info--text[data-description] {
@@ -440,15 +453,15 @@
   font-size: clamp(0.68rem, 1.3cqw, 0.9rem);
   font-family: var(--font-archivo);
   font-weight: 500;
-  color: #1a1a1a;
+  color: rgba(255, 255, 255, 0.9);
   max-width: min(80vw, 350px);
   white-space: normal;
 }
 
 .voyage-slide-info--text[data-description] span {
   animation: none;
-  color: #1a1a1a;
-  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8), 0 1px 5px rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 @media (min-width: 768px) {
@@ -460,15 +473,15 @@
 /* ─── Progress Bar ─── */
 .voyage-slider-progress-container {
   position: absolute;
-  bottom: 5%;
+  bottom: 15px;
   left: 50%;
   transform: translateX(-50%);
   width: clamp(120px, 30vw, 200px);
   height: 3px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   overflow: hidden;
-  z-index: 1000;
+  z-index: 2000 !important;
 }
 
 .voyage-slider-progress-bar {

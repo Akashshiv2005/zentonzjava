@@ -392,9 +392,6 @@ const AdminPromotions: React.FC = () => {
                         <button onClick={() => handleEdit(promo)} className="p-2 rounded-lg bg-surface hover:bg-white/10 text-on-surface/60 hover:text-white transition-colors shadow-sm" title="Edit">
                           <Edit2 size={16} />
                         </button>
-                        <button onClick={() => handleDelete(promo.id)} className="p-2 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors shadow-sm" title="Delete">
-                          <Trash2 size={16} />
-                        </button>
                       </div>
                     </div>
                   </div>

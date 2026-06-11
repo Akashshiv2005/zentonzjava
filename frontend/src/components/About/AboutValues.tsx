@@ -150,13 +150,20 @@ const AboutValues: React.FC = () => {
               </div>
             </div>
             <div className="relative">
-              <div className="relative z-10 p-2 bg-primary/10 rounded-4xl sm:rounded-5xl shadow-2xl rotate-2 border border-primary/20">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                whileHover={{ scale: 1.03 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                className="relative z-10 p-2 bg-primary/10 rounded-4xl sm:rounded-5xl shadow-2xl border border-primary/20"
+              >
                 <img
                   src={interiorImage}
                   alt="Salon Hygiene"
                   className="rounded-3xl sm:rounded-5xl w-full aspect-video object-cover"
                 />
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>
