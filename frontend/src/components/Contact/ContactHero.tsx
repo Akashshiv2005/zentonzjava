@@ -21,7 +21,7 @@ const ContactHero: React.FC = () => {
                 Connect With The Atelier
               </span>
             </div>
-            <h1 className="text-display text-on-surface mb-6 tb:mb-10 normal-case leading-[0.95] sparkle-group">
+            <h1 className="text-display text-on-surface mb-6 tb:mb-10 normal-case leading-[1.15] sparkle-group">
               <SparkleHeading text="Begin Your" className="text-on-surface" />
               <br />
               <SparkleHeading
