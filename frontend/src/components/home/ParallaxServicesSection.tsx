@@ -116,35 +116,6 @@ const parallaxServicesFallback: ParallaxService[] = [
 
 export function ParallaxServicesSection() {
   const [selectedImage, setSelectedImage] = React.useState<{ url: string; title: string } | null>(null);
-  const [dynamicServices, setDynamicServices] = React.useState(parallaxServicesFallback);
-
-  React.useEffect(() => {
-    fetch('http://localhost:8081/api/services')
-      .then(res => res.json())
-      .then(data => {
-        if (data && data.length > 0) {
-          const merged = data.map((s: any) => {
-            const fallback = parallaxServicesFallback.find(f => {
-              const fTitle = f.title.trim().toLowerCase();
-              const sTitle = s.title?.trim().toLowerCase() || '';
-              const sCat = s.category?.trim().toLowerCase() || '';
-              return fTitle === sTitle || fTitle === sCat;
-            }) || parallaxServicesFallback[0];
-            return {
-              title: s.title,
-              description: s.description,
-              image: s.imageName ? `http://localhost:8081/api/gallery/images/${s.imageName}` : fallback.image,
-              price: s.price,
-              benefits: s.highlights ? s.highlights.split(',').map((h: string) => h.trim()) : fallback.benefits,
-              color: fallback.color,
-              backgroundPosition: fallback.backgroundPosition
-            };
-          });
-          setDynamicServices(merged);
-        }
-      })
-      .catch(console.error);
-  }, []);
 
   return (
     <section className="py-6 tb:py-8 dt:py-10 relative bg-background overflow-hidden">
@@ -174,7 +145,7 @@ export function ParallaxServicesSection() {
           <h1 className="parallax-page__title">#EXPLORE</h1>
           <ParallaxArrow />
           <div className="parallax-content parallax-content--alternate parallax-content--padded">
-            {dynamicServices.map((service, index) => (
+            {parallaxServicesFallback.map((service, index) => (
               <ScrollParallaxCard
                 key={service.title}
                 index={index}
