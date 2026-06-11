@@ -48,15 +48,16 @@
 /* Dynamic AM/PM */
 .metty-ampm {
   position: absolute;
-  right: calc(-6 * var(--clock-scale));
+  right: calc(-12 * var(--clock-scale));
   bottom: 0px;
   background: var(--primary);
   color: white;
-  padding: 1px 6px;
-  border-radius: 3px;
-  font-size: calc(0.9 * var(--clock-scale));
+  padding: calc(0.5 * var(--clock-scale)) calc(1.5 * var(--clock-scale));
+  border-radius: calc(1.5 * var(--clock-scale));
+  font-size: calc(2.8 * var(--clock-scale));
   font-weight: 900;
   text-transform: uppercase;
+  line-height: 1;
 }
 
 .metty-digit span {

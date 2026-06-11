@@ -84,6 +84,7 @@ const Footer: React.FC = () => {
                 { label: "Membership", path: "/membership" },
                 { label: "Gallery", path: "/gallery" },
                 { label: "Contact", path: "/contact" },
+                { label: "Reserve", path: "/book" },
               ].map((item) => (
                 <li
                   key={item.label}

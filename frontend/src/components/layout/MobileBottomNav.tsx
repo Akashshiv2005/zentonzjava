@@ -5,6 +5,7 @@ import {
   MessageSquare,
   Flower2,
   Star,
+  Calendar,
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -19,6 +20,7 @@ export function MobileBottomNav() {
     { name: "Gallery", path: "/gallery", icon: Camera },
     { name: "Membership", path: "/membership", icon: Star },
     { name: "Contact", path: "/contact", icon: MessageSquare },
+    { name: "Reserve", path: "/book", icon: Calendar },
   ];
 
   if (pathname.startsWith('/admin')) {
