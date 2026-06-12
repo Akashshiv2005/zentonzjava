@@ -11,14 +11,15 @@ MINIO_ENDPOINT = os.getenv("MINIO_ENDPOINT", "127.0.0.1:9000")
 MINIO_ACCESS_KEY = os.getenv("MINIO_ACCESS_KEY", "minioadmin")
 MINIO_SECRET_KEY = os.getenv("MINIO_SECRET_KEY", "minioadmin")
 MINIO_BUCKET = os.getenv("MINIO_BUCKET", "zentonez")
+MINIO_SECURE = os.getenv("MINIO_SECURE", "False").lower() in ("true", "1", "yes")
 
 def import_minio_images():
-    print(f"Connecting to MinIO at {MINIO_ENDPOINT}...")
+    print(f"Connecting to MinIO at {MINIO_ENDPOINT} (secure={MINIO_SECURE})...")
     client = Minio(
         MINIO_ENDPOINT,
         access_key=MINIO_ACCESS_KEY,
         secret_key=MINIO_SECRET_KEY,
-        secure=False
+        secure=MINIO_SECURE
     )
 
     # 1. Create bucket if it doesn't exist
