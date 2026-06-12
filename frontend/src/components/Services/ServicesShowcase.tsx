@@ -443,7 +443,7 @@ const ServicesShowcase: React.FC = () => {
       if (rightColRef.current && containerRef.current) {
         ScrollTrigger.create({
           trigger: containerRef.current,
-          start: "top top",
+          start: "top 80px",
           end: "bottom bottom",
           pin: rightColRef.current,
           pinSpacing: false,
@@ -566,11 +566,11 @@ const ServicesShowcase: React.FC = () => {
                 key={service.id}
                 id={`desktop-${serviceKey}`}
                 data-service={serviceKey}
-                className="showcase-info h-screen flex items-center justify-center text-center scroll-mt-24"
+                className="showcase-info h-[calc(100vh-80px)] flex items-center justify-center text-center scroll-mt-24"
               >
-              <div className="max-w-md space-y-7 flex flex-col items-center">
-                <div className="flex flex-col items-center gap-4">
-                  <div className="p-4 bg-white text-primary rounded-2xl shadow-luxury-deep border border-primary/20">
+              <div className="max-w-md space-y-5 flex flex-col items-center">
+                <div className="flex flex-col items-center gap-2">
+                  <div className="p-3 bg-white text-primary rounded-2xl shadow-luxury-deep border border-primary/20">
                     {service.icon}
                   </div>
                   <span className="text-primary font-black uppercase tracking-[0.4em] text-[10px]">
@@ -578,45 +578,45 @@ const ServicesShowcase: React.FC = () => {
                   </span>
                 </div>
 
-                <div className="space-y-4">
-                  <h2 className="text-5xl xl:text-6xl font-black text-on-surface leading-none uppercase italic font-serif">
+                <div className="space-y-2">
+                  <h2 className="text-4xl xl:text-5xl font-black text-on-surface leading-none uppercase italic font-serif">
                     {service.title}
                   </h2>
-                  <p className="text-on-surface/90 text-lg leading-relaxed font-medium">
+                  <p className="text-on-surface/90 text-base leading-relaxed font-medium">
                     {service.description}
                   </p>
                 </div>
 
-                <div className="flex flex-col items-center gap-4 py-2">
+                <div className="flex flex-col items-center gap-3 py-1">
                   <div className="flex flex-wrap justify-center gap-2 w-full">
                     {service.highlights.map((h, i) => (
                       <span
                         key={i}
-                        className="px-3 py-1 bg-on-surface/5 rounded-full text-[10px] font-black uppercase tracking-widest text-on-surface/80 border border-on-surface/10"
+                        className="px-2.5 py-0.5 bg-on-surface/5 rounded-full text-[9px] font-black uppercase tracking-widest text-on-surface/80 border border-on-surface/10"
                       >
                         {h}
                       </span>
                     ))}
                   </div>
                   <div className="flex items-center gap-2 text-primary">
-                    <Clock size={16} />
+                    <Clock size={14} />
                     <span className="font-black text-xs uppercase tracking-widest">
                       {service.duration}
                     </span>
                   </div>
                 </div>
 
-                <div className="flex flex-col items-center gap-4 pt-4 w-full">
+                <div className="flex flex-col items-center gap-3 pt-2 w-full">
                   <div className="flex flex-col items-center">
-                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-on-surface/60 mb-1">
+                    <span className="text-[9px] font-black uppercase tracking-[0.2em] text-on-surface/60 mb-0.5">
                       Ritual Investment
                     </span>
-                    <span className="text-4xl font-black text-on-surface italic font-serif tracking-tight">
+                    <span className="text-3xl font-black text-on-surface italic font-serif tracking-tight">
                       {service.price}
                     </span>
                   </div>
                   <Link to="/book" className="w-full">
-                    <button className="btn-premium-gold w-full py-4 text-sm tracking-widest">
+                    <button className="btn-premium-gold w-full py-3.5 text-xs tracking-widest">
                       Book Ritual
                     </button>
                   </Link>
@@ -629,7 +629,7 @@ const ServicesShowcase: React.FC = () => {
 
         {/* Right Column: Pinned Visualization */}
         <div
-          className="h-screen flex items-center justify-center overflow-hidden pt-24 pb-8"
+          className="h-[calc(100vh-80px)] flex items-center justify-center overflow-hidden pt-12 pb-8"
           ref={rightColRef}
         >
           <div className="relative w-full max-w-[320px] xl:max-w-[360px] aspect-4/5 rounded-[3rem] overflow-hidden shadow-luxury-deep border-4 border-white bg-white group cursor-zoom-in">
